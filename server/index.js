@@ -35,8 +35,8 @@ async function getNextID(table, column){
 /**
  * scenarioInserting POST. Should receive following:
  * string scenarioNameVar, int scenarioTypeVar, int questionTypeVar,
- * string questionTextVar(300), string questionOptionVar(1-4)(140),
- * int questionCorrectVar(1-4). 
+ * string questionTextVar(300), string pictureVar(90)(for path and the picturename),
+ * string questionOptionVar(1-4)(140), int questionCorrectVar(1-4). 
  * 
  * With (1-4) add one of the numbers 
  * to the end of the variablename as a part of the name e.g. questionCorrectVar1.
@@ -82,6 +82,7 @@ app.post("/api/insert", async (req,res) => {
 
     //Insert into QmultipleChoice table
     const questionText = req.body.questionTextVar;
+    const picturePath = req.body.pictureVar;
     const questionOption1 = req.body.questionOption1Var;
     const questionOption2 = req.body.questionOption2Var;
     const questionOption3 = req.body.questionOption3Var;
@@ -91,8 +92,8 @@ app.post("/api/insert", async (req,res) => {
     const correct3 = req.body.questionCorrect3Var;
     const correct4 = req.body.questionCorrect4Var;
     const qmultiplechoiceInsert =
-    "INSERT INTO qmultiplechoice (questionid, questiontext, option1, option2, option3, option4, correct1, correct2, correct3, correct4) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    await queryPromise(qmultiplechoiceInsert, [questionID, questionText, questionOption1, questionOption2, questionOption3, questionOption4, correct1, correct2, correct3, correct4])
+    "INSERT INTO qmultiplechoice (questionid, questiontext, picture, option1, option2, option3, option4, correct1, correct2, correct3, correct4) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    await queryPromise(qmultiplechoiceInsert, [questionID, questionText, picturePath, questionOption1, questionOption2, questionOption3, questionOption4, correct1, correct2, correct3, correct4])
     .then((result)=> {
         console.log ("SUCCESS! 4");
     })

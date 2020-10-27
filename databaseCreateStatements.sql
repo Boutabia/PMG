@@ -24,6 +24,7 @@ CREATE TABLE `questionlist` (
 CREATE TABLE `qmultiplechoice` (
   `questionid` int NOT NULL,
   `questiontext` varchar(300) NOT NULL,
+  `picture` varchar(90) DEFAULT NULL,
   `option1` varchar(140) DEFAULT NULL,
   `option2` varchar(140) DEFAULT NULL,
   `option3` varchar(140) DEFAULT NULL,
