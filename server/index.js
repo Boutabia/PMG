@@ -1,15 +1,19 @@
 const express = require("express");
+const session = require("express-session");
 const bodyParser = require("body-parser");
 const cors = require ("cors");
 const app = express();
-const {db} = require("./dbpool");
-const {getNextID, insertToScenario,
+const {db, getNextID} = require("./dbpool");
+const {insertToScenario,
        insertToScenarioCategory, insertToQuestionlist,
        insertToQmultiplechoice} = require("./scenarios");
+const usertools = require("./usertools");
 
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.json());
 app.use(cors());
+app.use
+
 
 /**
  * scenarioInserting POST. Should receive following:
@@ -22,6 +26,10 @@ app.use(cors());
  * (300) and (140) are number of characters.
  */
 
+// We could also use a JSON -> TBD
+
+
+//Should be changed towards "/api/insert/scenario"
 app.post("/api/insert", async (req,res) => {
     //Check authorization
 
@@ -39,12 +47,38 @@ app.post("/api/insert", async (req,res) => {
 
     //Insert into questionlist table
     await insertToQuestionlist(req, questionID);
-    
-    //Insert into QmultipleChoice table
+    //When someone starts to add more questiontypes, the logic which one is inserted could go here
+        /*By this logic, I use qmultiplechoice*/ 
+    //Insert into qmultipleChoice table
     await insertToQmultiplechoice(req, questionID);
     res.writeHead(200, ("Inserting was successful."));
-    res.end();
+    return res.end();
 });
+//
+app.post("/api/insert/user", async (req,res) => {
+    //validate
+    if (usertools.getCurrentUserRole(req) !== "superuser"){
+        res.writeHead(403, "Only allowed for superuser.");
+        return res.end();
+    }
+    //act
+    const user = req.body.user;
+    if (usertools.usernameInUse(user.name)){
+        res.writeHead(400, "Username in use!");
+        return res.end();
+    }
+    if (usertools.createUser(user.name, user.password)){
+        res.writeHead(200, "User created succesfully.");
+        return res.end();
+    }
+    res.writeHead(500, "Unknown server error");
+    return res.end();
+});
+
+app.post("/api/login"), async(req, res)=>{
+    const creds = usertools.credentialsDecrypt(req);
+    
+}
 
 
 

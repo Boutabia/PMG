@@ -1,20 +1,12 @@
-const {db} = require("./dbpool");
-
-function queryPromise(str, params){
-    return new Promise((resolve, reject) => {
-        db.query(str, params, (err, result)=>{
-            if (err) reject(err);
-            resolve(result);
-        })
-    })
-}
+const {db, queryPromise} = require("./dbpool");
 
 
-async function getNextID(table, column){
-    let idquery = "SELECT MAX(" + column + ") AS maxid FROM "+ table;
-    return await queryPromise(idquery, null);
-
-} 
+/**
+ * Method to insert into the scenario -table
+ * @param {Object} req 
+ * @param {*} scenarioID 
+ * @param {*} questionID 
+ */
 
 async function insertToScenario(req, scenarioID, questionID){
     let success = false;
@@ -37,7 +29,7 @@ async function insertToScenarioCategory(req, scenarioID){
     let success = false;
     const scenarioCat = req.body.scenarioTypeVar;
     const categoryInsert = 
-    "INSERT INTO scenariocategory (scenarioid, category) VALUES (?, ?)";
+    "INSERT INTO scenariocategory (scenarioid, categoryid) VALUES (?, ?)";
     await queryPromise(categoryInsert, [scenarioID, scenarioCat])
         .then((result)=> {
             console.log ("Inserted scenario category succesfully 2/4.");
@@ -78,9 +70,10 @@ async function insertToQmultiplechoice(req, questionID){
     const correct2 = req.body.questionCorrect2Var;
     const correct3 = req.body.questionCorrect3Var;
     const correct4 = req.body.questionCorrect4Var;
+    const explanation = req.body.questionExplanationVar;
     const qmultiplechoiceInsert =
-    "INSERT INTO qmultiplechoice (questionid, questiontext, picture, option1, option2, option3, option4, correct1, correct2, correct3, correct4) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    await queryPromise(qmultiplechoiceInsert, [questionID, questionText, picturePath, questionOption1, questionOption2, questionOption3, questionOption4, correct1, correct2, correct3, correct4])
+    "INSERT INTO qmultiplechoice (questionid, questiontext, picture, option1, option2, option3, option4, correct1, correct2, correct3, correct4, explanation) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    await queryPromise(qmultiplechoiceInsert, [questionID, questionText, picturePath, questionOption1, questionOption2, questionOption3, questionOption4, correct1, correct2, correct3, correct4, explanation])
         .then((result)=> {
             console.log ("Inserted qmultiplechoice succesfully 4/4.");
             success = true;
@@ -91,10 +84,18 @@ async function insertToQmultiplechoice(req, questionID){
         });
     return success;
 }
+///////////////////////////////Functios TODO for loading scenarios
+
+//define search? For getScenario to not get so cluttered
+
+//getScenario based on options chosen
+
+//getQMultiplechoice
+
+//more?
+
 
 module.exports = {
-    queryPromise,
-    getNextID,
     insertToScenario,
     insertToScenarioCategory,
     insertToQuestionlist,

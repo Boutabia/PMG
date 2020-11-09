@@ -33,6 +33,7 @@ CREATE TABLE `qmultiplechoice` (
   `correct2` tinyint DEFAULT NULL,
   `correct3` tinyint DEFAULT NULL,
   `correct4` tinyint DEFAULT NULL,
+  `explanation` varchar(300) DEFAULT NULL,
   PRIMARY KEY (`questionid`),
   UNIQUE KEY `questionid_UNIQUE` (`questionid`),
   CONSTRAINT `qid` FOREIGN KEY (`questionid`) REFERENCES `questionlist` (`questionid`) ON DELETE CASCADE ON UPDATE CASCADE
