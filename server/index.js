@@ -1,5 +1,5 @@
+require('dotenv').config();
 const express = require("express");
-const session = require("express-session");
 const bodyParser = require("body-parser");
 const cors = require ("cors");
 const app = express();
@@ -8,11 +8,14 @@ const {insertToScenario,
        insertToScenarioCategory, insertToQuestionlist,
        insertToQmultiplechoice} = require("./scenarios");
 const usertools = require("./usertools");
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.json());
 app.use(cors());
 app.use
+
 
 
 /**
@@ -27,17 +30,18 @@ app.use
  */
 
 // We could also use a JSON -> TBD
+app.get("/get", authenticateToken, async(req, res) =>{
+    return res.json({happy: "true"});
+});
 
-
-//Should be changed towards "/api/insert/scenario"
 app.post("/api/insert", async (req,res) => {
     //Check authorization
 
     //check input if it's JSON, if we are going for JSON?
 
     //get ID
-    const scenarioID = ((await getNextID("scenario", "scenarioid"))[0].maxid)+1;
-    const questionID = ((await getNextID("scenario", "questionid"))[0].maxid)+1;
+    const scenarioID = (await getNextID("scenario", "scenarioid"));
+    const questionID = (await getNextID("scenario", "questionid"));
     
     //Insert into scenario table
     await insertToScenario(req, scenarioID, questionID);
@@ -55,19 +59,19 @@ app.post("/api/insert", async (req,res) => {
     return res.end();
 });
 //
-app.post("/api/insert/user", async (req,res) => {
-    //validate
-    if (usertools.getCurrentUserRole(req) !== "superuser"){
+app.post("/api/register", authenticateToken, async (req,res) => {
+    //authorization
+    if (req.user.role !== "superuser"){
         res.writeHead(403, "Only allowed for superuser.");
         return res.end();
     }
     //act
-    const user = req.body.user;
-    if (usertools.usernameInUse(user.name)){
+    const newuser = req.body.newuser;
+    if (await usertools.usernameInUse(newuser.name)){
         res.writeHead(400, "Username in use!");
         return res.end();
     }
-    if (usertools.createUser(user.name, user.password)){
+    if (await usertools.createUser(newuser.name, newuser.password)){
         res.writeHead(200, "User created succesfully.");
         return res.end();
     }
@@ -75,11 +79,38 @@ app.post("/api/insert/user", async (req,res) => {
     return res.end();
 });
 
-app.post("/api/login"), async(req, res)=>{
-    const creds = usertools.credentialsDecrypt(req);
-    
+app.post("/api/login", async(req, res)=>{
+    //Authenticate user
+    const body = req.body;
+    const user = await usertools.getUser(body.username);
+    console.log(user); 
+    const pwCorrect = user === undefined
+      ? false
+      : await bcrypt.compare(body.password, user.passwordhash);
+    if (!(user && pwCorrect)) {
+        response.writeHead(401, "invalid username or password");
+        return response.end();
+    }
+
+    const accessToken = await generateAccessToken(user);
+    return res.json({accessToken: accessToken});
+})
+
+async function authenticateToken(req, res, next) {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(" ")[1];
+    if (token == null) return res.sendStatus(401);
+
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+        if (err) return res.sendStatus(403);
+        req.user = user;
+        next();
+    })
 }
 
+async function generateAccessToken(user){
+    return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "1h"});
+}
 
 
 app.listen(3001,()=>{

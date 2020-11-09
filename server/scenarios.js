@@ -28,9 +28,13 @@ async function insertToScenario(req, scenarioID, questionID){
 async function insertToScenarioCategory(req, scenarioID){
     let success = false;
     const scenarioCat = req.body.scenarioTypeVar;
+    const categoryarray = new Array();
+    for (let i = 0; i < scenarioCat.length; i++){
+        categoryarray.push(scenarioID, scenarioCat[i]);
+    }
     const categoryInsert = 
     "INSERT INTO scenariocategory (scenarioid, categoryid) VALUES (?, ?)";
-    await queryPromise(categoryInsert, [scenarioID, scenarioCat])
+    await queryPromise(categoryInsert, categoryarray)
         .then((result)=> {
             console.log ("Inserted scenario category succesfully 2/4.");
             success = true;

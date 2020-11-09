@@ -11,7 +11,7 @@ const submitScenario = () => {
   Axios.post('http://localhost:3001/api/insert',{
     scenarioNameVar: scenarioNameState,
     pictureVar: "index.png",
-    scenarioTypeVar: scenarioTypeState,
+    scenarioTypeVar: [scenarioTypeState],
     questionTypeVar: 1,
     questionTextVar: "This is a sample question",
     questionOption1Var: "Choose, me, 1!",

@@ -30,8 +30,7 @@ function queryPromise(str, params){
  */
 async function getNextID(table, column){
     let idquery = "SELECT MAX(" + column + ") AS maxid FROM "+ table;
-    return await queryPromise(idquery, null);
-
+    return (await queryPromise(idquery, null))[0].maxid+1;
 } 
 
 module.exports = {db, getNextID, queryPromise};
