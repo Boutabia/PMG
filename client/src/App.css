@@ -1,38 +1,62 @@
 .App {
+  height: 100vh;
   text-align: center;
+  font-family: Helvetica, Arial, sans-serif;
+  background: linear-gradient(to bottom, #4e008e 50%, #4f12aa 100%)
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.game-view {
+  width: 70rem;
+  margin:auto;
+  background: #4f12aa;
+}
+.scenario{
+  background-color: whitesmoke;
+  margin: auto;
+  width: 700px;
+  margin-bottom: 30px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 2px solid #4f12aa;
+  color: #4e008e;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.answers {
+  width: 700px;
+  margin: auto;
+  margin-bottom: 30px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.list-group-item-answers {
+  background-color: #4e008e;
+  border: 2px solid #4f12aa;
+  text-align: left;
+  border-radius: 5px;
+  color: whitesmoke;
 }
 
-.App-link {
-  color: #61dafb;
+.list-group-item-answers:hover {
+  border: 1px outset #5f1e91;
+  background-color: #370164;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.btn-submit {
+  color: rgb(228, 134, 57);
+  font-weight: bold;
+  background-color: #4e008e;
+  border: 2px solid #4f12aa;
+  border-radius: 5px;
+  margin: 10px;
+  padding: 10px;
+  box-shadow: 0 8px #4c0f7a;
+}
+
+.btn-submit:hover {
+  background-color: #370164;
+  color: rgb(228, 134, 57);
+}
+
+.btn-submit:active {
+  box-shadow: 0 5px #370164;
+  transform: translateY(4px);
 }

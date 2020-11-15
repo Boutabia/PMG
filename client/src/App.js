@@ -1,6 +1,11 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState, useEffect } from "react";
 import './App.css';
 import Axios from "axios";
+import Scenario from './scenario';
+import Answers from './answerOptions';
+import Buttons from './gameButtons';
+import GameView from './gameView';
 
 function App() {
 const [scenarioNameState , setScenarioName] = useState("");
@@ -18,7 +23,7 @@ const submitScenario = () => {
 
   return (
     <div className="App">
-      <h1> Hello PMG</h1>
+      {/*<h1> Hello PMG</h1>
       <div className="form">
         <label>Scenario Name</label>
         <input
@@ -35,7 +40,8 @@ const submitScenario = () => {
         
         <button onClick={submitScenario}> Submit</button>
 
-      </div>
+      </div>*/}
+      <GameView/>
 
     </div>
   );
