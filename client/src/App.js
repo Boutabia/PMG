@@ -2,9 +2,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState, useEffect } from "react";
 import './App.css';
 import Axios from "axios";
-import Scenario from './scenario';
-import Answers from './answerOptions';
-import Buttons from './gameButtons';
 import GameView from './gameView';
 
 function App() {
