@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(cors());
 app.use
 
-
+/**********PACKAGE:JSON********************************************** */
 
 /**
  * scenarioInserting POST. Should receive following:
@@ -83,13 +83,12 @@ app.post("/api/login", async(req, res)=>{
     //Authenticate user
     const body = req.body;
     const user = await usertools.getUser(body.username);
-    console.log(user); 
     const pwCorrect = user === undefined
       ? false
       : await bcrypt.compare(body.password, user.passwordhash);
     if (!(user && pwCorrect)) {
-        response.writeHead(401, "invalid username or password");
-        return response.end();
+        res.writeHead(401, "invalid username or password");
+        return res.end();
     }
 
     const accessToken = await generateAccessToken(user);
