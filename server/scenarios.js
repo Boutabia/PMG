@@ -1,11 +1,12 @@
-const {db, queryPromise} = require("./dbpool");
+const {db, queryPromise, getNextID} = require("./dbpool");
+
 
 
 /**
  * Method to insert into the scenario -table
  * @param {Object} req 
- * @param {*} scenarioID 
- * @param {*} questionID 
+ * @param {Number} scenarioID 
+ * @param {Number} questionID 
  */
 
 async function insertToScenario(req, scenarioID, questionID){
@@ -25,6 +26,11 @@ async function insertToScenario(req, scenarioID, questionID){
     return success;
 }
 
+/**
+ * Function that inserts to scenariocategory.
+ * @param {Request-object} req 
+ * @param {Number} scenarioID 
+ */
 async function insertToScenarioCategory(req, scenarioID){
     let success = false;
     const scenarioCat = req.body.scenarioTypeVar;
@@ -46,6 +52,11 @@ async function insertToScenarioCategory(req, scenarioID){
     return success;
 }
 
+/**
+ * Inserts request data to questionlist table.
+ * @param {Request} req 
+ * @param {Number} questionID 
+ */
 async function insertToQuestionlist(req, questionID){
     let success = false;
     const questionType = req.body.questionTypeVar;
@@ -62,6 +73,12 @@ async function insertToQuestionlist(req, questionID){
         });
     return success;
 }
+
+/**
+ * Inserts data from request to qmultiplechoice-table.
+ * @param {Request} req 
+ * @param {Number} questionID 
+ */
 
 async function insertToQmultiplechoice(req, questionID){
     const questionText = req.body.questionTextVar;
@@ -88,20 +105,125 @@ async function insertToQmultiplechoice(req, questionID){
         });
     return success;
 }
-///////////////////////////////Functios TODO for loading scenarios
 
-//define search? For getScenario to not get so cluttered
+/**
+ * Gets all the scenarios and their related information
+ * limited by parameters. If game, list is randomized and limited.
+ * When game is false, returns list in id-order.
+ * @param {Array} categories 
+ * @param {Number} limit 
+ * @param {Boolean} game 
+ */
+async function getScenarioList(categories = [], limit = 10, game = false){
+    let query = "SELECT * FROM scenario, scenariocategory, category, questionlist "
+    query += "WHERE (scenario.scenarioid = scenariocategory.scenarioid "
+    query += "AND scenario.questionid = questionlist.questionid "
+    query += "AND category.categoryid = scenariocategory.categoryid) ";
 
-//getScenario based on options chosen
+    if (categories.length > 0){
+        query += "AND ("
+        for (let i = 0; i < categories.length; i++){
+            query += "scenariocategory.categoryid = ? "
+            if (i < categories.length-1) query += "OR ";
+        }
+        query += ") ";
+    }
+    let queryarray;
+    if (game){
+        query += "ORDER BY RAND() LIMIT ?";
+        queryarray = categories.concat([limit]);
+    }
+    
 
-//getQMultiplechoice
+    const result = await queryPromise(query, queryarray);
+
+    //cleanup
+    const scenarioArray = new Array();
+    for (let i = 0; i < result.length; i++){
+        const element = {
+            scenarioid: result[i].scenarioid,
+            scenarioname: result[i].scenarioname,
+            questionid: result[i].questionid, 
+            categoryid: result[i].categoryid,
+            categoryname: result[i].categoryname,
+            questiontype: result[i].questiontype
+        }
+        scenarioArray.push(element);
+    }
+    return scenarioArray;
+}
+
+/**
+ * This can be extended or modularized to fetch multiple types of questions.
+ * Currently just questiontype 1.
+ * @param {Array} scenarioArray 
+ */
+async function fetchQuestions(scenarioArray){
+    for (let i = 0; i < scenarioArray.length; i++){
+        const questionid = scenarioArray[i].questionid;
+        const questiontype = scenarioArray[i].questiontype;
+        if (questiontype == 1){ // always true, as it is for now, the only questiontype
+            const query = "SELECT * FROM qmultiplechoice WHERE questionid = ?"
+            const result = await queryPromise(query, [questionid]);
+
+            scenarioArray[i].questionid = result[0].questionid,
+            scenarioArray[i].questiontext = result[0].questiontext,
+            scenarioArray[i].picture = result[0].picture,
+            scenarioArray[i].option1 = result[0].option1,
+            scenarioArray[i].option2 = result[0].option2,
+            scenarioArray[i].option3 = result[0].option3,
+            scenarioArray[i].option4 = result[0].option4,
+            scenarioArray[i].correct1 = result[0].correct1,
+            scenarioArray[i].correct2 = result[0].correct2,
+            scenarioArray[i].correct3 = result[0].correct3,
+            scenarioArray[i].correct4 = result[0].correct4,
+            scenarioArray[i].explanation = result[0].explanation
+        }
+    }
+    //console.log(scenarioArray);
+    return scenarioArray;
+}
+
+/**
+ * Returns all categories saved in category-table. 
+ */
+async function getCategories(){
+    const query = "SELECT * FROM category";
+    result = await queryPromise(query);
+    const categoryArray = new Array();
+    for (let i = 0; i < result.length; i++){
+        const element = {
+            categoryid: result[i].categoryid,
+            caregoryname: result[i].categoryname
+        }
+        categoryArray.push(element);
+    }
+    return categoryArray;
+}
+
+/**
+ * Inserts a new category with new ID to the category-table
+ * @param {String} newCategoryName 
+ */
+async function insertCategory(newCategoryName){
+    const categoryid = await getNextID("category", "categoryid");
+    const query = "INSERT INTO category VALUES (?, ?)"
+    await queryPromise(query, [categoryid, newCategoryName])
+        .catch((err)=>{
+            console.log(err);
+        });
+    return;
+}
 
 //more?
-
 
 module.exports = {
     insertToScenario,
     insertToScenarioCategory,
     insertToQuestionlist,
-    insertToQmultiplechoice
+    insertToQmultiplechoice, 
+    getScenarioList,
+    fetchQuestions,
+    getCategories,
+    insertCategory
 }
