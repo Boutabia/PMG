@@ -1,4 +1,4 @@
 node_modules/
 app.rest
-**/*.env
+server/.env
 client/
