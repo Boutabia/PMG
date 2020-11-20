@@ -17,8 +17,6 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.json());
 app.use(cors());
 
-/**********PACKAGE:JSON********************************************** */
-
 /**
  * Can be used to test if user is authenticated. 
  */
