@@ -123,10 +123,9 @@ async function getScenarioList(categories = [], limit = 10, game = false){
     if (categories.length > 0){
         query += "AND ("
         for (let i = 0; i < categories.length; i++){
-            query += "scenariocategory.categoryid = ? "
-            if (i < categories.length-1) query += "OR ";
-        }
-        query += ") ";
+            query += "scenariocategory.categoryid = ? OR "
+        } 
+        query += "1 = 2) ";
     }
     let queryarray;
     if (game){
