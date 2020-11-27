@@ -1,24 +1,43 @@
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import React, { useState, useEffect } from "react";
 import './App.css';
+import LoginForm from './loginForm';
+import {
+  BrowserRouter as Router,
+  Switch, Route, Link
+} from "react-router-dom";
+import Home from './home';
+import AddScenarioForm from "./addScenario";
 import Axios from "axios";
+import Scenario from './scenario';
+import Answers from './answerOptions';
+import Buttons from './gameButtons';
+import GameView from './gameView';
 
 function App() {
-const [scenarioNameState , setScenarioName] = useState("");
-const [scenarioTypeState , setScenarioType] = useState("");
-
-const submitScenario = () => {
-
-  Axios.post('http://localhost:3001/api/insert',{
-    scenarioNameVar: scenarioNameState,
-    scenarioTypeVar: scenarioTypeState,
-  }).then (() => {
-    alert("Scenario Added to DB");
-  });
-};
-
   return (
     <div className="App">
-      <h1> Hello PMG</h1>
+      <div className="container">
+        <Router>
+          <div>
+            <Link className="nav" to="/">PMG</Link>
+            <Link className="nav" to="/forteachers">For Teachers</Link>
+            <Link className="nav" to="/addscenario">Add Scenario</Link>
+          </div>
+          <Switch>
+            <Route path="/forteachers">
+              <LoginForm/>
+            </Route>
+            <Route path="/addscenario">
+              <AddScenarioForm/>
+            </Route>
+            <Route path="/">
+              <Home/>
+            </Route>
+          </Switch>
+        </Router>
+      </div>
+      {/*<h1> Hello PMG</h1>
       <div className="form">
         <label>Scenario Name</label>
         <input
@@ -35,7 +54,8 @@ const submitScenario = () => {
         
         <button onClick={submitScenario}> Submit</button>
 
-      </div>
+      </div>*/}
+      <GameView/>
 
     </div>
   );
