@@ -25,7 +25,6 @@ yarn-error.log*
 
 # backend
 node_modules/
-app.rest
-server/.env
+
 client/
 backup/
