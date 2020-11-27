@@ -1,0 +1,73 @@
+
+POST http://localhost:3001/api/login
+Content-Type: application/json 
+
+{
+    "username": "superuser",
+    "password": "superuserpassword2020"
+}
+
+###
+
+GET http://localhost:3001/get
+Content-Type : application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InN1cGVydXNlciIsInBhc3N3b3JkaGFzaCI6IiQyYiQxMiQyTWcySzlzTzhwNE1KeGFEL1FpY0d1QkFDQzRzZTFOVUFTZFVkdTVTbzdXTTBKUld5TkhlZSIsInJvbGUiOiJzdXBlcnVzZXIiLCJpYXQiOjE2MDU4NzE5MDYsImV4cCI6MTYwNTg3NTUwNn0.bWvKtpEac7ovnb0zcwOtwJdP6Hec6vONG0TCWPJIARE
+
+###
+
+POST http://localhost:3001/refreshtoken
+Content-Type: application/json
+Authorization: 
+
+###
+post http://localhost:3001/api/register
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwibmFtZSI6InVzZXI1IiwicGFzc3dvcmRoYXNoIjoiJDJiJDEyJENTbmNYTTIueWFSLjFZS0FhSnNPQ3VLU0g3LzA3MDJJSVNieEswWnJha3dPaWpHSVhHdlQyIiwicm9sZSI6InVzZXIiLCJpYXQiOjE2MDU1Mjg4MTUsImV4cCI6MTYwNTUzMjQxNX0.PSy_ITvVE3kzAYFmoI0h3tsbIpOgagsf76f-IifegHY
+   
+{
+     "newuser": {
+        "name": "user6",
+        "password": "password2020"
+    }
+}
+
+###
+
+GET http://localhost:3001/api/getScenarios
+Content-Type : application/json
+
+{
+    "limit" : 10,
+    "categories" : [1, 2, 3, 4]
+}
+
+###
+
+GET http://localhost:3001/api/getCategories
+Content-Type : application/json
+
+{
+    "limit" : 10,
+    "categories" : [1, 2, 3, 4]
+}
+
+###
+
+POST http://localhost:3001/api/insert/category
+Content-Type: application/json 
+
+{
+    "newCategoryName": "Happy category"
+}
+
+###
+
+GET http://localhost:3001/api/startgame
+Content-Type : application/json
+
+{
+    "limit" : 10,
+    "categories" : []
+}
+
+###
