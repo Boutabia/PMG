@@ -1,7 +1,13 @@
+require('dotenv').config();
 const {db, getNextID, queryPromise} = require("./dbpool");
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken'); 
-//createUser
+
+/**
+ * Function to create a user. 
+ * @param {string} username 
+ * @param {string} password 
+ */
 async function createUser(username, password){
     const id =  await getNextID("user", "id");
     const pw = await bcrypt.hash(password, 12);
@@ -9,7 +15,6 @@ async function createUser(username, password){
     "INSERT INTO user (id, name, passwordhash, role) VALUES (?, ?, ?, ?)";
     return await queryPromise(userInsert, [id, username, pw, "user"])
         .then((result)=>{
-            console.log("Inserted user succesfully");
             return true;
         })
         .catch((err)=> {
@@ -50,7 +55,6 @@ async function getUser(username){
 async function usernameInUse(username){
     const user = await getUser(username);
     if (user == null){
-        console.log("Returning false");
         return false;
     }
     return true;
@@ -70,9 +74,42 @@ async function deleteUser(username){
         });
 }
 
+/**
+ * Function that authenticates the request token, and allows to continue
+ * if it is valid. If not, you will be denied. You can add
+ * this to other routes if needed. 
+ * @param {request-object} req 
+ * @param {Response-object} res 
+ * @param {callback} next 
+ */
+async function authenticateToken(req, res, next) {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(" ")[1];
+    if (token == null) return res.sendStatus(401);
+
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+        if (err) return res.sendStatus(403);
+        req.user = user;
+        next();
+    })
+}
+
+/**
+ * Function that generates and returns an accesstoken
+ * based on the user-object-data.
+ * @param {User-object} user 
+ */
+
+async function generateAccessToken(user){
+    return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "1h"});
+}
+
+
 module.exports = {
     createUser,
     getUser,
     usernameInUse,
-    deleteUser
+    deleteUser,
+    authenticateToken, 
+    generateAccessToken
 }

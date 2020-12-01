@@ -3,8 +3,8 @@ const bodyParser = require("body-parser");
 const cors = require ("cors");
 const app = express();
 
-const {contentRouter} = require("./content");
-const {usersRouter} = require("./users");
+const {contentRouter} = require("./contentRouter");
+const {usersRouter} = require("./userRouter");
 
 
 app.use(bodyParser.urlencoded({extended:true}));
@@ -17,7 +17,7 @@ app.use(cors());
 
 app.use("/api/content", contentRouter);
 
-app.use("/api/users", usersRouter);
+app.use("/api/user", usersRouter);
 
 /**
  * port-definition

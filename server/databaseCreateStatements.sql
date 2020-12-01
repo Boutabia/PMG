@@ -6,14 +6,22 @@ CREATE TABLE `scenario` (
   UNIQUE KEY `questionid_UNIQUE` (`questionid`),
   UNIQUE KEY `scenarioid_UNIQUE` (`scenarioid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `category` (
+  `categoryid` int NOT NULL,
+  `categoryname` varchar(60) DEFAULT NULL,
+  PRIMARY KEY (`categoryid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 CREATE TABLE `scenariocategory` (
   `scenarioid` int NOT NULL,
-  `category` int NOT NULL,
-  PRIMARY KEY (`scenarioid`,`category`),
-  UNIQUE KEY `scenarioid_UNIQUE` (`scenarioid`),
-  UNIQUE KEY `category_UNIQUE` (`category`),
+  `categoryid` int NOT NULL,
+  PRIMARY KEY (`scenarioid`,`categoryid`),
+  KEY `categoryid_idx` (`categoryid`),
+  CONSTRAINT `categoryid` FOREIGN KEY (`categoryid`) REFERENCES `category` (`categoryid`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `scenarioid` FOREIGN KEY (`scenarioid`) REFERENCES `scenario` (`scenarioid`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 CREATE TABLE `questionlist` (
   `questionid` int NOT NULL,
   `questiontype` int NOT NULL,
@@ -21,6 +29,7 @@ CREATE TABLE `questionlist` (
   UNIQUE KEY `questionid_UNIQUE` (`questionid`),
   CONSTRAINT `questionid` FOREIGN KEY (`questionid`) REFERENCES `scenario` (`questionid`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 CREATE TABLE `qmultiplechoice` (
   `questionid` int NOT NULL,
   `questiontext` varchar(300) NOT NULL,
@@ -38,3 +47,4 @@ CREATE TABLE `qmultiplechoice` (
   UNIQUE KEY `questionid_UNIQUE` (`questionid`),
   CONSTRAINT `qid` FOREIGN KEY (`questionid`) REFERENCES `questionlist` (`questionid`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+

@@ -1,5 +1,5 @@
 
-POST http://localhost:3001/api/login
+POST http://localhost:3001/api/user/login
 Content-Type: application/json 
 
 {
@@ -14,27 +14,33 @@ Content-Type : application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InN1cGVydXNlciIsInBhc3N3b3JkaGFzaCI6IiQyYiQxMiQyTWcySzlzTzhwNE1KeGFEL1FpY0d1QkFDQzRzZTFOVUFTZFVkdTVTbzdXTTBKUld5TkhlZSIsInJvbGUiOiJzdXBlcnVzZXIiLCJpYXQiOjE2MDU4NzE5MDYsImV4cCI6MTYwNTg3NTUwNn0.bWvKtpEac7ovnb0zcwOtwJdP6Hec6vONG0TCWPJIARE
 
 ###
-
-POST http://localhost:3001/refreshtoken
+post http://localhost:3001/api/user/register
 Content-Type: application/json
-Authorization: 
-
-###
-post http://localhost:3001/api/register
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwibmFtZSI6InVzZXI1IiwicGFzc3dvcmRoYXNoIjoiJDJiJDEyJENTbmNYTTIueWFSLjFZS0FhSnNPQ3VLU0g3LzA3MDJJSVNieEswWnJha3dPaWpHSVhHdlQyIiwicm9sZSI6InVzZXIiLCJpYXQiOjE2MDU1Mjg4MTUsImV4cCI6MTYwNTUzMjQxNX0.PSy_ITvVE3kzAYFmoI0h3tsbIpOgagsf76f-IifegHY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InN1cGVydXNlciIsInBhc3N3b3JkaGFzaCI6IiQyYiQxMiQyTWcySzlzTzhwNE1KeGFEL1FpY0d1QkFDQzRzZTFOVUFTZFVkdTVTbzdXTTBKUld5TkhlZSIsInJvbGUiOiJzdXBlcnVzZXIiLCJpYXQiOjE2MDY4MjI2NTYsImV4cCI6MTYwNjgyNjI1Nn0.UwDJFfKNDQe1XUxhm-LzlGiLxF14mq42wkM9sytKxoA
    
 {
      "newuser": {
-        "name": "user6",
+        "name": "user7",
         "password": "password2020"
     }
 }
 
 ###
 
-GET http://localhost:3001/api/getScenarios
+GET http://localhost:3001/api/content/startgame
 Content-Type : application/json
+
+{
+    "limit" : 10,
+    "categories" : [4]
+}
+
+###
+
+GET http://localhost:3001/api/content/category
+Content-Type : application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InN1cGVydXNlciIsInBhc3N3b3JkaGFzaCI6IiQyYiQxMiQyTWcySzlzTzhwNE1KeGFEL1FpY0d1QkFDQzRzZTFOVUFTZFVkdTVTbzdXTTBKUld5TkhlZSIsInJvbGUiOiJzdXBlcnVzZXIiLCJpYXQiOjE2MDY4MjM0NDAsImV4cCI6MTYwNjgyNzA0MH0.wfI4eB5jp5bTFzGqwXS87rhOMZWf1tl7F1k3kmmPpwQ
+
 
 {
     "limit" : 10,
@@ -43,17 +49,7 @@ Content-Type : application/json
 
 ###
 
-GET http://localhost:3001/api/getCategories
-Content-Type : application/json
-
-{
-    "limit" : 10,
-    "categories" : [1, 2, 3, 4]
-}
-
-###
-
-POST http://localhost:3001/api/insert/category
+POST http://localhost:3001/api/content/category
 Content-Type: application/json 
 
 {
@@ -62,11 +58,12 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:3001/api/startgame
+GET http://localhost:3001/api/content/allScenarios
 Content-Type : application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InN1cGVydXNlciIsInBhc3N3b3JkaGFzaCI6IiQyYiQxMiQyTWcySzlzTzhwNE1KeGFEL1FpY0d1QkFDQzRzZTFOVUFTZFVkdTVTbzdXTTBKUld5TkhlZSIsInJvbGUiOiJzdXBlcnVzZXIiLCJpYXQiOjE2MDY4MjM0NDAsImV4cCI6MTYwNjgyNzA0MH0.wfI4eB5jp5bTFzGqwXS87rhOMZWf1tl7F1k3kmmPpwQ
 
 {
-    "limit" : 10,
+    "limit" : 1,
     "categories" : []
 }
 
