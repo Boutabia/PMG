@@ -1,7 +1,6 @@
 const {db, getNextID, queryPromise} = require("./dbpool");
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-
+const jwt = require('jsonwebtoken'); 
 //createUser
 async function createUser(username, password){
     const id =  await getNextID("user", "id");
