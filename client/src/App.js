@@ -1,17 +1,18 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState, useEffect } from "react";
-import './App.css';
-import LoginForm from './loginForm';
+//import './App.css';
+import Login from './components/Login';
 import {
   BrowserRouter as Router,
   Switch, Route, Link
 } from "react-router-dom"
 import Home from './home';
-import AddScenarioForm from "./addScenario";
+import AddScenarioForm from "./addScenarioForm";
 
 function App() {
   return (
     <div className="App">
-      <div className="container">
+      <div>
         <Router>
           <div>
             <Link className="nav" to="/">PMG</Link>
@@ -20,7 +21,7 @@ function App() {
           </div>
           <Switch>
             <Route path="/forteachers">
-              <LoginForm/>
+              <Login/>
             </Route>
             <Route path="/addscenario">
               <AddScenarioForm/>

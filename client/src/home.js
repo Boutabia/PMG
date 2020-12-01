@@ -1,5 +1,4 @@
 import React from 'react';
-import SubmitButton from './submitButton';
 
 class Home extends React.Component {
   render () {
