@@ -31,8 +31,8 @@ GET http://localhost:3001/api/content/startgame
 Content-Type : application/json
 
 {
-    "limit" : 10,
-    "categories" : [4]
+    "limit" : 4,
+    "categories" : []
 }
 
 ###
@@ -42,25 +42,21 @@ Content-Type : application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InN1cGVydXNlciIsInBhc3N3b3JkaGFzaCI6IiQyYiQxMiQyTWcySzlzTzhwNE1KeGFEL1FpY0d1QkFDQzRzZTFOVUFTZFVkdTVTbzdXTTBKUld5TkhlZSIsInJvbGUiOiJzdXBlcnVzZXIiLCJpYXQiOjE2MDY4MjM0NDAsImV4cCI6MTYwNjgyNzA0MH0.wfI4eB5jp5bTFzGqwXS87rhOMZWf1tl7F1k3kmmPpwQ
 
 
-{
-    "limit" : 10,
-    "categories" : [1, 2, 3, 4]
-}
-
 ###
 
 POST http://localhost:3001/api/content/category
 Content-Type: application/json 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InN1cGVydXNlciIsInBhc3N3b3JkaGFzaCI6IiQyYiQxMiQyTWcySzlzTzhwNE1KeGFEL1FpY0d1QkFDQzRzZTFOVUFTZFVkdTVTbzdXTTBKUld5TkhlZSIsInJvbGUiOiJzdXBlcnVzZXIiLCJpYXQiOjE2MDY4MjUyMjIsImV4cCI6MTYwNjgyODgyMn0.8F3dH98xNZ8dlo2RPDlI-KCIIta-QimXmqwY6QpQebc
 
 {
-    "newCategoryName": "Happy category"
+    "newCategoryName": "New Category 1/12"
 }
 
 ###
 
 GET http://localhost:3001/api/content/allScenarios
 Content-Type : application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InN1cGVydXNlciIsInBhc3N3b3JkaGFzaCI6IiQyYiQxMiQyTWcySzlzTzhwNE1KeGFEL1FpY0d1QkFDQzRzZTFOVUFTZFVkdTVTbzdXTTBKUld5TkhlZSIsInJvbGUiOiJzdXBlcnVzZXIiLCJpYXQiOjE2MDY4MjM0NDAsImV4cCI6MTYwNjgyNzA0MH0.wfI4eB5jp5bTFzGqwXS87rhOMZWf1tl7F1k3kmmPpwQ
+
 
 {
     "limit" : 1,
