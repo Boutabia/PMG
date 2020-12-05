@@ -1,11 +1,11 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
 
-function Scenario(props) {
+function Scenario({title, text}) {
     return (
         <Card className="scenario">
-            <Card.Title>{props.title}</Card.Title>
-            <Card.Text>{props.text}</Card.Text>
+            <Card.Title>{title}</Card.Title>
+            <Card.Text>{text}</Card.Text>
         </Card>
     )
 }

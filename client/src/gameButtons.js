@@ -1,9 +1,10 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 
-function Buttons() {
+function Buttons({handleSubmit, options, setOptions}) {
+    
     return(
-        <Button variant='submit'>Answer</Button>
+        <Button variant='submit' onClick={handleSubmit}>Answer</Button>
     )
 }
 

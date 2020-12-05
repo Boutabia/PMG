@@ -1,5 +1,5 @@
 .App {
-  height: 100vh;
+  min-height: 100vh;
   text-align: center;
   font-family: Helvetica, Arial, sans-serif;
   background: linear-gradient(to bottom, #4e008e 50%, #4f12aa 100%)
@@ -38,6 +38,31 @@
 .list-group-item-answers:hover {
   border: 1px outset #5f1e91;
   background-color: #370164;
+}
+
+.list-group-item-selected {
+  border: 1px outset #5f1e91;
+  background-color: #250242;
+  text-align: left;
+  border-radius: 5px;
+  color: whitesmoke;
+
+}
+
+.list-group-item-correct {
+  border: green;
+  background-color: green;
+  text-align: left;
+  border-radius: 5px;
+  color: whitesmoke;
+}
+
+.list-group-item-incorrect {
+  border: red;
+  background-color: red;
+  text-align: left;
+  border-radius: 5px;
+  color: whitesmoke;
 }
 
 .btn-submit {
