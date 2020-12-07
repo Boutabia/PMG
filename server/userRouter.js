@@ -2,7 +2,7 @@ const express = require('express');
 const usersRouter = express.Router();
 const bcrypt = require('bcrypt');
 const {getUser, generateAccessToken, authenticateToken,
-       usernameInUse, createUser} = require("./usertools");
+       usernameInUse, createUser, deleteUser} = require("./usertools");
 
 
 
@@ -48,6 +48,25 @@ usersRouter.post("/register", authenticateToken, async (req,res) => {
     }
     if (await createUser(newuser.name, newuser.password)){
         res.writeHead(200, "User created succesfully.");
+        return res.end();
+    }
+    res.writeHead(500, "Unknown server error");
+    return res.end();
+});
+
+usersRouter.delete("/delete", authenticateToken, async(req, res)=>{
+    if (req.user.role !== "superuser"){
+        res.writeHead(403, "Only allowed for superuser.");
+        return res.end();
+    }
+
+    if (!await usernameInUse(req.body.name)){
+        res.writeHead(404, "Username not found!");
+        return res.end();
+    }
+
+    if (await deleteUser(req.body.name)){
+        res.writeHead(200, "User deleted succesfuly.");
         return res.end();
     }
     res.writeHead(500, "Unknown server error");

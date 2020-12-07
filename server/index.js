@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require ("cors");
 const app = express();
+const {isThereASuperuser} = require("./usertools");
 
 const {contentRouter} = require("./contentRouter");
 const {usersRouter} = require("./userRouter");
@@ -10,6 +11,14 @@ const {usersRouter} = require("./userRouter");
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.json());
 app.use(cors());
+
+/**
+ * if superuser has not been made when the server is launched, create a superuser.
+ */
+
+(async () => {
+    await isThereASuperuser();
+})().then();
 
 /**
  * All /api/content HTTP methods go to content.

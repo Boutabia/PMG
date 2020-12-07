@@ -8,12 +8,12 @@ const jwt = require('jsonwebtoken');
  * @param {string} username 
  * @param {string} password 
  */
-async function createUser(username, password){
+async function createUser(username, password, role = "user"){
     const id =  await getNextID("user", "id");
     const pw = await bcrypt.hash(password, 12);
     const userInsert =
     "INSERT INTO user (id, name, passwordhash, role) VALUES (?, ?, ?, ?)";
-    return await queryPromise(userInsert, [id, username, pw, "user"])
+    return await queryPromise(userInsert, [id, username, pw, role])
         .then((result)=>{
             return true;
         })
@@ -42,7 +42,6 @@ async function getUser(username){
                     role: res[0].role
                 };
             }
-            console.log("false, not in use");
             return undefined;
         })
         .catch((err) => {
@@ -60,9 +59,12 @@ async function usernameInUse(username){
     return true;
 }
 
-//removeUser
+/**
+ * Deletes a user based on name. 
+ * @param {String} username 
+ */
 async function deleteUser(username){
-    const query = "DELETE ? FROM user";
+    const query = "DELETE FROM user WHERE name = ?";
     return await queryPromise(query, [username])
         .then((res)=> {
             console.log("Successfully deleted user.");
@@ -104,12 +106,19 @@ async function generateAccessToken(user){
     return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "12h"});
 }
 
-
+async function isThereASuperuser(){
+    if (!(await usernameInUse("superuser"))){
+        await createUser("superuser", process.env.SUPERUSERPASSWORD, "superuser");
+    }
+    return;
+}
+ 
 module.exports = {
     createUser,
     getUser,
     usernameInUse,
     deleteUser,
     authenticateToken, 
-    generateAccessToken
+    generateAccessToken,
+    isThereASuperuser
 }

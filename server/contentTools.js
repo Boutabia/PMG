@@ -243,6 +243,14 @@ async function getStatistics(id = 0){
     }
     return resultarray;
 }
+/**
+ * Function that adds statistics. Array inserted needs to have
+ * elements, which consist of ID that is going to be updated, and
+ * statistic, which will be 0 1 or 2, according to that part
+ * a certain stat will be incremented. 0 for incorrect, 1 for partially
+ * correct and 2 for correct. Total will always be incremented.
+ * @param {Array} statisticsArray 
+ */
 
 async function addStatistics(statisticsArray){
     const invalidated = new Array();
@@ -275,6 +283,12 @@ async function addStatistics(statisticsArray){
     return invalidated;
 }
 
+/**
+ * When inserting a scenario, statistics need also to be added for the scenario.
+ * This function does that, and only id needs to be inserted. Other values
+ * in table statistic will be defaulted. 
+ * @param {Number} id 
+ */
 async function insertToStatistics(id){
     return queryResposne = await queryPromise("INSERT INTO statistic (scenarioid) VALUES (?)", [id]);
 }
