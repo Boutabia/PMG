@@ -1,11 +1,17 @@
 const {db, queryPromise, getNextID} = require("./dbpool");
-
+/**
+ * Inserts data to table named "scenario" 
+ * @param {Request object} req 
+ * @param {Number} scenarioID 
+ * @param {Number} questionID 
+ */
 async function insertToScenario(req, scenarioID, questionID){
     let success = false;
+    const difficulty = req.body.scenarioDifficultyVar ? req.body.scenarioDifficultyVar : 2;
     const scenarioName = req.body.scenarioNameVar;
     const scenarioInsert = 
-    "INSERT INTO scenario (scenarioid, scenarioname, questionid) VALUES (?, ?, ?)";
-    await queryPromise(scenarioInsert,[scenarioID, scenarioName, questionID])
+    "INSERT INTO scenario (scenarioid, scenarioname, questionid, difficulty) VALUES (?, ?, ?, ?)";
+    await queryPromise(scenarioInsert,[scenarioID, scenarioName, questionID, difficulty])
         .then((result)=> {
             console.log ("Inserted scenario succesfully 1/4.");
             success = true;        
@@ -24,7 +30,7 @@ async function insertToScenario(req, scenarioID, questionID){
  */
 async function insertToScenarioCategory(req, scenarioID){
     let success = false;
-    const scenarioCat = req.body.scenarioTypeVar;
+    const scenarioCat = req.body.scenarioCategoryVar;
     const categoryarray = new Array();
     for (let i = 0; i < scenarioCat.length; i++){
         categoryarray.push(scenarioID, scenarioCat[i]);
@@ -105,10 +111,11 @@ async function insertToQmultiplechoice(req, questionID){
  * @param {Number} limit 
  * @param {Boolean} game 
  */
-async function getScenarioList(categories = [], limit = 10, game = false){
+async function getScenarioList(categories = [], limit = 10, game = false, difficulty = 2){
     let query = "SELECT * FROM scenario, scenariocategory, category, questionlist "
     query += "WHERE (scenario.scenarioid = scenariocategory.scenarioid "
     query += "AND scenario.questionid = questionlist.questionid "
+    if (game) query += "AND scenario.difficulty = ? ";
     query += "AND category.categoryid = scenariocategory.categoryid) ";
 
     if (categories.length > 0){
@@ -121,7 +128,10 @@ async function getScenarioList(categories = [], limit = 10, game = false){
     let queryarray;
     if (game){
         query += "ORDER BY RAND() LIMIT ?";
-        queryarray = categories.concat([limit]);
+        queryarray = [difficulty].concat(categories.concat([limit]));
+    }
+    else {
+        query += "ORDER BY scenario.scenarioid";
     }
     
 
@@ -133,6 +143,7 @@ async function getScenarioList(categories = [], limit = 10, game = false){
         const element = {
             scenarioid: result[i].scenarioid,
             scenarioname: result[i].scenarioname,
+            scenariodifficulty: result[i].difficulty,
             questionid: result[i].questionid, 
             categoryid: result[i].categoryid,
             categoryname: result[i].categoryname,

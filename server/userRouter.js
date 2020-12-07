@@ -25,7 +25,7 @@ usersRouter.post('/login', async(req, res)=>{
     }
 
     const accessToken = await generateAccessToken(user);
-    return res.json({accessToken: accessToken});
+    return res.json({accessToken: accessToken, lifetime: "12"});
 });
 
 /**

@@ -17,6 +17,11 @@ app.use(cors());
 
 app.use("/api/content", contentRouter);
 
+/**
+ * All /api/user HTTP methods go to user.
+ */
+
+
 app.use("/api/user", usersRouter);
 
 /**
