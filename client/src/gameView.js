@@ -18,8 +18,10 @@ function GameView(props) {
             {id:3, optionText:"Fusce auctor bibendum dui quis tincidunt.", isCorrect:false, selected:false, feedback:0},
             {id:4, optionText:"Mauris vitae metus scelerisque, tincidunt velit vel.", isCorrect:true, selected:false, feedback:0}
         ])
+    const [submitted, setSubmitted] = useState(false);
 
         function handleSubmit() {
+            setSubmitted(true);
             setOptions(options.map((item) => {
                 if (item.selected) {
                     if (item.isCorrect) {
@@ -46,7 +48,13 @@ function GameView(props) {
                         ))}
                     </AnswerList>
                 </div>
-            <Buttons options={options} setOptions={setOptions} handleSubmit={handleSubmit}/>   
+            <Buttons options={options} setOptions={setOptions} handleSubmit={handleSubmit}/>
+            {submitted ?
+                <Card>
+                    <Card.Title>Right answer</Card.Title>
+                    <Card.Text>Explanation for the right answer</Card.Text>
+                </Card>
+            : ''}
         </Card>
     )
 }

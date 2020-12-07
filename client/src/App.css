@@ -85,3 +85,7 @@
   box-shadow: 0 5px #370164;
   transform: translateY(4px);
 }
+
+.check {
+  margin-right: 12px;
+}
