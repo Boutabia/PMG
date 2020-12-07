@@ -8,7 +8,10 @@ const {insertToScenario,
     getScenarioList,
     fetchQuestions,
     getCategories,
-    insertCategory} = require("./contentTools");
+    insertCategory, 
+    getStatistics,
+    addStatistics,
+    insertToStatistics} = require("./contentTools");
 
 /**
  * Method to insert into the scenario -table
@@ -45,17 +48,20 @@ contentRouter.post("/complete", authenticateToken, async (req,res) => {
     const questionID = (await getNextID("scenario", "questionid"));
     
     //Insert into scenario table
-    await insertToScenario(req, scenarioID, questionID);
+    console.log(await insertToScenario(req, scenarioID, questionID));
+
+    //insert into statistics
+    console.log(await insertToStatistics(scenarioID));
     
     //Insert into scenariocategory table
-    await insertToScenarioCategory(req, scenarioID);
+    console.log(await insertToScenarioCategory(req, scenarioID));
 
     //Insert into questionlist table
-    await insertToQuestionlist(req, questionID);
+    console.log(await insertToQuestionlist(req, questionID));
     //When someone starts to add more questiontypes, the logic which one is inserted could go here
         /*By this logic, I use qmultiplechoice*/ 
     //Insert into qmultipleChoice table
-    await insertToQmultiplechoice(req, questionID);
+    console.log(await insertToQmultiplechoice(req, questionID));
     res.writeHead(200, ("Inserting was successful."));
     return res.end();
 });
@@ -114,6 +120,38 @@ contentRouter.get("/category", async(req, res)=>{
     return res.end(JSON.stringify(categoryArray));
 });
 
+/**
+ * GET all statistics, or set "scenarioIdVar" to body, if you want a single 
+ * scenario statistics.
+ */
+contentRouter.get("/statistics", async(req, res)=>{
+    const id = req.body.scenarioIdVar;
+    const statistics = await id > 0 ? await getStatistics(id) : await getStatistics(); 
+    res.writeHead(200, "Statistics fetched!", {'Content-Type': 'application/json'});
+    return res.end(JSON.stringify(statistics));
+});
+/**
+ * PUT statistics to update new numbers in there. 
+ * send statisticsArrayVar, which has 2 variables for each 
+ * element. Variables are "id" and "statistic"
+ * For id insert Number scenarioid, and for statistic
+ * insert Number 0, 1 or 2 based on the 
+ * answer. If answer was totally wrong: 0, 
+ * if partially correct: 1, if totally correct: 2.
+ */
+contentRouter.put("/statistics", async(req, res)=>{
+    const statistics = req.body.statisticsArrayVar;
+    const invalidatedStatistics = await addStatistics(statistics);
+    console.log(invalidatedStatistics);
+    if (invalidatedStatistics.length > 0){
+        res.statusCode = 400;
+        res.statusMessage= "Some statistics were invalid";
+        return res.end(JSON.stringify(invalidatedStatistics));
+    }
+    res.statusCode = 200;
+    res.statusMessage = "All statistics updated.";
+    return res.end();
+});
 
 
 module.exports = {

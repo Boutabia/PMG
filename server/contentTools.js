@@ -1,3 +1,4 @@
+const { query } = require("express");
 const {db, queryPromise, getNextID} = require("./dbpool");
 /**
  * Inserts data to table named "scenario" 
@@ -216,6 +217,67 @@ async function insertCategory(newCategoryName){
     return;
 }
 
+/**
+ * Returns an array of all the statistics for scenarios
+ * If you want to limit to a single scenario statistics, add an id. 
+ * @param {Number} id 
+ */
+async function getStatistics(id = 0){
+    let query = "SELECT * FROM statistic ";
+    const parameterarray = new Array();
+    if (id > 0){
+        query += "WHERE scenarioid = ?";
+        parameterarray.push(id);
+    } 
+    const result = await queryPromise(query, parameterarray);
+    const resultarray = new Array();
+    for (let i = 0; i < result.length; i++){
+        const element = {
+            id: result[i].scenarioid,
+            correct: result[i].correct,
+            partiallycorrect: result[i].partiallycorrect,
+            incorrect: result[i].incorrect,
+            total: result[i].total 
+        }
+        resultarray.push(element);
+    }
+    return resultarray;
+}
+
+async function addStatistics(statisticsArray){
+    const invalidated = new Array();
+    for (let i = 0; i < statisticsArray.length; i++){
+        const id = statisticsArray[i].id;
+        const statistic = statisticsArray[i].statistic;
+        let toIncrement;
+        switch (statistic){
+            case 0:
+                toIncrement = "incorrect";
+                break;
+            case 1:
+                toIncrement = "partiallycorrect";
+                break;
+            case 2: 
+                toIncrement = "correct";
+                break;
+            default:
+                invalidated.push(id);
+                continue;
+        }
+        const query = "UPDATE statistic SET total = total+1, " 
+                    + toIncrement + " = " + toIncrement+ "+1 "
+                    + "WHERE scenarioid = ?";
+        const result = await queryPromise(query, id);
+        if (result.affectedRows > 0) continue;
+        console.log("here");
+        invalidated.push(id);
+    }
+    return invalidated;
+}
+
+async function insertToStatistics(id){
+    return queryResposne = await queryPromise("INSERT INTO statistic (scenarioid) VALUES (?)", [id]);
+}
 //more?
 
 module.exports={
@@ -226,5 +288,8 @@ module.exports={
     getScenarioList,
     fetchQuestions,
     getCategories,
-    insertCategory
+    insertCategory,
+    getStatistics,
+    addStatistics,
+    insertToStatistics
 }

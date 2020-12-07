@@ -1,3 +1,5 @@
+--insert your own database where you want to use as in USE pmgdatabase;
+
 CREATE TABLE `scenario` (
   `scenarioid` int NOT NULL,
   `scenarioname` varchar(60) NOT NULL,
@@ -56,3 +58,14 @@ CREATE TABLE `user` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `name_UNIQUE` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `statistic` (
+  `scenarioid` int NOT NULL,
+  `correct` int NOT NULL DEFAULT '0',
+  `partiallycorrect` int NOT NULL DEFAULT '0',
+  `incorrect` int NOT NULL DEFAULT '0',
+  `total` int NOT NULL DEFAULT '0',
+  KEY `scenariostatistics_idx` (`scenarioid`),
+  CONSTRAINT `scenariostatistics` FOREIGN KEY (`scenarioid`) REFERENCES `scenario` (`scenarioid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+

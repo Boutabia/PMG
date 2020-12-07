@@ -24,6 +24,31 @@ app.use("/api/content", contentRouter);
 
    POST api/content/complete
 
+EXAMPLE
+
+
+POST http://localhost:3001/api/content/complete
+Content-Type : application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InN1cGVydXNlciIsInBhc3N3b3JkaGFzaCI6IiQyYiQxMiQyTWcySzlzTzhwNE1KeGFEL1FpY0d1QkFDQzRzZTFOVUFTZFVkdTVTbzdXTTBKUld5TkhlZSIsInJvbGUiOiJzdXBlcnVzZXIiLCJpYXQiOjE2MDczMjgxNDAsImV4cCI6MTYwNzM3MTM0MH0.IcCH9MxCLCjllZqMtk1uCUM-XaW_7-mVDDB8neT2jco
+
+{
+    "scenarioNameVar": "How many Leningrads fit in Stalingrad?",
+    "questionTypeVar": 1,
+    "questionTextVar": "Have you ever visited Stalingrad? It would help in this. How many Leningrads fit to Stalingrad?",
+    "pictureVar": "/../img/ponderingPerson.png",
+    "questionOption1Var": "0", 
+    "questionOption2Var": "1", 
+    "questionOption3Var": "2", 
+    "questionOption4Var": "3 or more",
+    "questionCorrect1Var": 0,
+    "questionCorrect2Var": 1,
+    "questionCorrect3Var": 0,
+    "questionCorrect4Var": 0,
+    "questionExplanationVar": "Volgograd (prev. name Stalingrad) is 859,4 km^2, and St. Petersburg (prev. name Leningrad) is 1 439 km^2.",
+    "scenarioDifficultyVar": 3,
+    "scenarioCategoryVar": [7]
+}
+
    /**
     * this GET should be called when a game is needed to begin. 
     * You can add number[] of "categories" and number "limit" to get a fixed number

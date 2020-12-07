@@ -14,7 +14,7 @@ const db = mysql.createPool({
  * @param {*} params 
  */
 
-function queryPromise(str, params){
+function queryPromise(str, params = []){
     return new Promise((resolve, reject) => {
         db.query(str, params, (err, result)=>{
             if (err) reject(err);

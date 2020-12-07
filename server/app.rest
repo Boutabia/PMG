@@ -47,7 +47,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6I
 
 POST http://localhost:3001/api/content/category
 Content-Type: application/json 
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InN1cGVydXNlciIsInBhc3N3b3JkaGFzaCI6IiQyYiQxMiQyTWcySzlzTzhwNE1KeGFEL1FpY0d1QkFDQzRzZTFOVUFTZFVkdTVTbzdXTTBKUld5TkhlZSIsInJvbGUiOiJzdXBlcnVzZXIiLCJpYXQiOjE2MDY4MjUyMjIsImV4cCI6MTYwNjgyODgyMn0.8F3dH98xNZ8dlo2RPDlI-KCIIta-QimXmqwY6QpQebc
+Authorization: Bearer s
 
 {
     "newCategoryName": "New Category 1/12"
@@ -72,19 +72,52 @@ Content-Type : application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InN1cGVydXNlciIsInBhc3N3b3JkaGFzaCI6IiQyYiQxMiQyTWcySzlzTzhwNE1KeGFEL1FpY0d1QkFDQzRzZTFOVUFTZFVkdTVTbzdXTTBKUld5TkhlZSIsInJvbGUiOiJzdXBlcnVzZXIiLCJpYXQiOjE2MDczMjgxNDAsImV4cCI6MTYwNzM3MTM0MH0.IcCH9MxCLCjllZqMtk1uCUM-XaW_7-mVDDB8neT2jco
 
 {
-    "scenarioNameVar": "How many Leningrads fit in Stalingrad?",
+    "scenarioNameVar": "Is this ok?",
     "questionTypeVar": 1,
-    "questionTextVar": "Have you ever visited Stalingrad? It would help in this. How many Leningrads fit to Stalingrad?",
-    "pictureVar": "/../img/ponderingPerson.png",
-    "questionOption1Var": "0", 
-    "questionOption2Var": "1", 
-    "questionOption3Var": "2", 
-    "questionOption4Var": "3 or more",
-    "questionCorrect1Var": 0,
+    "questionTextVar": "Is this ok? Like, do you think it is ok? Thonk so? Or no?",
+    "pictureVar": "/../img/TinkeringThonking.png",
+    "questionOption1Var": "Yes", 
+    "questionOption2Var": "It is", 
+    "questionOption3Var": "No...", 
+    "questionOption4Var": "Indeed",
+    "questionCorrect1Var": 1,
     "questionCorrect2Var": 1,
     "questionCorrect3Var": 0,
-    "questionCorrect4Var": 0,
-    "questionExplanationVar": "Volgograd (prev. name Stalingrad) is 859,4 km^2, and St. Petersburg (prev. name Leningrad) is 1 439 km^2.",
-    "scenarioDifficultyVar": 3,
-    "scenarioCategoryVar": [7]
+    "questionCorrect4Var": 1,
+    "questionExplanationVar": "*Thonking* ... ... ... Yes, yes it seems.",
+    "scenarioDifficultyVar": 1,
+    "scenarioCategoryVar": [9]
+}
+
+###
+
+GET http://localhost:3001/api/content/statistics
+Content-Type : application/json
+
+{
+    "scenarioIdVar": 12
+}
+
+###
+PUT http://localhost:3001/api/content/statistics
+Content-Type : application/json
+
+{
+    "statisticsArrayVar":[{
+        "id": 12,
+        "statistic": 0
+    },
+    {
+        "id": 12,
+        "statistic": 1
+    },
+    {
+        "id": 12,
+        "statistic": 2
+    },
+    {
+        "id": 11,
+        "statistic": 0
+    }
+    ]
 }
