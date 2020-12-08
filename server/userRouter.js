@@ -25,7 +25,8 @@ usersRouter.post('/login', async(req, res)=>{
     }
 
     const accessToken = await generateAccessToken(user);
-    return res.json({accessToken: accessToken, lifetime: "12"});
+    const expirationTime = Date.now()+(12*1000*3600); //12 * milliseconds * minutes * seconds = 12 hours
+    return res.json({accessToken: accessToken, expiration: expirationTime});
 });
 
 /**

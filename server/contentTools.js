@@ -199,9 +199,9 @@ async function deleteScenario(id){
 /**
  * Returns all categories saved in category-table. 
  */
-async function getCategories( id = []){
-    let query = "SELECT * FROM category";
-    if (id.length > )
+async function getCategories( id = 0){
+    let query = "SELECT * FROM category ";
+    if (id > 0) query += `WHERE categoryid = ${id}`;
     const result = await queryPromise(query);
     const categoryArray = new Array();
     for (let i = 0; i < result.length; i++){

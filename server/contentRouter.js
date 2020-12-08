@@ -133,7 +133,7 @@ contentRouter.get("/statistics", async(req, res)=>{
     return res.end(JSON.stringify(statistics));
 });
 /**
- * PUT statistics to update new numbers in there. 
+ * POST statistics to update new numbers in there. 
  * send statisticsArrayVar, which has 2 variables for each 
  * element. Variables are "id" and "statistic"
  * For id insert Number scenarioid, and for statistic
@@ -141,7 +141,7 @@ contentRouter.get("/statistics", async(req, res)=>{
  * answer. If answer was totally wrong: 0, 
  * if partially correct: 1, if totally correct: 2.
  */
-contentRouter.put("/statistics", async(req, res)=>{
+contentRouter.post("/statistics", async(req, res)=>{
     const statistics = req.body.statisticsArrayVar;
     const invalidatedStatistics = await addStatistics(statistics);
     console.log(invalidatedStatistics);
@@ -165,7 +165,7 @@ contentRouter.delete("/scenario", authenticateToken, async(req, res)=>{
 contentRouter.delete("/category", authenticateToken, async(req, res)=>{
     const id = req.body.categoryToDeleteVar;
     
-    const scenariosUsingThisCategory = (await getScenarioList([id])).length;
+    const scenariosUsingThisCategory = (await getScenarioList(id)).length;
     if (scenariosUsingThisCategory > 0) {
         res.writeHead(400, `Bad request. There are ${scenariosUsingThisCategory} scenarios using this category. Delete them before deleting the category`);
         return res.end();
