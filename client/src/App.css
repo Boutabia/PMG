@@ -2,13 +2,15 @@
   min-height: 100vh;
   text-align: center;
   font-family: Helvetica, Arial, sans-serif;
-  background: linear-gradient(to bottom, #4e008e 50%, #4f12aa 100%)
+  background: linear-gradient(to bottom, #4e008e 50%, #4f12aa 100%);
+  padding-top: 2rem;
 }
 
 .game-view {
   width: 70rem;
   margin:auto;
   background: #4f12aa;
+  padding-top: 2rem;
 }
 .scenario{
   background-color: whitesmoke;
@@ -65,6 +67,27 @@
   color: whitesmoke;
 }
 
+.btn-skip {
+  color: rgb(228, 134, 57);
+  font-weight: bold;
+  background-color: #4e008e;
+  border: 2px solid #4f12aa;
+  border-radius: 5px;
+  margin: 10px;
+  padding: 10px;
+  box-shadow: 0 8px #4c0f7a;
+}
+
+.btn-skip:hover {
+  background-color: #370164;
+  color: rgb(228, 134, 57);
+}
+
+.btn-skip:active {
+  box-shadow: 0 5px #370164;
+  transform: translateY(4px);
+}
+
 .btn-submit {
   color: rgb(228, 134, 57);
   font-weight: bold;
@@ -88,4 +111,8 @@
 
 .check {
   margin-right: 12px;
+}
+
+.explanation {
+  color: #4e008e;
 }

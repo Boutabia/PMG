@@ -4,7 +4,10 @@ import Button from 'react-bootstrap/Button';
 function Buttons({handleSubmit, options, setOptions}) {
     
     return(
-        <Button variant='submit' onClick={handleSubmit}>Answer</Button>
+        <div>
+            <Button disabled={options.every(option => (!option.selected))} variant='submit' onClick={handleSubmit}>Answer</Button>
+            <Button variant='skip'>Skip question</Button>
+        </div>
     )
 }
 
