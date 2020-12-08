@@ -18,7 +18,7 @@ app.use(cors());
 
 (async () => {
     await isThereASuperuser();
-})().then();
+})();
 
 /**
  * All /api/content HTTP methods go to content.

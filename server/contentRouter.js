@@ -11,7 +11,9 @@ const {insertToScenario,
     insertCategory, 
     getStatistics,
     addStatistics,
-    insertToStatistics} = require("./contentTools");
+    insertToStatistics,
+    deleteScenario,
+    deleteCategory} = require("./contentTools");
 
 /**
  * Method to insert into the scenario -table
@@ -151,6 +153,26 @@ contentRouter.put("/statistics", async(req, res)=>{
     res.statusCode = 200;
     res.statusMessage = "All statistics updated.";
     return res.end();
+});
+
+contentRouter.delete("/scenario", authenticateToken, async(req, res)=>{
+    const id = req.body.scenarioToDeleteVar;
+    const deleted = await deleteScenario(id);
+    res.writeHead(200, `Succesfully deleted ${deleted.affectedRows} records.`);
+    res.end(deleted.affectedRows);
+});
+
+contentRouter.delete("/category", authenticateToken, async(req, res)=>{
+    const id = req.body.categoryToDeleteVar;
+    
+    const scenariosUsingThisCategory = (await getScenarioList([id])).length;
+    if (scenariosUsingThisCategory > 0) {
+        res.writeHead(400, `Bad request. There are ${scenariosUsingThisCategory} scenarios using this category. Delete them before deleting the category`);
+        return res.end();
+    }
+    const isDeleted = deleteCategory(id);
+    res.writeHead(200, "Succesfully deleted a category.");
+    res.end();
 });
 
 

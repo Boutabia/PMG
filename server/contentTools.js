@@ -133,6 +133,7 @@ async function getScenarioList(categories = [], limit = 10, game = false, diffic
     }
     else {
         query += "ORDER BY scenario.scenarioid";
+        queryarray = categories;
     }
     
 
@@ -185,13 +186,23 @@ async function fetchQuestions(scenarioArray){
     //console.log(scenarioArray);
     return scenarioArray;
 }
+/**
+ * 
+ * @param {Number} id 
+ */
+async function deleteScenario(id){
+    const query = "DELETE FROM scenario WHERE scenarioid = ?";
+    const result = await queryPromise(query, [id]);
+    return result;
+}
 
 /**
  * Returns all categories saved in category-table. 
  */
-async function getCategories(){
-    const query = "SELECT * FROM category";
-    result = await queryPromise(query);
+async function getCategories( id = []){
+    let query = "SELECT * FROM category";
+    if (id.length > )
+    const result = await queryPromise(query);
     const categoryArray = new Array();
     for (let i = 0; i < result.length; i++){
         const element = {
@@ -215,6 +226,13 @@ async function insertCategory(newCategoryName){
             console.log(err);
         });
     return;
+}
+
+async function deleteCategory(id){
+    const query = "DELETE FROM category WHERE categoryid = ?";
+    const result = await queryPromise(query, [id]);
+    console.log(result);
+    return true;
 }
 
 /**
@@ -301,9 +319,11 @@ module.exports={
     insertToQmultiplechoice, 
     getScenarioList,
     fetchQuestions,
+    deleteScenario,
     getCategories,
     insertCategory,
     getStatistics,
     addStatistics,
-    insertToStatistics
+    insertToStatistics,
+    deleteCategory
 }

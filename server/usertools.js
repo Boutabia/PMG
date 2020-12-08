@@ -108,7 +108,9 @@ async function generateAccessToken(user){
 
 async function isThereASuperuser(){
     if (!(await usernameInUse("superuser"))){
-        await createUser("superuser", process.env.SUPERUSERPASSWORD, "superuser");
+        const password = process.env.SUPERUSERPASSWORD === undefined ? "superuserpassword2020" : process.env.SUPERUSERPASSWORD;
+        await createUser("superuser", password , "superuser");
+        console.log("Created a new superuser according to envronment settings.");
     }
     return;
 }
