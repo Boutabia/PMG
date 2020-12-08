@@ -1,4 +1,3 @@
-const { query } = require("express");
 const {db, queryPromise, getNextID} = require("./dbpool");
 /**
  * Inserts data to table named "scenario" 

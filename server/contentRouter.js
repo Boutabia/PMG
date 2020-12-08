@@ -46,8 +46,8 @@ contentRouter.post("/category", authenticateToken, async (req, res) => {
 
 contentRouter.post("/complete", authenticateToken, async (req,res) => {
     //get ID
-    const scenarioID = (await getNextID("scenario", "scenarioid"));
-    const questionID = (await getNextID("scenario", "questionid"));
+    const scenarioID = (await getNextID("statistic", "scenarioid"));
+    const questionID = (await getNextID("questionlist", "questionid"));
     
     //Insert into scenario table
     console.log(await insertToScenario(req, scenarioID, questionID));

@@ -66,7 +66,7 @@ Authorization: Bearer s
 
 GET http://localhost:3001/api/content/allScenarios
 Content-Type : application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywibmFtZSI6InN1cGVydXNlciIsInBhc3N3b3JkaGFzaCI6IiQyYiQxMiR2T3R4ZGo5dk5Qak1KdmxwWnBOYjd1Sk1NbzltMkEubFF2ZmdUUkJVRldZcVp1Ym5rL2lZTyIsInJvbGUiOiJzdXBlcnVzZXIiLCJpYXQiOjE2MDc0NDM0MjEsImV4cCI6MTYwNzQ4NjYyMX0.PXWk0vVdMFjUOxmnbzdYhzTzFtjf5yhKyQIaIWoxmQQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywibmFtZSI6InN1cGVydXNlciIsInBhc3N3b3JkaGFzaCI6IiQyYiQxMiR2T3R4ZGo5dk5Qak1KdmxwWnBOYjd1Sk1NbzltMkEubFF2ZmdUUkJVRldZcVp1Ym5rL2lZTyIsInJvbGUiOiJzdXBlcnVzZXIiLCJpYXQiOjE2MDc0NTQzNTksImV4cCI6MTYwNzQ5NzU1OX0.UT20LXy7Ov8xKoWK-YpPWlsqxQD0na2OWcRJEerVriw
 
 {
     "limit" : 1,
@@ -77,12 +77,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywibmFtZSI6I
 
 POST http://localhost:3001/api/content/complete
 Content-Type : application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InN1cGVydXNlciIsInBhc3N3b3JkaGFzaCI6IiQyYiQxMiQyTWcySzlzTzhwNE1KeGFEL1FpY0d1QkFDQzRzZTFOVUFTZFVkdTVTbzdXTTBKUld5TkhlZSIsInJvbGUiOiJzdXBlcnVzZXIiLCJpYXQiOjE2MDczMjgxNDAsImV4cCI6MTYwNzM3MTM0MH0.IcCH9MxCLCjllZqMtk1uCUM-XaW_7-mVDDB8neT2jco
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywibmFtZSI6InN1cGVydXNlciIsInBhc3N3b3JkaGFzaCI6IiQyYiQxMiR2T3R4ZGo5dk5Qak1KdmxwWnBOYjd1Sk1NbzltMkEubFF2ZmdUUkJVRldZcVp1Ym5rL2lZTyIsInJvbGUiOiJzdXBlcnVzZXIiLCJpYXQiOjE2MDc0NTQzNTksImV4cCI6MTYwNzQ5NzU1OX0.UT20LXy7Ov8xKoWK-YpPWlsqxQD0na2OWcRJEerVriw
 
 {
-    "scenarioNameVar": "Is this ok?",
+    "scenarioNameVar": "YAPPEE?",
     "questionTypeVar": 1,
-    "questionTextVar": "Is this ok? Like, do you think it is ok? Thonk so? Or no?",
+    "questionTextVar": "RABLING? Thonk so? Or no?",
     "pictureVar": "/../img/TinkeringThonking.png",
     "questionOption1Var": "Yes", 
     "questionOption2Var": "It is", 
@@ -105,6 +105,12 @@ Content-Type : application/json
 {
     "scenarioIdVar": 12
 }
+
+###
+
+GET http://localhost:3001/api/content/statistics
+Content-Type : application/json
+
 
 ###
 PUT http://localhost:3001/api/content/statistics
