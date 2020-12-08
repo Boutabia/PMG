@@ -20,23 +20,23 @@ function GameView(props) {
         ])
     const [submitted, setSubmitted] = useState(false);
 
-        function handleSubmit() {
-            setSubmitted(true);
-            setOptions(options.map((item) => {
-                if (item.selected) {
-                    if (item.isCorrect) {
-                        return {
-                            ...item, feedback: 1
-                        };
-                    } else {
-                        return {
-                            ...item, feedback: 2
-                        };
-                    }
-            }
-                return item;
-            }))
+    function handleSubmit() {
+        setSubmitted(true);
+        setOptions(options.map((item) => {
+            if (item.selected) {
+                if (item.isCorrect) {
+                    return {
+                        ...item, feedback: 1
+                    };
+                } else {
+                    return {
+                        ...item, feedback: 2
+                    };
+                }
         }
+            return item;
+        }))
+    }
 
     return (
         <Card className='game-view'>

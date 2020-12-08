@@ -20,24 +20,7 @@ const submitScenario = () => {
 
   return (
     <div className="App">
-      {/*<h1> Hello PMG</h1>
-      <div className="form">
-        <label>Scenario Name</label>
-        <input
-         type="text" 
-         name="scenarioName"
-         onChange={(e) => {setScenarioName(e.target.value);}}
-         ></input>
-        <label>Scenario type</label>
-        <input 
-        type="text" 
-        name="scenarioType"
-        onChange={(e) => {setScenarioType(e.target.value);}}></input>
-        
-        
-        <button onClick={submitScenario}> Submit</button>
-
-      </div>*/}
+     
       <GameView/>
 
     </div>
