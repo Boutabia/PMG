@@ -154,13 +154,21 @@ contentRouter.post("/statistics", async(req, res)=>{
     res.statusMessage = "All statistics updated.";
     return res.end();
 });
-
+/**
+ * Delete a scenario with id as "scenarioToDeleteVar" if you have logged in.
+ * 
+ */
 contentRouter.delete("/scenario", authenticateToken, async(req, res)=>{
     const id = req.body.scenarioToDeleteVar;
     const deleted = await deleteScenario(id);
     res.writeHead(200, `Succesfully deleted ${deleted.affectedRows} records.`);
     res.end(deleted.affectedRows);
 });
+
+/**
+ * Delete a category with an id sent as "categoryToDeleteVar" in body. 
+ * If the category is used somewhere, delete is not possible. 
+ */
 
 contentRouter.delete("/category", authenticateToken, async(req, res)=>{
     const id = req.body.categoryToDeleteVar;

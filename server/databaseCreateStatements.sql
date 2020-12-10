@@ -4,10 +4,12 @@ CREATE TABLE `scenario` (
   `scenarioid` int NOT NULL,
   `scenarioname` varchar(60) NOT NULL,
   `questionid` int NOT NULL,
+  `difficulty` int NOT NULL DEFAULT '2',
   PRIMARY KEY (`scenarioid`),
   UNIQUE KEY `questionid_UNIQUE` (`questionid`),
   UNIQUE KEY `scenarioid_UNIQUE` (`scenarioid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 
 CREATE TABLE `category` (
   `categoryid` int NOT NULL,
@@ -65,7 +67,5 @@ CREATE TABLE `statistic` (
   `partiallycorrect` int NOT NULL DEFAULT '0',
   `incorrect` int NOT NULL DEFAULT '0',
   `total` int NOT NULL DEFAULT '0',
-  KEY `scenariostatistics_idx` (`scenarioid`),
-  CONSTRAINT `scenariostatistics` FOREIGN KEY (`scenarioid`) REFERENCES `scenario` (`scenarioid`)
+  PRIMARY KEY (`scenarioid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-

@@ -50,7 +50,10 @@ async function getUser(username){
         });
 }
 
-//usernameInUse
+/**
+ * Checks if the username in parameter is in use.
+ * @param {String} username 
+ */
 async function usernameInUse(username){
     const user = await getUser(username);
     if (user == null){
@@ -106,6 +109,10 @@ async function generateAccessToken(user){
     return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "12h"});
 }
 
+/**
+ * Checks if there is a superuser, and if there isn't will create 
+ * a new one based on environmental variables, or using a "superuserpassword2020" string.
+ */
 async function isThereASuperuser(){
     if (!(await usernameInUse("superuser"))){
         const password = process.env.SUPERUSERPASSWORD === undefined ? "superuserpassword2020" : process.env.SUPERUSERPASSWORD;

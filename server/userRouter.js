@@ -55,6 +55,11 @@ usersRouter.post("/register", authenticateToken, async (req,res) => {
     return res.end();
 });
 
+/**
+ * You can delete a user if you are authenticated based on the name of the user
+ * which should be sent in body as a variable "name"
+ */
+
 usersRouter.delete("/delete", authenticateToken, async(req, res)=>{
     if (req.user.role !== "superuser"){
         res.writeHead(403, "Only allowed for superuser.");

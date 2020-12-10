@@ -226,6 +226,10 @@ async function insertCategory(newCategoryName){
         });
     return;
 }
+/**
+ * Deleting a single category. Deletes based on ID. 
+ * @param {Number} id 
+ */
 
 async function deleteCategory(id){
     const query = "DELETE FROM category WHERE categoryid = ?";
