@@ -2,7 +2,7 @@ const express = require('express');
 const usersRouter = express.Router();
 const bcrypt = require('bcrypt');
 const {getUser, generateAccessToken, authenticateToken,
-       usernameInUse, createUser, deleteUser} = require("./usertools");
+       usernameInUse, createUser, deleteUser} = require("../tools/usertools");
 
 
 

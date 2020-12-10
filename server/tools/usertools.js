@@ -1,5 +1,5 @@
 require('dotenv').config();
-const {db, getNextID, queryPromise} = require("./dbpool");
+const {db, getNextID, queryPromise} = require("./db");
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken'); 
 

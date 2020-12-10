@@ -1,6 +1,6 @@
-const {getNextID} = require("./dbpool");
+const {getNextID} = require("../tools/db");
 const contentRouter = require("express").Router();
-const {authenticateToken} = require("./usertools");
+const {authenticateToken} = require("../tools/usertools");
 const {insertToScenario,
     insertToScenarioCategory,
     insertToQuestionlist,
@@ -13,7 +13,7 @@ const {insertToScenario,
     addStatistics,
     insertToStatistics,
     deleteScenario,
-    deleteCategory} = require("./contentTools");
+    deleteCategory} = require("../tools/contentTools");
 
 /**
  * Method to insert into the scenario -table
@@ -49,22 +49,26 @@ contentRouter.post("/complete", authenticateToken, async (req,res) => {
     const scenarioID = (await getNextID("statistic", "scenarioid"));
     const questionID = (await getNextID("questionlist", "questionid"));
     
+    const AMOUNT_OF_INSERTS = 5;
+
     //Insert into scenario table
-    console.log(await insertToScenario(req, scenarioID, questionID));
+    let successes = 0;
+    if (await insertToScenario(req, scenarioID, questionID)) successes++;
 
     //insert into statistics
-    console.log(await insertToStatistics(scenarioID));
+    if (await insertToStatistics(scenarioID)) successes++;
     
     //Insert into scenariocategory table
-    console.log(await insertToScenarioCategory(req, scenarioID));
+    if (await insertToScenarioCategory(req, scenarioID)) successes++;
 
     //Insert into questionlist table
-    console.log(await insertToQuestionlist(req, questionID));
+    if (await insertToQuestionlist(req, questionID)) successes++; 
     //When someone starts to add more questiontypes, the logic which one is inserted could go here
         /*By this logic, I use qmultiplechoice*/ 
     //Insert into qmultipleChoice table
-    console.log(await insertToQmultiplechoice(req, questionID));
-    res.writeHead(200, ("Inserting was successful."));
+    if (await insertToQmultiplechoice(req, questionID)) successes++;
+    const successrate = (successes/AMOUNT_OF_INSERTS)*100
+    res.writeHead(200, (`Inserting was ${successrate}% successful.`));
     return res.end();
 });
 
@@ -144,7 +148,6 @@ contentRouter.get("/statistics", async(req, res)=>{
 contentRouter.post("/statistics", async(req, res)=>{
     const statistics = req.body.statisticsArrayVar;
     const invalidatedStatistics = await addStatistics(statistics);
-    console.log(invalidatedStatistics);
     if (invalidatedStatistics.length > 0){
         res.statusCode = 400;
         res.statusMessage= "Some statistics were invalid";
@@ -162,7 +165,7 @@ contentRouter.delete("/scenario", authenticateToken, async(req, res)=>{
     const id = req.body.scenarioToDeleteVar;
     const deleted = await deleteScenario(id);
     res.writeHead(200, `Succesfully deleted ${deleted.affectedRows} records.`);
-    res.end(deleted.affectedRows);
+    res.end(`${deleted.affectedRows}`);
 });
 
 /**
@@ -173,13 +176,13 @@ contentRouter.delete("/scenario", authenticateToken, async(req, res)=>{
 contentRouter.delete("/category", authenticateToken, async(req, res)=>{
     const id = req.body.categoryToDeleteVar;
     
-    const scenariosUsingThisCategory = (await getScenarioList(id)).length;
+    const scenariosUsingThisCategory = (await getScenarioList([id])).length;
     if (scenariosUsingThisCategory > 0) {
         res.writeHead(400, `Bad request. There are ${scenariosUsingThisCategory} scenarios using this category. Delete them before deleting the category`);
         return res.end();
     }
-    const isDeleted = deleteCategory(id);
-    res.writeHead(200, "Succesfully deleted a category.");
+    const amountOfDeleted = (await deleteCategory(id)).affectedRows;
+    res.writeHead(200,  `Number of deleted categories: ${amountOfDeleted}`);
     res.end();
 });
 

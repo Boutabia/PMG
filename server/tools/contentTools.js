@@ -1,4 +1,4 @@
-const {db, queryPromise, getNextID} = require("./dbpool");
+const {db, queryPromise, getNextID} = require("./db");
 /**
  * Inserts data to table named "scenario" 
  * @param {Request object} req 
@@ -13,7 +13,6 @@ async function insertToScenario(req, scenarioID, questionID){
     "INSERT INTO scenario (scenarioid, scenarioname, questionid, difficulty) VALUES (?, ?, ?, ?)";
     await queryPromise(scenarioInsert,[scenarioID, scenarioName, questionID, difficulty])
         .then((result)=> {
-            console.log ("Inserted scenario succesfully 1/4.");
             success = true;        
         })
         .catch((err) => {
@@ -39,7 +38,6 @@ async function insertToScenarioCategory(req, scenarioID){
     "INSERT INTO scenariocategory (scenarioid, categoryid) VALUES (?, ?)";
     await queryPromise(categoryInsert, categoryarray)
         .then((result)=> {
-            console.log ("Inserted scenario category succesfully 2/4.");
             success = true;
         })
         .catch((err) => {
@@ -61,7 +59,6 @@ async function insertToQuestionlist(req, questionID){
     "INSERT INTO questionlist (questionid, questiontype) VALUES (?, ?)";
     await queryPromise(questionListInsert, [questionID, questionType])
         .then((result)=> {
-            console.log ("Inserted questionlist succesfully 3/4.");
             success = true;
         })
         .catch((err) => {
@@ -93,7 +90,6 @@ async function insertToQmultiplechoice(req, questionID){
     "INSERT INTO qmultiplechoice (questionid, questiontext, picture, option1, option2, option3, option4, correct1, correct2, correct3, correct4, explanation) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     await queryPromise(qmultiplechoiceInsert, [questionID, questionText, picturePath, questionOption1, questionOption2, questionOption3, questionOption4, correct1, correct2, correct3, correct4, explanation])
         .then((result)=> {
-            console.log ("Inserted qmultiplechoice succesfully 4/4.");
             success = true;
         })
         .catch((err) => {
@@ -233,9 +229,7 @@ async function insertCategory(newCategoryName){
 
 async function deleteCategory(id){
     const query = "DELETE FROM category WHERE categoryid = ?";
-    const result = await queryPromise(query, [id]);
-    console.log(result);
-    return true;
+    return await queryPromise(query, [id]);
 }
 
 /**

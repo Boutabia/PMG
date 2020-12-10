@@ -2,10 +2,10 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require ("cors");
 const app = express();
-const {isThereASuperuser} = require("./usertools");
+const {isThereASuperuser} = require("./tools/usertools");
 
-const {contentRouter} = require("./contentRouter");
-const {usersRouter} = require("./userRouter");
+const {contentRouter} = require("./routes/contentRouter");
+const {usersRouter} = require("./routes/userRouter");
 
 
 app.use(bodyParser.urlencoded({extended:true}));
