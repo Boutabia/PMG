@@ -1,13 +1,33 @@
-import React from 'react';
+import React, { useState, useEffect} from 'react';
 
-class Home extends React.Component {
-  render () {
-    return (
-      <div>
-        <h1>Welcome to Project Management Game</h1>
-      </div>
+import UserService from './services/user.service';
+
+const Home = () => {
+  const [content, setContent] = useState("");
+
+  useEffect(() => {
+    UserService.getPublicContent().then(
+      (response) => {
+        setContent(response.data);
+      },
+      (error) => {
+        const _content = 
+          (error.response && error.response.data) ||
+          error.message ||
+          error.toString();
+
+        setContent(_content);
+      }
     );
-  }
-}
+  }, []);
+
+  return (
+    <div className="container">
+      <header className="jumbotron">
+       <h3>{content}</h3>
+      </header>
+    </div>
+    );
+};
 
 export default Home;

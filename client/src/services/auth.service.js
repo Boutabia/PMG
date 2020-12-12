@@ -1,19 +1,23 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:3001/api/";
+export const API_URL = "http://localhost:3001/api/";
 
-const login = (email, password) => {
+const login = (username, password) => {
   return axios
-    .post(API_URL + "login", {
-      email,
+    .post(API_URL + "user/login", {
+      username,
       password,
     })
     .then((response) => {
       if (response.data.accessToken) {
-        localStorage.setItem("user", JSON.stringify(response.data));
+        localStorage.setItem("user", JSON.stringify(response.data.accessToken));
+
+        localStorage.setItem("expiration", JSON.stringify(response.data.expiration));
       }
 
-      return response.data;
+      return response.accessToken;
+    }, (error) => {
+      console.log(error);
     });
 };
 
