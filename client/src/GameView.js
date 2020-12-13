@@ -48,7 +48,7 @@ function GameView(props) {
                         ))}
                     </AnswerList>
                 </div>
-            <Buttons options={options} setOptions={setOptions} handleSubmit={handleSubmit}/>
+            <Buttons options={options} setOptions={setOptions} handleSubmit={handleSubmit} submitted={submitted}/>
             {submitted ?
                 <Card className='explanation'>
                     <Card.Title>Right answer</Card.Title>

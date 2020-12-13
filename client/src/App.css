@@ -67,7 +67,7 @@
   color: whitesmoke;
 }
 
-.btn-skip {
+.btn-game {
   color: rgb(228, 134, 57);
   font-weight: bold;
   background-color: #4e008e;
@@ -78,33 +78,12 @@
   box-shadow: 0 8px #4c0f7a;
 }
 
-.btn-skip:hover {
+.btn-game:hover {
   background-color: #370164;
   color: rgb(228, 134, 57);
 }
 
-.btn-skip:active {
-  box-shadow: 0 5px #370164;
-  transform: translateY(4px);
-}
-
-.btn-submit {
-  color: rgb(228, 134, 57);
-  font-weight: bold;
-  background-color: #4e008e;
-  border: 2px solid #4f12aa;
-  border-radius: 5px;
-  margin: 10px;
-  padding: 10px;
-  box-shadow: 0 8px #4c0f7a;
-}
-
-.btn-submit:hover {
-  background-color: #370164;
-  color: rgb(228, 134, 57);
-}
-
-.btn-submit:active {
+.btn-game:active {
   box-shadow: 0 5px #370164;
   transform: translateY(4px);
 }
@@ -115,4 +94,7 @@
 
 .explanation {
   color: #4e008e;
+  margin-top: 2rem;
+  padding-top: 1rem;
+  background-color: whitesmoke;
 }

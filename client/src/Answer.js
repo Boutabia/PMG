@@ -1,6 +1,7 @@
 import React from 'react'
 import ListGroup from 'react-bootstrap/ListGroup'
-import {FaCheck} from 'react-icons/fa'
+import {FaRegCircle} from 'react-icons/fa'
+import {FaCheckCircle} from 'react-icons/fa'
 
 function Answer({text, option, options, setOptions}) {
 
@@ -18,12 +19,12 @@ function Answer({text, option, options, setOptions}) {
     return (
         <div>
         {option.feedback===1 ?
-            <ListGroup.Item type='checkbox' variant='correct'><FaCheck className='check'/>{text}</ListGroup.Item>
+            <ListGroup.Item type='checkbox' variant='correct'><FaCheckCircle className='check'/>{text}</ListGroup.Item>
         : option.feedback===2 ?
-            <ListGroup.Item type='checkbox' variant='incorrect'><FaCheck className='check'/>{text}</ListGroup.Item>
+            <ListGroup.Item type='checkbox' variant='incorrect'><FaCheckCircle className='check'/>{text}</ListGroup.Item>
         : option.selected ?
-            <ListGroup.Item type='checkbox' variant='selected' onClick={handleSelect}><FaCheck className='check'/>{text}</ListGroup.Item>
-        : <ListGroup.Item type='checkbox' variant='answers' onClick={handleSelect}>{text}</ListGroup.Item>
+            <ListGroup.Item type='checkbox' variant='selected' onClick={handleSelect}><FaCheckCircle className='check'/>{text}</ListGroup.Item>
+        : <ListGroup.Item type='checkbox' variant='answers' onClick={handleSelect}><FaRegCircle className='check'/>{text}</ListGroup.Item>
         }
         </div>
     )
