@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState, useEffect } from "react";
-//import './App.css';
+import './App.css';
 import Login from './components/Login';
 import {
   BrowserRouter as Router,
@@ -10,7 +10,8 @@ import Home from './home';
 import AddScenarioForm from "./addScenarioForm";
 import AuthService from "./services/auth.service";
 import Profile from "./components/Profile";
-import BoardUser from "./components/BoardUser";
+import Scenarios from "./components/Scenarios";
+import Navbar from "react-bootstrap/Navbar";
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -39,20 +40,26 @@ const App = () => {
     <div className="App">
       <div>
         <Router>
-          <nav className="navbar navbar-expand navbar-dark bg-dark">
+          <Navbar variant="dark">
             <Link to={"/"} className="navbar-brand">
               PMG
             </Link>
-            <div className="navbar-nav mr-auto">
+            
 
               {currentUser && (
-                <li className="nav-item">
-                  <Link to={"/user"} className="nav-link">
-                    User
-                  </Link>
-                </li>
+                <div className="navbar-nav mr-auto">
+                  <li className="nav-item">
+                    <Link to={"/scenarios"} className="nav-link">
+                      Scenarios
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link to={"/addScenario"} className="nav-link">
+                      Add New Scenario
+                    </Link>
+                  </li>
+                </div>
               )}
-            </div>
 
             {currentUser ? (
               <div className="navbar-nav ml-auto">
@@ -76,14 +83,15 @@ const App = () => {
                 </li>
               </div>
             )}
-          </nav>
+          </Navbar>
 
           <div className="container mt-3">
             <Switch>
-              <Route exact path={["/"]} component={Home} />
+              <Route exact path={"/"} component={Home} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/profile" component={Profile} />
-              <Route path="/user" component={BoardUser} />
+              <Route path="/scenarios" component={Scenarios} />
+              <Route path="/addScenario" component={AddScenarioForm} />
             </Switch>
           </div>
         </Router>
