@@ -1,11 +1,16 @@
+require('dotenv').config();
 const mysql = require("mysql");
 
+const host = process.env.DB_HOST ? process.env.DB_HOST : "notlocalhost";
+const user = process.env.DB_USER ? process.env.DB_USER : "notkari";
+const password = process.env.DB_PASSWORD ? process.env.DB_PASSWORD : "not123456";
+const database = process.env.DB_DATABASE ? process.env.DB_DATABASE : "notpmgdatabase";
 
 const db = mysql.createPool({
-    host: "localhost",
-    user: "kari",
-    password: "123456",
-    database: "pmgdatabase",
+    host: host,
+    user: user,
+    password: password,
+    database: database,
 });
 
 /**
@@ -14,9 +19,9 @@ const db = mysql.createPool({
  * @param {*} params 
  */
 
-function queryPromise(str, params = []){
+function queryPromise(query, params = []){
     return new Promise((resolve, reject) => {
-        db.query(str, params, (err, result)=>{
+        db.query(query, params, (err, result)=>{
             if (err) reject(err);
             resolve(result);
         })

@@ -5,7 +5,7 @@ const app = express();
 const {isThereASuperuser} = require("./tools/usertools");
 
 const {contentRouter} = require("./routes/contentRouter");
-const {usersRouter} = require("./routes/userRouter");
+const {userRouter} = require("./routes/userRouter");
 
 
 app.use(bodyParser.urlencoded({extended:true}));
@@ -31,7 +31,7 @@ app.use("/api/content", contentRouter);
  */
 
 
-app.use("/api/user", usersRouter);
+app.use("/api/user", userRouter);
 
 /**
  * port-definition

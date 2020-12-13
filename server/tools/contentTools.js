@@ -160,7 +160,7 @@ async function fetchQuestions(scenarioArray){
     for (let i = 0; i < scenarioArray.length; i++){
         const questionid = scenarioArray[i].questionid;
         const questiontype = scenarioArray[i].questiontype;
-        if (questiontype == 1){ // always true, as it is for now, the only questiontype
+        if (questiontype == 1 && questionid > 0){ // always true, as it is for now, the only questiontype
             const query = "SELECT * FROM qmultiplechoice WHERE questionid = ?"
             const result = await queryPromise(query, [questionid]);
 
@@ -192,7 +192,7 @@ async function deleteScenario(id){
 }
 
 /**
- * Returns all categories saved in category-table. 
+ * Returns all categories (or categories with parameters id) saved in category-table. 
  */
 async function getCategories( id = 0){
     let query = "SELECT * FROM category ";
@@ -305,7 +305,7 @@ async function addStatistics(statisticsArray){
  * @param {Number} id 
  */
 async function insertToStatistics(id){
-    return queryResposne = await queryPromise("INSERT INTO statistic (scenarioid) VALUES (?)", [id]);
+    return (await queryPromise("INSERT INTO statistic (scenarioid) VALUES (?)", [id]));
 }
 //more?
 
