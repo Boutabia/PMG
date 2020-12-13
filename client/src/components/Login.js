@@ -4,6 +4,7 @@ import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
 import AuthService from "../services/auth.service";
+import "./Login.css";
 
 const required = (value) => {
   if (!value) {
@@ -82,7 +83,8 @@ const Login = (props) => {
         <Form onSubmit={handleLogin} ref={form}>
 
           <div className="form-group">
-            <label htmlFor="email">Email</label>
+            <h3>Log In</h3>
+            <label htmlFor="email">EMAIL</label>
             <Input
               type="text"
               className="form-control"
@@ -94,7 +96,7 @@ const Login = (props) => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password">PASSWORD</label>
             <Input
               type="password"
               className="form-control"
@@ -110,7 +112,7 @@ const Login = (props) => {
               {loading && (
                 <span className="spinner-border spinner-border-sm"></span>
               )}
-              <span>Login</span>
+              <span>LOG IN</span>
             </button>
           </div>
 
