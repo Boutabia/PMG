@@ -1,5 +1,5 @@
 const express = require('express');
-const usersRouter = express.Router();
+const userRouter = express.Router();
 const bcrypt = require('bcrypt');
 const {getUser, generateAccessToken, authenticateToken,
        usernameInUse, createUser, deleteUser} = require("../tools/usertools");
@@ -12,7 +12,7 @@ const {getUser, generateAccessToken, authenticateToken,
  * If correct, POST will return accesstoken in json response.
  */
 
-usersRouter.post('/login', async(req, res)=>{
+userRouter.post('/login', async(req, res)=>{
     //Authenticate user
     const body = req.body;
     const user = await getUser(body.username);
@@ -35,7 +35,7 @@ usersRouter.post('/login', async(req, res)=>{
  * password and username defined. Role will automatically be user.
  */
 
-usersRouter.post("/register", authenticateToken, async (req,res) => {
+userRouter.post("/register", authenticateToken, async (req,res) => {
     //authorization
     if (req.user.role !== "superuser"){
         res.writeHead(403, "Only allowed for superuser.");
@@ -60,7 +60,7 @@ usersRouter.post("/register", authenticateToken, async (req,res) => {
  * which should be sent in body as a variable "name"
  */
 
-usersRouter.delete("/delete", authenticateToken, async(req, res)=>{
+userRouter.delete("/delete", authenticateToken, async(req, res)=>{
     if (req.user.role !== "superuser"){
         res.writeHead(403, "Only allowed for superuser.");
         return res.end();
@@ -82,5 +82,5 @@ usersRouter.delete("/delete", authenticateToken, async(req, res)=>{
 
 
 module.exports={
-    usersRouter
+    userRouter 
 }
