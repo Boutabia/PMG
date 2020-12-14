@@ -7,6 +7,11 @@ const getScenarios = () => {
   return axios.get(API_URL + "content/allScenarios", { headers: authHeader() });
 };
 
+const getCategories = () => {
+  return axios.get(API_URL + "content/category");
+};
+
 export default {
   getScenarios,
+  getCategories,
 };

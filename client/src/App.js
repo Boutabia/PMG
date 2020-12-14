@@ -44,6 +44,20 @@ const App = () => {
             <Link to={"/"} className="navbar-brand">
               PMG
             </Link>
+
+            {/*for testing, delete later*/}
+            {/* <div className="navbar-nav mr-auto">
+              <li className="nav-item">
+                <Link to={"/scenarios"} className="nav-link">
+                  Scenarios
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to={"/addScenario"} className="nav-link">
+                  Add New Scenario
+                </Link>
+              </li>
+            </div> */}
             
 
               {currentUser && (

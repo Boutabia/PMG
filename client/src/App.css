@@ -7,13 +7,6 @@ body {
   background-color: #4E0091;
 }
 
-.container {
-  color: #ffffff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
 
 .navbar {
   background-color: #4E0091;

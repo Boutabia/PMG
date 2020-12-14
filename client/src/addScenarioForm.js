@@ -1,14 +1,17 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Form from 'react-bootstrap/Form';
-import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
-import Axios from 'axios';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import "./components/Login.css";
+import Jumbotron from 'react-bootstrap/Jumbotron';
+import Axios from 'axios';
+import authHeader from './services/auth-header';
+import UserService from './services/user.service';
 
-function AddScenarioForm() {
+function AddScenarioForm(props) {
 
   const [scenarioNameState, setScenarioName] = useState("");
 
@@ -18,20 +21,13 @@ function AddScenarioForm() {
     setDescription(data)
   }
 
-  const [categories] = useState([
-    {id: 1, label: "Leadership", value: "Leadership"},
-    {id: 2, label: "Meeting Practices", value: "Meeting Practices"},
-    {id: 3, label: "Risk Management", value: "Risk Management"},
-    {id: 4, label: "Scheduling", value: "Scheduling"},
-    {id: 5, label: "Scrum", value: "Scrum"},
-    {id: 6, label: "Teamwork", value: "Teamwork"}
-  ]);
-  const [categoryState, setCategory] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState([]);
 
   const updateCategory = (newValue) => {
     console.log('newValue: ', newValue)
 
-    setCategory(prevArray => {
+    setSelectedCategories(prevArray => {
       let valueExists = false
 
       prevArray.map(item => {
@@ -50,6 +46,16 @@ function AddScenarioForm() {
       
     })
   };
+
+  useEffect(() => {
+    UserService.getCategories().then(
+      (response) => {
+        setCategories([response.data]);
+      })
+      .catch((error) => {
+        console.log(error);
+    });
+  }, []);
 
   const [difficultyLevels] = useState([
     {label: "Easy", value: "Easy"},
@@ -102,8 +108,9 @@ function AddScenarioForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     console.log(scenarioNameState);
-    console.log(categoryState);
+    console.log(selectedCategories);
     console.log(difficultyState);
     console.log(descriptionState);
     console.log(optionsState);
@@ -115,7 +122,7 @@ function AddScenarioForm() {
 
     const scenarioData = {
       scenarioname: scenarioNameState,
-      categories: categoryState,
+      categories: selectedCategories,
       questiontext: descriptionState,
       option1: optionsState[0].value,
       option2: optionsState[1].value,
@@ -132,22 +139,25 @@ function AddScenarioForm() {
     console.log(scenarioData);
 
     Axios
-      .post('http://localhost:3001/api/insert', scenarioData)
+      .post('http://localhost:3001/api/content/complete', scenarioData, {
+        headers: authHeader()
+      })
       .then (() => {
         alert("Scenario Added to DB");
+        props.history.push("/scenarios");
+        window.location.reload();
     });
   }
 
   return (
-    <Container>
+    <Jumbotron>
       <Form onSubmit={handleSubmit}>
         <h2>New Scenario</h2>
         <Form.Group>
-          <Form.Label>Scenario name</Form.Label>
+          <Form.Label>SCENARIO NAME</Form.Label>
             <Form.Control
               type='text'
               name='scenarioName'
-              placeholder='Scenario name'
               value={scenarioNameState}
               required
               onChange={(e) => setScenarioName(e.target.value)}
@@ -155,7 +165,7 @@ function AddScenarioForm() {
             />
         </Form.Group>
         <Form.Group>
-          <Form.Label>Category
+          <Form.Label>CATEGORY
             <Form.Text className="text-muted">
               Select all that apply
             </Form.Text>
@@ -163,7 +173,7 @@ function AddScenarioForm() {
           
           <Form.Control 
             as="select" multiple
-            value={categoryState}
+            value={categories}
             required
             onChange={(e) => updateCategory(e.target.value)}
           >
@@ -172,13 +182,13 @@ function AddScenarioForm() {
                 key={item.id}
                 value={item.value}
               >
-                {item.label}
+                {item.categoryname}
               </option>
             ))}
           </Form.Control>
         </Form.Group>
         <Form.Group>
-          <Form.Label>Difficulty</Form.Label>
+          <Form.Label>DIFFICULTY</Form.Label>
           <Form.Control 
             as="select"
             value={difficultyState}
@@ -195,7 +205,7 @@ function AddScenarioForm() {
           </Form.Control>
         </Form.Group>
         <Form.Group>
-          <Form.Label>Scenario description</Form.Label>
+          <Form.Label>SCENARIO DESCRIPTION</Form.Label>
           <CKEditor
             editor={ClassicEditor}
             data={descriptionState}
@@ -204,16 +214,9 @@ function AddScenarioForm() {
               toolbar: ['heading', '|', 'bold', 'italic', 'blockQuote', 'numberedList', 'bulletedList', 'imageUpload', 'insertTable', '|', 'undo', 'redo']
             }}
           />
-          {/* <Form.Control as="textarea" rows={5}
-            name="description"
-            value={descriptionState}
-            onChange={(e) => setDescription(e.target.value)}
-            required
-            maxLength={300}
-          /> */}
         </Form.Group>
 
-        <label>Answer options
+        <label>ANSWER OPTIONS
           <Form.Text className="text-muted">
             Check correct answers
           </Form.Text>
@@ -250,19 +253,8 @@ function AddScenarioForm() {
           ))}
         </Form.Group>
 
-        {/* <Form.Group>
-          <Form.Label>Explanation for correct answer</Form.Label>
-              <Form.Control as="textarea" rows={3}
-                name="explanantion"
-                value={explanationState}
-                onChange={(e) => setExplanation(e.target.value)}
-                required
-                maxLength={300}
-              />
-        </Form.Group> */}
-
         <Form.Group>
-          <Form.Label>Explanation for correct answer</Form.Label>
+          <Form.Label>EXPLANATION FOR CORRECT ANSWER</Form.Label>
           <CKEditor
             editor={ClassicEditor}
             data={explanationState}
@@ -273,18 +265,10 @@ function AddScenarioForm() {
           />
         </Form.Group>
 
-        <Form.Group>
-              <Form.File 
-                id="FormControlImage" 
-                label="Upload image"
-                onChange={handleImage}
-              />
-        </Form.Group>
-        <Button variant="primary" type="submit">Save Scenario</Button>
+        <Button variant="primary" type="submit">SAVE SCENARIO</Button>
       </Form>
-    </Container>
+    </Jumbotron>
   );
-}
-
+};
 
 export default AddScenarioForm;

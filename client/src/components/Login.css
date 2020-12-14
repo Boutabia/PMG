@@ -2,18 +2,23 @@
 
 body {
   font-family: 'Montserrat', sans-serif;
+  background-color: white;
 }
 
-h3 {
+h2, h3 {
   color: #4e0091;
   font-weight: 700;
   text-align: center;
   letter-spacing: 2px;
 }
 
+h2 {
+  margin-bottom: 30px;
+}
+
 label {
   display: block;
-  margin-top: 10px;
+  margin-top: 20px;
   color: #626164;
   font-weight: 600;
   letter-spacing: 1px;
@@ -35,9 +40,7 @@ label {
   -moz-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.3);
   -webkit-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.3);
   box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.3);
-  border-style: solid;
-  border-width: 5px;
-  border-color: #e9e0db;
+  border: 5px solid #e9e0db;
 }
 
 .btn-primary {
@@ -48,6 +51,7 @@ label {
   border-style: none;
   font-weight: 600;
   letter-spacing: 2px;
+  margin-top: 20px;
 }
 
 .btn-primary:hover {
@@ -70,4 +74,14 @@ label {
   -webkit-border-radius: 0px;
   border-radius: 0px;
   border-style: none;
+}
+
+.jumbotron {
+  background-color: #e2e5f4;
+  padding: 30px 25px 30px;
+  margin: 0 auto 25px;
+  -moz-border-radius: 0px;
+  -webkit-border-radius: 0px;
+  border-radius: 0px;
+  border: 5px solid #e9e0db;
 }
