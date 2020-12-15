@@ -2,7 +2,6 @@ import React, { useState, useRef } from "react";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
-import { isEmail } from "validator";
 import AuthService from "../services/auth.service";
 import "./Login.css";
 
@@ -16,28 +15,18 @@ const required = (value) => {
   }
 };
 
-const validEmail = value => {
-  if (!isEmail(value)) {
-    return (
-      <div className="alert alert-danger" role="alert">
-        This is not a valid email.
-      </div>
-    );
-  }
-};
-
 const Login = (props) => {
   const form = useRef();
   const checkBtn = useRef();
 
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
-  const onChangeEmail = (e) => {
-    const email = e.target.value;
-    setEmail(email);
+  const onChangeUsername = (e) => {
+    const username = e.target.value;
+    setUsername(username);
   };
 
   const onChangePassword = (e) => {
@@ -54,9 +43,9 @@ const Login = (props) => {
     form.current.validateAll();
 
     if (checkBtn.current.context._errors.length === 0) {
-      AuthService.login(email, password).then(
+      AuthService.login(username, password).then(
         () => {
-          props.history.push("/profile");
+          props.history.push("/scenarios");
           window.location.reload();
         },
         (error) => {
@@ -84,14 +73,14 @@ const Login = (props) => {
 
           <div className="form-group">
             <h3>Log In</h3>
-            <label htmlFor="email">EMAIL</label>
+            <label htmlFor="username">USERNAME</label>
             <Input
               type="text"
               className="form-control"
-              name="email"
-              value={email}
-              onChange={onChangeEmail}
-              validations={[required, validEmail]}
+              name="username"
+              value={username}
+              onChange={onChangeUsername}
+              validations={[required]}
             />
           </div>
 
