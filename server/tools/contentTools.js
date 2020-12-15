@@ -202,7 +202,7 @@ async function getCategories( id = 0){
     for (let i = 0; i < result.length; i++){
         const element = {
             categoryid: result[i].categoryid,
-            caregoryname: result[i].categoryname
+            categoryname: result[i].categoryname
         }
         categoryArray.push(element);
     }
