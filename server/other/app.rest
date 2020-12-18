@@ -41,7 +41,8 @@ Content-Type : application/json
 
 {
     "limit" : 15,
-    "categories" : []
+    "categories" : [],
+    "difficulty": 3
 }
 
 ###
