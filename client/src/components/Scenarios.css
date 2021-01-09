@@ -5,3 +5,10 @@
 .btn {
   margin: auto;
 }
+
+.btn-secondary {
+  -moz-border-radius: 0px;
+  -webkit-border-radius: 0px;
+  border-radius: 0px;
+  border-style: none;
+}

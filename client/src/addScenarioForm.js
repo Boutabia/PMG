@@ -7,9 +7,13 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import "./components/Login.css";
 import Jumbotron from 'react-bootstrap/Jumbotron';
-import Axios from 'axios';
-import authHeader from './services/auth-header';
-import UserService from './services/user.service';
+import scenarioService from "./services/scenarios";
+
+const required = (value) => {
+    return (
+      alert("This field is required")
+    )
+}
 
 function AddScenarioForm(props) {
 
@@ -43,14 +47,14 @@ function AddScenarioForm(props) {
       } else {
         return [...prevArray, newValue]
       }
-      
     })
+    console.log("selected categories: " + selectedCategories);
   };
 
   useEffect(() => {
-    UserService.getCategories().then(
+    scenarioService.getCategories().then(
       (response) => {
-        setCategories([response.data]);
+        setCategories(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -58,9 +62,9 @@ function AddScenarioForm(props) {
   }, []);
 
   const [difficultyLevels] = useState([
-    {label: "Easy", value: "Easy"},
-    {label: "Medium", value: "Medium"},
-    {label: "Hard", value:"Hard"}
+    {label: "Easy", value: 1},
+    {label: "Medium", value: 2},
+    {label: "Hard", value: 3}
   ]);
   const [difficultyState, setDifficulty] = useState("Easy");
 
@@ -94,13 +98,11 @@ function AddScenarioForm(props) {
     setExplanation(data)
   }
 
-  const [imageState, setImage] = useState({raw:""});
+  const [imagePathState, setImagePath] = useState("");
 
   const handleImage = e => {
     if (e.target.files.length && e.target.files[0].name.length <= 90) {
-      setImage({
-        raw: e.target.files[0]
-      });
+      setImagePath(e.target.files[0].name);
     } else {
         alert("Filename too long!")
     }
@@ -115,38 +117,45 @@ function AddScenarioForm(props) {
     console.log(descriptionState);
     console.log(optionsState);
     console.log(checked);
-    console.log(imageState);
+    console.log(imagePathState);
     console.log(explanationState);
 
-    const convertBoolean = val => val ? 1 : 0
+    if (selectedCategories.length === 0) {
+      required()
+    } else {
 
-    const scenarioData = {
-      scenarioname: scenarioNameState,
-      categories: selectedCategories,
-      questiontext: descriptionState,
-      option1: optionsState[0].value,
-      option2: optionsState[1].value,
-      option3: optionsState[2].value,
-      option4: optionsState[3].value,
-      correct1: convertBoolean(checked.option1),
-      correct2: convertBoolean(checked.option2),
-      correct3: convertBoolean(checked.option3),
-      correct4: convertBoolean(checked.option4),
-      picture: imageState,
-      explanation: explanationState,
+      const convertBoolean = val => val ? 1 : 0
+
+      const scenarioData = {
+        scenarioNameVar: scenarioNameState,
+        questionTypeVar: 1,
+        questionTextVar: descriptionState,
+        // change to pictureVar: imageState,
+        pictureVar: "/../img/Testing.png",
+        questionOption1Var: optionsState[0].value,
+        questionOption2Var: optionsState[1].value,
+        questionOption3Var: optionsState[2].value,
+        questionOption4Var: optionsState[3].value,
+        questionCorrect1Var: convertBoolean(checked.option1),
+        questionCorrect2Var: convertBoolean(checked.option2),
+        questionCorrect3Var: convertBoolean(checked.option3),
+        questionCorrect4Var: convertBoolean(checked.option4),
+        questionExplanationVar: explanationState,
+        scenarioDifficultyVar: difficultyState,
+        scenarioCategoryVar: selectedCategories
+      }
+  
+      console.log(scenarioData);
+  
+      scenarioService
+        .createScenario(scenarioData)
+        .then (() => {
+          alert("Scenario Added to DB");
+          props.history.push("/scenarios");
+          window.location.reload();
+      });
     }
-
-    console.log(scenarioData);
-
-    Axios
-      .post('http://localhost:3001/api/content/complete', scenarioData, {
-        headers: authHeader()
-      })
-      .then (() => {
-        alert("Scenario Added to DB");
-        props.history.push("/scenarios");
-        window.location.reload();
-    });
+    
   }
 
   return (
@@ -171,21 +180,19 @@ function AddScenarioForm(props) {
             </Form.Text>
           </Form.Label>
           
-          <Form.Control 
-            as="select" multiple
-            value={categories}
-            required
-            onChange={(e) => updateCategory(e.target.value)}
-          >
-            {categories.map(item => (
-              <option
-                key={item.id}
-                value={item.value}
-              >
-                {item.categoryname}
-              </option>
-            ))}
-          </Form.Control>
+          {categories.map(item => (
+            <Form.Group key={item.categoryid} controlId="formBasicCheckbox">
+              <Form.Check
+                id={item.categoryid}
+                label={item.categoryname}
+                key={item.categoryid}
+                value={item.categoryid}
+                onChange={(e) => updateCategory(e.target.value)}
+              />
+            </Form.Group>
+          ))}
+          
+
         </Form.Group>
         <Form.Group>
           <Form.Label>DIFFICULTY</Form.Label>
@@ -213,6 +220,14 @@ function AddScenarioForm(props) {
             config={{
               toolbar: ['heading', '|', 'bold', 'italic', 'blockQuote', 'numberedList', 'bulletedList', 'imageUpload', 'insertTable', '|', 'undo', 'redo']
             }}
+          />
+        </Form.Group>
+
+        <Form.Group>
+          <Form.File 
+            id="exampleFormControlFile1" 
+            label="Add image to description" 
+            onChange={handleImage}  
           />
         </Form.Group>
 

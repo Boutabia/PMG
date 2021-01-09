@@ -85,3 +85,7 @@ label {
   border-radius: 0px;
   border: 5px solid #e9e0db;
 }
+
+.form-check-label {
+  font-weight: 400;
+}

@@ -9,7 +9,6 @@ import {
 import Home from './home';
 import AddScenarioForm from "./addScenarioForm";
 import AuthService from "./services/auth.service";
-import Profile from "./components/Profile";
 import Scenarios from "./components/Scenarios";
 import Navbar from "react-bootstrap/Navbar";
 import AboutUs from './components/AboutUs';

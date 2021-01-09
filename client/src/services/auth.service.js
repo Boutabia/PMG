@@ -1,5 +1,4 @@
 import axios from "axios";
-import authHeader from "./auth-header";
 
 export const API_URL = "http://localhost:3001/api/";
 
@@ -30,8 +29,10 @@ const getCurrentUser = () => {
   return JSON.parse(localStorage.getItem("user"));
 };
 
-export default {
+const auth = {
   login,
   logout,
-  getCurrentUser,
+  getCurrentUser
 };
+
+export default auth;

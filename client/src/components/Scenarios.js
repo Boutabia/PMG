@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Jumbotron from "react-bootstrap/Jumbotron";
-import AuthService from "../services/auth.service";
-import ListGroup from "react-bootstrap/ListGroup";
-import UserService from "../services/user.service";
-import authHeader from "../services/auth-header";
-import Axios from "axios";
 import Table from "react-bootstrap/Table";
 import "./Scenarios.css";
 import Button from "react-bootstrap/Button";
@@ -17,6 +12,12 @@ const Scenarios = () => {
   const [show, setShow] = useState(false);
   const [scenario, setScenario] = useState("");
 
+  const difficultyLevels = {
+    1: "Easy",
+    2: "Medium",
+    3: "Hard"
+  };
+
   console.log(scenario);
 
   /*For modal window*/
@@ -26,14 +27,6 @@ const Scenarios = () => {
     console.log(`scenarioid ${scenarioid}`);
     
   }
-
- /*  const [testContent] = useState([
-    {id:1, scenarioname: "scenario1", scenariodifficulty: 3, categoryname: "Meeting Practices"},
-    {id:2, scenarioname: "scenario2", scenariodifficulty: 1, categoryname: "Scrum"},
-    {id:3, scenarioname: "scenario3", scenariodifficulty: 2, categoryname: "Risk Management"},
-    {id:4, scenarioname: "scenario4", scenariodifficulty: 3, categoryname: "Scheduling"},
-    {id:5, scenarioname: "scenario5", scenariodifficulty: 2, categoryname: "Meeting Practices"},
-  ]); */
 
   useEffect(() => {
     scenarioService
@@ -55,8 +48,11 @@ const Scenarios = () => {
         console.log("deleted " + deleted.data);
         if (deleted.data === 1) {
           setScenario("");
+          window.location.reload();
           console.log("deleted successfully");
           alert("Scenario deleted");
+        } else {
+          alert("Scenario was not deleted");
         }
       })
       .catch(error => {
@@ -88,7 +84,7 @@ const Scenarios = () => {
                   {item.scenarioname} {item.scenarioid}
                 </td>
                 <td>
-                  {item.scenariodifficulty}
+                  {difficultyLevels[item.scenariodifficulty]}
                 </td>
                 <td>
                   {item.categoryname}
@@ -107,7 +103,7 @@ const Scenarios = () => {
               
               <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
-                  <Modal.Title>Delete Scenario</Modal.Title>
+                  <Modal.Title>Delete Scenario?</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                   Are you sure you want to delete this scenario?

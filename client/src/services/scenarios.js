@@ -9,6 +9,10 @@ const getAll = () => {
 
 }
 
+const getCategories = () => {
+  return axios.get(baseUrl + "content/category");
+};
+
 const deleteScenario = (scenarioToDeleteVar) => {
   const request = {
     headers: authHeader()
@@ -33,7 +37,17 @@ const deleteScenario = (scenarioToDeleteVar) => {
     }})
 }
 
-export default {
-  getAll,
-  deleteScenario
+const createScenario = (scenarioData) => {
+  return axios.post(baseUrl + 'content/complete', scenarioData, {
+    headers: authHeader()
+  })
 }
+
+const scenarios = {
+  getAll,
+  getCategories,
+  deleteScenario,
+  createScenario
+}
+
+export default scenarios;

@@ -1,5 +1,4 @@
 import React from 'react';
-import Container from 'react-bootstrap/esm/Container';
 import Card from 'react-bootstrap/Card';
 import './AboutUs.css';
 
