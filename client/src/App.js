@@ -12,6 +12,7 @@ import AuthService from "./services/auth.service";
 import Profile from "./components/Profile";
 import Scenarios from "./components/Scenarios";
 import Navbar from "react-bootstrap/Navbar";
+import AboutUs from './components/AboutUs';
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -68,7 +69,7 @@ const App = () => {
                     </Link>
                   </li>
                   <li className="nav-item">
-                    <Link to={"/addScenario"} className="nav-link">
+                    <Link to={"/addscenario"} className="nav-link">
                       Add New Scenario
                     </Link>
                   </li>
@@ -78,8 +79,8 @@ const App = () => {
             {currentUser ? (
               <div className="navbar-nav ml-auto">
                 <li className="nav-item">
-                  <Link to={"/profile"} className="nav-link">
-                    {currentUser.username}
+                  <Link to={"/aboutus"} className="nav-link">
+                    About Us
                   </Link>
                 </li>
                 <li className="nav-item">
@@ -90,6 +91,11 @@ const App = () => {
               </div>
             ) : (
               <div className="navbar-nav ml-auto">
+                <li className="nav-item">
+                  <Link to={"/aboutus"} className="nav-link">
+                    About Us
+                  </Link>
+                </li>
                 <li className="nav-item">
                   <Link to={"/login"} className="nav-link">
                     For Teachers
@@ -102,10 +108,10 @@ const App = () => {
           <div className="container mt-3">
             <Switch>
               <Route exact path={"/"} component={Home} />
+              <Route exact path={"/aboutus"} component={AboutUs} />
               <Route exact path="/login" component={Login} />
-              <Route exact path="/profile" component={Profile} />
               <Route path="/scenarios" component={Scenarios} />
-              <Route path="/addScenario" component={AddScenarioForm} />
+              <Route path="/addscenario" component={AddScenarioForm} />
             </Switch>
           </div>
         </Router>
