@@ -1,10 +1,11 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import './App.css';
 import Login from './components/Login';
 import {
   BrowserRouter as Router,
-  Switch, Route, Link
+  Switch, Route, Redirect, Link
 } from "react-router-dom";
 import Home from './home';
 import AddScenarioForm from "./addScenarioForm";
@@ -26,10 +27,14 @@ const App = () => {
 
   useEffect(() => {
     let d = new Date();
-    const expired = localStorage.getItem("expiration") <  d.getTime();
-    if (expired) {
-      logOut();
-    } 
+    let exp = localStorage.getItem("expiration")
+    if (exp) {
+      const expired = exp <  d.getTime();
+      if (expired) {
+        logOut();
+        window.location.reload();
+      }
+    }
   }, []);
 
   const logOut = () => {
@@ -44,22 +49,6 @@ const App = () => {
             <Link to={"/"} className="navbar-brand">
               PMG
             </Link>
-
-            {/*for testing, delete later*/}
-            {/* <div className="navbar-nav mr-auto">
-              <li className="nav-item">
-                <Link to={"/scenarios"} className="nav-link">
-                  Scenarios
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link to={"/addScenario"} className="nav-link">
-                  Add New Scenario
-                </Link>
-              </li>
-            </div> */}
-            
-
               {currentUser && (
                 <div className="navbar-nav mr-auto">
                   <li className="nav-item">
@@ -106,11 +95,11 @@ const App = () => {
 
           <div className="container mt-3">
             <Switch>
-              <Route exact path={"/"} component={Home} />
               <Route exact path={"/aboutus"} component={AboutUs} />
               <Route exact path="/login" component={Login} />
               <Route path="/scenarios" component={Scenarios} />
               <Route path="/addscenario" component={AddScenarioForm} />
+              <Route exact path={"/"} component={Home} />
             </Switch>
           </div>
         </Router>

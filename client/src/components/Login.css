@@ -48,25 +48,36 @@ label {
   -moz-border-radius: 0px;
   -webkit-border-radius: 0px;
   border-radius: 0px;
-  border-style: none;
+  border-style: solid;
+  border-color: #4e0091;
+  border-width: 2px;
   font-weight: 600;
   letter-spacing: 2px;
-  margin-top: 20px;
 }
 
 .btn-primary:hover {
   background-color: #8406ea;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  border-style: none;
+  border-style: solid;
+  border-color: #8406ea;
 }
 
 .btn-primary:focus {
   background-color: #4e0091;
+  box-shadow: 0 0 0 2px #BA64FF;
+  border-style: solid;
+  border-color: #4e0091;
 }
 
-.btn-primary:active {
+.btn-primary:active:focus {
   background-color: #3d0072!important;
-  border: 5 px solid #270048!important;
+  border: 2px solid #270048!important;
+  box-shadow: 0 0 0 2px #BA64FF!important;
+}
+
+.btn-primary:disabled {
+  background-color: #d5d5d5;
+  color: #626164;
 }
 
 .form-control {
@@ -74,6 +85,7 @@ label {
   -webkit-border-radius: 0px;
   border-radius: 0px;
   border-style: none;
+  margin-bottom: 20px;
 }
 
 .jumbotron {

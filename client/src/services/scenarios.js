@@ -14,27 +14,10 @@ const getCategories = () => {
 };
 
 const deleteScenario = (scenarioToDeleteVar) => {
-  const request = {
-    headers: authHeader()
-    /* body: {
-      "scenarioToDeleteVar": scenarioToDeleteVar.toString()
-    },
-    "scenarioToDeleteVare": scenarioToDeleteVar.toString(), 
-    data: {
-      "scenarioToDeleteVare": scenarioToDeleteVar
-    }*/
-    /* params: {
-      "scenarioToDeleteVar": String(scenarioToDeleteVar),
-    } */
-  }
-
-  console.log(request)
-
-  return axios.delete(baseUrl + 'content/scenario', {
-    headers: authHeader(), 
-    data: {
-      scenarioToDeleteVar: scenarioToDeleteVar
-    }})
+  return axios.delete(baseUrl + 'content/scenario', { 
+    data: {scenarioToDeleteVar: scenarioToDeleteVar},
+    headers: authHeader(),
+  })
 }
 
 const createScenario = (scenarioData) => {

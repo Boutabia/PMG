@@ -23,3 +23,7 @@ body {
 .nav-link:active {
   color: #A9AE0F!important;
 }
+
+.navbar-brand {
+  font-weight: bold;
+}

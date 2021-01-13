@@ -15,14 +15,15 @@ const login = (username, password) => {
         localStorage.setItem("expiration", JSON.stringify(response.data.expiration));
       }
 
-      return response.accessToken;
-    }, (error) => {
-      console.log(error);
+      return response.data;
     });
 };
 
 const logout = () => {
+  console.log("logged out");
   localStorage.removeItem("user");
+  localStorage.removeItem("expiration");
+  //history.push("/login");
 };
 
 const getCurrentUser = () => {

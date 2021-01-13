@@ -66,7 +66,7 @@ function AddScenarioForm(props) {
     {label: "Medium", value: 2},
     {label: "Hard", value: 3}
   ]);
-  const [difficultyState, setDifficulty] = useState("Easy");
+  const [difficultyState, setDifficulty] = useState(1);
 
   const [optionsState, setOptions] = useState([
     {id: 1, name: "option1", label: "Option A", value: ""},
@@ -218,7 +218,7 @@ function AddScenarioForm(props) {
             data={descriptionState}
             onChange={handleDescription}
             config={{
-              toolbar: ['heading', '|', 'bold', 'italic', 'blockQuote', 'numberedList', 'bulletedList', 'imageUpload', 'insertTable', '|', 'undo', 'redo']
+              toolbar: ['heading', '|', 'bold', 'italic', 'blockQuote', 'numberedList', 'bulletedList', 'insertTable', '|', 'undo', 'redo']
             }}
           />
         </Form.Group>
@@ -275,7 +275,7 @@ function AddScenarioForm(props) {
             data={explanationState}
             onChange={handleExplanation}
             config={{
-              toolbar: ['heading', '|', 'bold', 'italic', 'blockQuote', 'numberedList', 'bulletedList', 'imageUpload', 'insertTable', '|', 'undo', 'redo']
+              toolbar: ['heading', '|', 'bold', 'italic', 'blockQuote', 'numberedList', 'bulletedList', 'insertTable', '|', 'undo', 'redo']
             }}
           />
         </Form.Group>

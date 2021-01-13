@@ -43,18 +43,29 @@ const Login = (props) => {
     form.current.validateAll();
 
     if (checkBtn.current.context._errors.length === 0) {
-      AuthService.login(username, password).then(
-        () => {
-          props.history.push("/scenarios");
-          window.location.reload();
+      AuthService.login(username, password)
+        .then(() => {
+          let user = JSON.parse(localStorage.getItem("user"));
+          if (user) {
+
+            props.history.push("/scenarios");
+            window.location.reload();
+          }
         },
         (error) => {
-          const resMessage =
+          console.log(error.response.data);
+          
+          /* const resMessage =
             (error.response &&
               error.response.data &&
               error.response.data.message) ||
             error.message ||
-            error.toString();
+            error.toString(); */
+            
+          let resMessage = "";
+          if (error.response.status === 401) {
+            resMessage = "Invalid username or password.";
+          }
 
           setLoading(false);
           setMessage(resMessage);
