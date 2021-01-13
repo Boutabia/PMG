@@ -9,14 +9,14 @@ function GameView(props) {
     const [currentScenario, setCurrentScenario] = useState(0);
     
     const [scenarios, setScenarios] = useState([{
-        scenarioTitle:"Scenario Title 1",
-        scenarioText:"Curabitur placerat lacus massa, ac congue neque aliquet nec. Morbi id dui tincidunt urna pulvinar vulputate id mollis ante?"}])
+        scenarioTitle:"Email Subject Fields",
+        scenarioText:"You are managing eShop project and organising project plan inspection meeting. You are sending the project plan to client and other stakeholders. What is a good email subject field?"}])
         
     const [options, setOptions] = useState([
-            {id:1, optionText:"Donec sagittis tortor at massa fringilla efficitur.", isCorrect:false, selected:false, feedback:0},
-            {id:2, optionText:"Aenean consectetur sit amet nunc eu ultrices.", isCorrect:true, selected:false, feedback:0},
-            {id:3, optionText:"Fusce auctor bibendum dui quis tincidunt.", isCorrect:false, selected:false, feedback:0},
-            {id:4, optionText:"Mauris vitae metus scelerisque, tincidunt velit vel.", isCorrect:true, selected:false, feedback:0}
+            {id:1, optionText:"Your project plan is ready!!!!", isCorrect:false, selected:false, feedback:0},
+            {id:2, optionText:"eShop / Project plan inspection on 30.09.2020", isCorrect:true, selected:false, feedback:0},
+            {id:3, optionText:"Project Plan is ready to be inspected", isCorrect:false, selected:false, feedback:0},
+            {id:4, optionText:"eShop inspection on Friday", isCorrect:false, selected:false, feedback:0}
         ])
     const [submitted, setSubmitted] = useState(false);
 
@@ -51,8 +51,8 @@ function GameView(props) {
             <Buttons options={options} setOptions={setOptions} handleSubmit={handleSubmit} submitted={submitted}/>
             {submitted ?
                 <Card className='explanation'>
-                    <Card.Title>Right answer</Card.Title>
-                    <Card.Text>Explanation for the right answer</Card.Text>
+                    <Card.Title>Right answer: eShop / Project plan inspection on 30.09.2020</Card.Title>
+                    <Card.Text>Email subject field should include the name of the project, a concise subject and a date.</Card.Text>
                 </Card>
             : ''}
         </Card>
