@@ -80,8 +80,8 @@ contentRouter.post("/complete", authenticateToken, async (req,res) => {
  */
 
 contentRouter.get("/startgame", async(req, res)=>{
-    const body = req.body;
-    const scenarioArray = await getScenarioList(body.categories, body.limit, true, body.difficulty);
+    const query = req.query;
+    const scenarioArray = await getScenarioList(query.categories, query.limit, true, query.difficulty);
 
     if (scenarioArray.length === 0){
         res.writeHead(500, "No scenarios found.");
@@ -131,11 +131,12 @@ contentRouter.get("/category", async(req, res)=>{
  * scenario statistics.
  */
 contentRouter.get("/statistics", async(req, res)=>{
-    const id = req.body.scenarioIdVar;
+    const id = req.query.scenarioIdVar;
     const statistics = await id > 0 ? await getStatistics(id) : await getStatistics(); 
     res.writeHead(200, "Statistics fetched!", {'Content-Type': 'application/json'});
     return res.end(JSON.stringify(statistics));
 });
+
 /**
  * POST statistics to update new numbers in there. 
  * send statisticsArrayVar, which has 2 variables for each 
