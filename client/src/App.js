@@ -8,7 +8,7 @@ import Button from 'react-bootstrap/Button'
 function App() {
 
   function startGame() {
-    Axios.get('http://localhost:3001/api/content/startgame')
+    Axios.get('http://localhost:3001/api/content/startgame', {params: {difficulty: 3, limit: 15}})
     .then((response) => {
       console.log(response.data);
     })
