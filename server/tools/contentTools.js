@@ -315,7 +315,7 @@ async function insertToStatistics(id){
  */
 
 async function uploadFile(file, res){
-    file.mv(`${__dirname}/public/uploads/${file.name}`, err => {
+    file.mv(`${__dirname}/../public/${file.name}`, err => {
         if (err) {
             console.error(err);
             return res.status(500).send(err);
