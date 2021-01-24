@@ -26,8 +26,8 @@ const createScenario = (scenarioData) => {
   })
 }
 
-const saveImage = (fileData) => {
-  return axios.post(baseUrl + 'upload', fileData, {
+const saveImage = (formData) => {
+  return axios.post(baseUrl + 'content/upload', formData, {
     headers: {
       'Content-Type': 'multipart/form-data'
     }

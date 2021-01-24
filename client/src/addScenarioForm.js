@@ -10,6 +10,7 @@ import Jumbotron from 'react-bootstrap/Jumbotron';
 import scenarioService from "./services/scenarios";
 import AuthService from "./services/auth.service";
 import { Redirect } from "react-router-dom";
+import Message from "./Message";
 
 const required = () => {
     return (
@@ -115,16 +116,6 @@ function AddScenarioForm(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log(scenarioNameState);
-    console.log(selectedCategories);
-    console.log(difficultyState);
-    console.log(descriptionState);
-    console.log(optionsState);
-    console.log(checked);
-    console.log(imagePathState);
-    console.log(explanationState);
-    console.log("KUVA", file);
-
     if (selectedCategories.length === 0 || descriptionState.length === 0) {
       required()
     } else {
@@ -151,29 +142,32 @@ function AddScenarioForm(props) {
   
       console.log(scenarioData);
 
-      const fileData = new FormData();
-      fileData.append("file", file);
-      console.log("image", fileData);
+      if(file) {
+        const formData = new FormData();
+        formData.append('file', file);
 
-      scenarioService
-        .saveImage(fileData)
+        scenarioService
+        .saveImage(formData)
         .then (() => {
-
+          
         })
         .catch(error => {
           console.log(error);
+          if (error.response.status === 500) {
+            setMessage('There was a problem with the server')
+          } else {
+            setMessage(error.response.data.msg);
+          }
         });
-
+      } 
+      
       scenarioService
         .createScenario(scenarioData)
         .then (() => {
           alert("New scenario added successfully.");
           props.history.push("/scenarios");
-          window.location.reload();
       });
-      
     }
-    
   }
 
   AuthService.getExpiration()
@@ -183,10 +177,11 @@ function AddScenarioForm(props) {
 
   return (
     <Jumbotron>
+      {message ? <Message msg={message} /> : null}
       <Form onSubmit={handleSubmit}>
         <h2>New Scenario</h2>
         <Form.Group>
-          <Form.Label>SCENARIO NAME</Form.Label>
+          <Form.Label>*SCENARIO NAME</Form.Label>
             <Form.Control
               type='text'
               name='scenarioName'
@@ -197,7 +192,7 @@ function AddScenarioForm(props) {
             />
         </Form.Group>
         <Form.Group>
-          <Form.Label>CATEGORY
+          <Form.Label>*CATEGORY
             <Form.Text className="text-muted">
               Select all that apply
             </Form.Text>
@@ -218,7 +213,7 @@ function AddScenarioForm(props) {
 
         </Form.Group>
         <Form.Group>
-          <Form.Label>DIFFICULTY</Form.Label>
+          <Form.Label>*DIFFICULTY</Form.Label>
           <Form.Control 
             as="select"
             value={difficultyState}
@@ -235,7 +230,7 @@ function AddScenarioForm(props) {
           </Form.Control>
         </Form.Group>
         <Form.Group>
-          <Form.Label>SCENARIO DESCRIPTION</Form.Label>
+          <Form.Label>*SCENARIO DESCRIPTION</Form.Label>
           <CKEditor
             editor={ClassicEditor}
             data={descriptionState}
@@ -249,12 +244,12 @@ function AddScenarioForm(props) {
         <Form.Group>
           <Form.File 
             id="exampleFormControlFile1" 
-            label="Add image to description" 
+            label="Add image to description (optional)" 
             onChange={handleImage}  
           />
         </Form.Group>
 
-        <label>ANSWER OPTIONS
+        <label>*ANSWER OPTIONS
           <Form.Text className="text-muted">
             Check correct answers
           </Form.Text>
@@ -292,7 +287,7 @@ function AddScenarioForm(props) {
         </Form.Group>
 
         <Form.Group>
-          <Form.Label>EXPLANATION FOR CORRECT ANSWER</Form.Label>
+          <Form.Label>*EXPLANATION FOR CORRECT ANSWER</Form.Label>
           <CKEditor
             editor={ClassicEditor}
             data={explanationState}
