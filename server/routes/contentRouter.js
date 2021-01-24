@@ -13,7 +13,8 @@ const {insertToScenario,
     addStatistics,
     insertToStatistics,
     deleteScenario,
-    deleteCategory} = require("../tools/contentTools");
+    deleteCategory,
+    uploadFile } = require("../tools/contentTools");
 
 /**
  * Method to insert into the scenario -table
@@ -187,6 +188,20 @@ contentRouter.delete("/category", authenticateToken, async(req, res)=>{
     res.end();
 });
 
+
+/**
+ * Route to upload content such as images and files. 
+ */
+contentRouter.post('/upload', (req, res) => {
+    if (req.files == undefined) {
+        res.writeHead(400, `No file uploaded`);
+        return res.end();
+    }
+  
+    const file = req.files.file;
+    return uploadFile(file, res);
+    
+});
 
 module.exports = {
     contentRouter
