@@ -43,25 +43,23 @@ const Scenarios = () => {
       })
   }, []);
 
-  
+  AuthService.getExpiration()
   if (!AuthService.getCurrentUser()) {
     return <Redirect to="/login" />;
   }
 
   const deleteScenario = () => {
-    console.log("DELEEETE " + scenario);
-
     scenarioService
       .deleteScenario(scenario)
       .then((deleted) => {
         console.log("deleted " + deleted.data);
         if (deleted.data === 1) {
-          setScenario("");
-          window.location.reload();
           console.log("deleted successfully");
-          alert("Scenario deleted");
+          alert("Scenario deleted.");
+          setContent(content.filter(item => item.scenarioid !== scenario));
+          setScenario("");
         } else {
-          alert("Scenario was not deleted");
+          alert("Scenario was not deleted.");
         }
       })
       .catch(error => {
@@ -69,8 +67,6 @@ const Scenarios = () => {
       })
 
     handleClose();
-
-    
   }
 
   return (
@@ -142,12 +138,12 @@ const Scenarios = () => {
               <Modal.Body>
                 <p><b>Category:</b> {scenarioView.categoryname}</p> 
                 <p><b>Difficulty:</b> {difficultyLevels[scenarioView.scenariodifficulty]}</p>
-                <p><b>Description:</b> <div dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(scenarioView.questiontext)}}></div></p>
+                <p><b>Description:</b> <span dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(scenarioView.questiontext)}}></span></p>
                 <p><b>Option A:</b> {scenarioView.option1} <b>{isCorrect(scenarioView.correct1)}</b></p>
                 <p><b>Option B:</b> {scenarioView.option2} <b>{isCorrect(scenarioView.correct2)}</b></p>
                 <p><b>Option C:</b> {scenarioView.option3} <b>{isCorrect(scenarioView.correct3)}</b></p>
                 <p><b>Option D:</b> {scenarioView.option4} <b>{isCorrect(scenarioView.correct4)}</b></p>
-                <p><b>Explanation:</b> <div dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(scenarioView.explanation)}}></div></p>
+                <p><b>Explanation:</b> <span dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(scenarioView.explanation)}}></span></p>
               </Modal.Body>
               <Modal.Footer>
                 <Button variant="primary" onClick={() => setShowScenario(false)}>Close</Button>

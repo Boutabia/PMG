@@ -26,11 +26,20 @@ const createScenario = (scenarioData) => {
   })
 }
 
+const saveImage = (fileData) => {
+  return axios.post(baseUrl + 'upload', fileData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  });
+}
+
 const scenarios = {
   getAll,
   getCategories,
   deleteScenario,
-  createScenario
+  createScenario,
+  saveImage
 }
 
 export default scenarios;

@@ -30,10 +30,23 @@ const getCurrentUser = () => {
   return JSON.parse(localStorage.getItem("user"));
 };
 
+const getExpiration = () => {
+  let d = new Date();
+    let exp = localStorage.getItem("expiration")
+    if (exp) {
+      const expired = exp <  d.getTime();
+      if (expired) {
+        logout();
+        window.location.reload();
+      }
+    }
+};
+
 const auth = {
   login,
   logout,
-  getCurrentUser
+  getCurrentUser,
+  getExpiration
 };
 
 export default auth;

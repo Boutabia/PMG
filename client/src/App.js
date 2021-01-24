@@ -1,11 +1,10 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
 import './App.css';
 import Login from './components/Login';
 import {
   BrowserRouter as Router,
-  Switch, Route, Redirect, Link
+  Switch, Route, Link
 } from "react-router-dom";
 import Home from './home';
 import AddScenarioForm from "./addScenarioForm";
@@ -22,18 +21,6 @@ const App = () => {
 
     if (user) {
       setCurrentUser(user);
-    }
-  }, []);
-
-  useEffect(() => {
-    let d = new Date();
-    let exp = localStorage.getItem("expiration")
-    if (exp) {
-      const expired = exp <  d.getTime();
-      if (expired) {
-        logOut();
-        window.location.reload();
-      }
     }
   }, []);
 

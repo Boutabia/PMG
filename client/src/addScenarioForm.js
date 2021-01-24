@@ -8,14 +8,17 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import "./components/Login.css";
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import scenarioService from "./services/scenarios";
+import AuthService from "./services/auth.service";
+import { Redirect } from "react-router-dom";
 
-const required = (value) => {
+const required = () => {
     return (
-      alert("This field is required")
+      alert("Select at least one category.")
     )
 }
 
 function AddScenarioForm(props) {
+  const [message, setMessage] = useState("");
 
   const [scenarioNameState, setScenarioName] = useState("");
 
@@ -34,7 +37,7 @@ function AddScenarioForm(props) {
     setSelectedCategories(prevArray => {
       let valueExists = false
 
-      prevArray.map(item => {
+      prevArray.forEach(item => {
         console.log('prevArray: ', prevArray)
         if (item === newValue) {
           valueExists = true;
@@ -48,7 +51,6 @@ function AddScenarioForm(props) {
         return [...prevArray, newValue]
       }
     })
-    console.log("selected categories: " + selectedCategories);
   };
 
   useEffect(() => {
@@ -98,6 +100,7 @@ function AddScenarioForm(props) {
     setExplanation(data)
   }
 
+  const [file, setFile] = useState("");
   const [imagePathState, setImagePath] = useState("");
 
   const handleImage = e => {
@@ -106,6 +109,7 @@ function AddScenarioForm(props) {
     } else {
         alert("Filename too long!")
     }
+    setFile(e.target.files[0]);
   };
 
   const handleSubmit = (e) => {
@@ -119,8 +123,9 @@ function AddScenarioForm(props) {
     console.log(checked);
     console.log(imagePathState);
     console.log(explanationState);
+    console.log("KUVA", file);
 
-    if (selectedCategories.length === 0) {
+    if (selectedCategories.length === 0 || descriptionState.length === 0) {
       required()
     } else {
 
@@ -130,8 +135,7 @@ function AddScenarioForm(props) {
         scenarioNameVar: scenarioNameState,
         questionTypeVar: 1,
         questionTextVar: descriptionState,
-        // change to pictureVar: imageState,
-        pictureVar: "/../img/Testing.png",
+        pictureVar: imagePathState,
         questionOption1Var: optionsState[0].value,
         questionOption2Var: optionsState[1].value,
         questionOption3Var: optionsState[2].value,
@@ -146,16 +150,35 @@ function AddScenarioForm(props) {
       }
   
       console.log(scenarioData);
-  
+
+      const fileData = new FormData();
+      fileData.append("file", file);
+      console.log("image", fileData);
+
+      scenarioService
+        .saveImage(fileData)
+        .then (() => {
+
+        })
+        .catch(error => {
+          console.log(error);
+        });
+
       scenarioService
         .createScenario(scenarioData)
         .then (() => {
-          alert("Scenario Added to DB");
+          alert("New scenario added successfully.");
           props.history.push("/scenarios");
           window.location.reload();
       });
+      
     }
     
+  }
+
+  AuthService.getExpiration()
+  if (!AuthService.getCurrentUser()) {
+    return <Redirect to="/login" />;
   }
 
   return (
@@ -279,6 +302,14 @@ function AddScenarioForm(props) {
             }}
           />
         </Form.Group>
+
+        {message && (
+            <div className="form-group">
+              <div className="alert alert-danger" role="alert">
+                {message}
+              </div>
+            </div>
+          )}
 
         <Button variant="primary" type="submit">SAVE SCENARIO</Button>
       </Form>
