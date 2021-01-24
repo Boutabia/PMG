@@ -3,7 +3,7 @@ import ListGroup from 'react-bootstrap/ListGroup'
 import {FaRegCircle} from 'react-icons/fa'
 import {FaCheckCircle} from 'react-icons/fa'
 
-function Answer({text, option, options, setOptions}) {
+function Option({text}) {
 
     function handleSelect() {
         setOptions(options.map((item) => {
@@ -24,10 +24,10 @@ function Answer({text, option, options, setOptions}) {
             <ListGroup.Item type='checkbox' variant='incorrect'><FaCheckCircle className='check'/>{text}</ListGroup.Item>
         : option.selected ?
             <ListGroup.Item type='checkbox' variant='selected' onClick={handleSelect}><FaCheckCircle className='check'/>{text}</ListGroup.Item>
-        : <ListGroup.Item type='checkbox' variant='answers' onClick={handleSelect}><FaRegCircle className='check'/>{text}</ListGroup.Item>
+        : <ListGroup.Item type='checkbox' variant='options' onClick={handleSelect}><FaRegCircle className='check'/>{text}</ListGroup.Item>
         }
         </div>
     )
 }
 
-export default Answer;
+export default Option;

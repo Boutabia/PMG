@@ -1,24 +1,55 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
+import Axios from "axios";
 import Card from 'react-bootstrap/Card';
 import Scenario from './Scenario';
-import AnswerList from './AnswerList';
-import Answer from './Answer';
 import Buttons from './GameButtons';
+import Button from 'react-bootstrap/Button';
+import Explanation from './Explanation';
+
 
 function GameView(props) {
-    const [currentScenario, setCurrentScenario] = useState(0);
     
-    const [scenarios, setScenarios] = useState([{
-        scenarioTitle:"Email Subject Fields",
-        scenarioText:"You are managing eShop project and organising project plan inspection meeting. You are sending the project plan to client and other stakeholders. What is a good email subject field?"}])
+    const [gameData, setGameData] = useState([]);
+    const [index, setIndex] = useState(0);
+    
+    const [scenario, setScenario] = useState(
+        {scenarioTitle:"", scenarioText:""});
         
     const [options, setOptions] = useState([
-            {id:1, optionText:"Your project plan is ready!!!!", isCorrect:false, selected:false, feedback:0},
-            {id:2, optionText:"eShop / Project plan inspection on 30.09.2020", isCorrect:true, selected:false, feedback:0},
-            {id:3, optionText:"Project Plan is ready to be inspected", isCorrect:false, selected:false, feedback:0},
-            {id:4, optionText:"eShop inspection on Friday", isCorrect:false, selected:false, feedback:0}
-        ])
+            {id:1, optionText:"", isCorrect:false, selected:false, feedback:0},
+            {id:2, optionText:"", isCorrect:true, selected:false, feedback:0},
+            {id:3, optionText:"", isCorrect:false, selected:false, feedback:0},
+            {id:4, optionText:"", isCorrect:false, selected:false, feedback:0}
+        ]);
+
     const [submitted, setSubmitted] = useState(false);
+
+    function fetchData() {
+        Axios.get('http://localhost:3001/api/content/startgame', {params: {difficulty: 3, limit: 15}})
+        .then((response) => {
+            console.log(response.data);
+            setGameData(response.data);
+            console.log(gameData);
+            })
+        .catch((error) => {
+        if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+        } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            // http.ClientRequest in node.js
+            console.log(error.request);
+        } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log('Error', error.message);
+        }
+        console.log(error.config);
+        })
+    }
 
     function handleSubmit() {
         setSubmitted(true);
@@ -38,22 +69,22 @@ function GameView(props) {
         }))
     }
 
+    function goForward() {
+        const nextIndex = index + 1;
+        setIndex(nextIndex);
+    }
+
     return (
         <Card className='game-view'>
+                <Button onClick={fetchData}>Fetch data</Button>
                 <div>
-                    <Scenario title={scenarios[currentScenario].scenarioTitle} text={scenarios[currentScenario].scenarioText} />
-                    <AnswerList>
-                        {options.map((option) => (
-                            <Answer key={option.id} option={option} text={option.optionText} options={options} setOptions={setOptions}/>
-                        ))}
-                    </AnswerList>
+                    {gameData.map(scenario => (
+                        <Scenario title={scenario.scenarioname} text={scenario.questiontext}/>
+                    ))}
                 </div>
-            <Buttons options={options} setOptions={setOptions} handleSubmit={handleSubmit} submitted={submitted}/>
+            <Buttons options={options} setOptions={setOptions} handleSubmit={handleSubmit} submitted={submitted} goForward={goForward}/>
             {submitted ?
-                <Card className='explanation'>
-                    <Card.Title>Right answer: eShop / Project plan inspection on 30.09.2020</Card.Title>
-                    <Card.Text>Email subject field should include the name of the project, a concise subject and a date.</Card.Text>
-                </Card>
+                <Explanation/>
             : ''}
         </Card>
     )

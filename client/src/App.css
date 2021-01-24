@@ -12,7 +12,7 @@
   background: #4f12aa;
   padding-top: 2rem;
 }
-.scenario{
+.question{
   background-color: whitesmoke;
   margin: auto;
   width: 700px;
@@ -23,13 +23,13 @@
   color: #4e008e;
 }
 
-.answers {
+.options {
   width: 700px;
   margin: auto;
   margin-bottom: 30px;
 }
 
-.list-group-item-answers {
+.list-group-item-options {
   background-color: #4e008e;
   border: 2px solid #4f12aa;
   text-align: left;
@@ -37,7 +37,7 @@
   color: whitesmoke;
 }
 
-.list-group-item-answers:hover {
+.list-group-item-options:hover {
   border: 1px outset #5f1e91;
   background-color: #370164;
 }
