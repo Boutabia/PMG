@@ -5,32 +5,64 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import "./Login.css";
 import Jumbotron from 'react-bootstrap/Jumbotron';
+import "./Login.css";
 import scenarioService from "../services/scenarios";
 import AuthService from "../services/auth.service";
 import { Redirect } from "react-router-dom";
 import Message from "./Message";
 
-const required = () => {
-    return (
-      alert("Select at least one category.")
-    )
-}
-
 function AddScenarioForm(props) {
+  /**
+   *  Component states 
+   */
   const [message, setMessage] = useState("");
-
   const [scenarioNameState, setScenarioName] = useState("");
-
+  const [categories, setCategories] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [difficultyLevels] = useState([
+    {label: "Easy", value: 1},
+    {label: "Medium", value: 2},
+    {label: "Hard", value: 3}
+  ]);
+  const [difficultyState, setDifficulty] = useState(1);
   const [descriptionState, setDescription] = useState("");
+  const [file, setFile] = useState("");
+  const [imagePathState, setImagePath] = useState("");
+  const [optionsState, setOptions] = useState([
+    {id: 1, name: "option1", label: "Option A", value: ""},
+    {id: 2, name: "option2", label: "Option B", value: ""},
+    {id: 3, name: "option3", label: "Option C", value: ""},
+    {id: 4, name: "option4", label: "Option D", value: ""}
+  ]);
+  const [checked, setChecked] = useState({
+    option1: false,
+    option2: false,
+    option3: false,
+    option4: false,
+  });
+  const [explanationState, setExplanation] = useState("");
+
+  /* 
+   * Gets categories from database 
+   */
+  useEffect(() => {
+    scenarioService.getCategories().then(
+      (response) => {
+        setCategories(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+    });
+  }, []);
+
+  /*
+   * Event handlers
+   */
   const handleDescription = (e, editor) => {
     const data = editor.getData()
     setDescription(data)
   }
-
-  const [categories, setCategories] = useState([]);
-  const [selectedCategories, setSelectedCategories] = useState([]);
 
   const updateCategory = (newValue) => {
     console.log('newValue: ', newValue)
@@ -53,30 +85,7 @@ function AddScenarioForm(props) {
       }
     })
   };
-
-  useEffect(() => {
-    scenarioService.getCategories().then(
-      (response) => {
-        setCategories(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-    });
-  }, []);
-
-  const [difficultyLevels] = useState([
-    {label: "Easy", value: 1},
-    {label: "Medium", value: 2},
-    {label: "Hard", value: 3}
-  ]);
-  const [difficultyState, setDifficulty] = useState(1);
-
-  const [optionsState, setOptions] = useState([
-    {id: 1, name: "option1", label: "Option A", value: ""},
-    {id: 2, name: "option2", label: "Option B", value: ""},
-    {id: 3, name: "option3", label: "Option C", value: ""},
-    {id: 4, name: "option4", label: "Option D", value: ""}
-  ]);
+  
   const handleOptionInput = index => event => {
     let newArr = [...optionsState];
     newArr[index].value = event.target.value;
@@ -84,25 +93,14 @@ function AddScenarioForm(props) {
     setOptions(newArr);
   };
 
-  const [checked, setChecked] = useState({
-    option1: false,
-    option2: false,
-    option3: false,
-    option4: false,
-  });
-
   const handleCheckbox = event => {
     setChecked({...checked, [event.target.name]: event.target.checked});
   };
 
-  const [explanationState, setExplanation] = useState("");
   const handleExplanation = (e, editor) => {
     const data = editor.getData()
     setExplanation(data)
   }
-
-  const [file, setFile] = useState("");
-  const [imagePathState, setImagePath] = useState("");
 
   const handleImage = e => {
     if (e.target.files.length && e.target.files[0].name.length <= 90) {
@@ -116,8 +114,18 @@ function AddScenarioForm(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (selectedCategories.length === 0 || descriptionState.length === 0) {
-      required()
+    const hasEmptyFields = () => {
+      let categoriesEmpty = selectedCategories.length === 0
+      let descriptionEmpty = descriptionState.length === 0
+      let explanationEmpty = explanationState.length === 0
+      let correctAnswerChecked = checked.option1 || checked.option2 || checked.option3 || checked.option4
+      let containsEmptyFields = categoriesEmpty || descriptionEmpty || explanationEmpty || !correctAnswerChecked
+      
+      return (containsEmptyFields)
+    }
+
+    if (hasEmptyFields()) {
+      setMessage("Fill all required fields.")
     } else {
 
       const convertBoolean = val => val ? 1 : 0
@@ -139,8 +147,6 @@ function AddScenarioForm(props) {
         scenarioDifficultyVar: difficultyState,
         scenarioCategoryVar: selectedCategories
       }
-  
-      console.log(scenarioData);
 
       if(file) {
         const formData = new FormData();
@@ -170,6 +176,10 @@ function AddScenarioForm(props) {
     }
   }
 
+  /*
+   * Checks if accesstoken is still valid,
+   * redirects to login page if not.
+   */
   AuthService.getExpiration()
   if (!AuthService.getCurrentUser()) {
     return <Redirect to="/login" />;
@@ -177,7 +187,6 @@ function AddScenarioForm(props) {
 
   return (
     <Jumbotron>
-      {message ? <Message msg={message} /> : null}
       <Form onSubmit={handleSubmit}>
         <h2>New Scenario</h2>
         <Form.Group>
@@ -297,16 +306,9 @@ function AddScenarioForm(props) {
             }}
           />
         </Form.Group>
-
-        {message && (
-            <div className="form-group">
-              <div className="alert alert-danger" role="alert">
-                {message}
-              </div>
-            </div>
-          )}
-
+        {message ? <Message msg={message} /> : null}
         <Button variant="primary" type="submit">SAVE SCENARIO</Button>
+
       </Form>
     </Jumbotron>
   );
