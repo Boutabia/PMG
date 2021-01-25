@@ -5,10 +5,10 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import "./components/Login.css";
+import "./Login.css";
 import Jumbotron from 'react-bootstrap/Jumbotron';
-import scenarioService from "./services/scenarios";
-import AuthService from "./services/auth.service";
+import scenarioService from "../services/scenarios";
+import AuthService from "../services/auth.service";
 import { Redirect } from "react-router-dom";
 import Message from "./Message";
 

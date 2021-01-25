@@ -7,7 +7,7 @@ import {
   Switch, Route, Link
 } from "react-router-dom";
 import Home from './home';
-import AddScenarioForm from "./addScenarioForm";
+import AddScenarioForm from "./components/addScenarioForm";
 import AuthService from "./services/auth.service";
 import Scenarios from "./components/Scenarios";
 import Navbar from "react-bootstrap/Navbar";
