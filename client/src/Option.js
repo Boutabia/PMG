@@ -1,11 +1,14 @@
-import React from 'react'
-import ListGroup from 'react-bootstrap/ListGroup'
-import {FaRegCircle} from 'react-icons/fa'
-import {FaCheckCircle} from 'react-icons/fa'
+import React, {useState} from 'react';
+import ListGroup from 'react-bootstrap/ListGroup';
+import {FaRegCircle} from 'react-icons/fa';
+import {FaCheckCircle} from 'react-icons/fa';
 
-function Answer({text, option, options, setOptions}) {
+function Option({text}) {
 
-    function handleSelect() {
+    [feedback, setFeedback] = useState(0);
+    [selected, setSelected] = useState(false);
+
+   /* function handleSelect() {
         setOptions(options.map((item) => {
             if (item.id === option.id) {
                 return {
@@ -14,20 +17,22 @@ function Answer({text, option, options, setOptions}) {
             }
             return item;
         }))
-    }
+    }*/
 
     return (
-        <div>
+       /* <div>
         {option.feedback===1 ?
             <ListGroup.Item type='checkbox' variant='correct'><FaCheckCircle className='check'/>{text}</ListGroup.Item>
         : option.feedback===2 ?
             <ListGroup.Item type='checkbox' variant='incorrect'><FaCheckCircle className='check'/>{text}</ListGroup.Item>
         : option.selected ?
             <ListGroup.Item type='checkbox' variant='selected' onClick={handleSelect}><FaCheckCircle className='check'/>{text}</ListGroup.Item>
-        : <ListGroup.Item type='checkbox' variant='answers' onClick={handleSelect}><FaRegCircle className='check'/>{text}</ListGroup.Item>
+        : <ListGroup.Item type='checkbox' variant='options' onClick={handleSelect}><FaRegCircle className='check'/>{text}</ListGroup.Item>
         }
-        </div>
+        </div>*/
+
+        <ListGroup.Item type='button' variant='options'><FaRegCircle className='check'/>{text}</ListGroup.Item>
     )
 }
 
-export default Answer;
+export default Option;
