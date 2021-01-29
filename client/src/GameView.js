@@ -59,6 +59,9 @@ function GameView(props) {
         setSubmitted(true);
         checkAnswers();
         updateScore();
+        if (index === gameData.length-1) {
+            setGameEnd(true);
+        }
     }
 
     function checkAnswers() {
@@ -95,6 +98,7 @@ function GameView(props) {
         if (nextIndex < gameData.length) {
             setIndex(nextIndex);
             cleanOptionUI();
+            setSubmitted(false);
         } else {
             setGameEnd(true);
         }
@@ -127,11 +131,13 @@ function GameView(props) {
             option3={gameData[index].option3}
             option4={gameData[index].option4}
             optionUI={optionUI}
-            setOptionUI={setOptionUI}/>
-            <Buttons submitted={submitted} handleSubmit={handleSubmit} goForward={goForward} gameEnd={gameEnd} setShowResult={setShowResult} optionUI={optionUI}/>
+            setOptionUI={setOptionUI}
+            submitted={submitted}/>
             {submitted ?
                 <Explanation text={gameData[index].explanation}/>
             : ''}
+            <Buttons submitted={submitted} handleSubmit={handleSubmit} goForward={goForward} gameEnd={gameEnd} setShowResult={setShowResult} optionUI={optionUI}/>
+
         </Card>
         }
         </div>

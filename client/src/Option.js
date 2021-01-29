@@ -3,7 +3,7 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import {FaRegCircle} from 'react-icons/fa';
 import {FaCheckCircle} from 'react-icons/fa';
 
-function Option({id, text, selected, feedback, optionUI, setOptionUI}) {
+function Option({id, text, selected, feedback, optionUI, setOptionUI, submitted}) {
 
     function handleSelect() {
         setOptionUI(optionUI.map((item) => {
@@ -23,8 +23,8 @@ function Option({id, text, selected, feedback, optionUI, setOptionUI}) {
         : feedback===-1 ?
             <ListGroup.Item id={id} type='button' variant='incorrect'><FaCheckCircle className='check'/>{text}</ListGroup.Item>
         : selected ?
-            <ListGroup.Item id={id} type='button' variant='selected' onClick={handleSelect}><FaCheckCircle className='check'/>{text}</ListGroup.Item>
-        :   <ListGroup.Item id={id} type='button' variant='options' onClick={handleSelect}><FaRegCircle className='check'/>{text}</ListGroup.Item>
+            <ListGroup.Item id={id} type='button' variant='selected' onClick={handleSelect} disabled={submitted}><FaCheckCircle className='check'/>{text}</ListGroup.Item>
+        :   <ListGroup.Item id={id} type='button' variant='options' onClick={handleSelect} disabled={submitted}><FaRegCircle className='check'/>{text}</ListGroup.Item>
         }
         </div>
     )
