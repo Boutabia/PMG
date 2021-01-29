@@ -106,4 +106,12 @@
       color: whitesmoke;
   }
 
+  .result {
+    min-height: 100vh;
+    color: whitesmoke;
+    text-align: center;
+    background: linear-gradient(to bottom, #4e008e 50%, #4f12aa 100%);
+    padding-top: 20rem;
+  }
+
   

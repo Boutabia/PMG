@@ -6,6 +6,7 @@ import ProgressBar from 'react-bootstrap/ProgressBar';
 import Scenario from './Scenario';
 import Buttons from './GameButtons';
 import Explanation from './Explanation';
+import Result from './Result';
 import './GameView.css';
 
 
@@ -20,6 +21,8 @@ function GameView(props) {
         {id: 3, selected: false, feedback: 0},
         {id: 4, selected: false, feedback: 0}]);
     const [score, setScore] = useState(0);
+    const [gameEnd, setGameEnd] = useState(false);
+    const [showResult, setShowResult] = useState(false);
     
     useEffect(() => {
         
@@ -54,11 +57,11 @@ function GameView(props) {
 
     function handleSubmit() {
         setSubmitted(true);
-        updateOptionUI();
+        checkAnswers();
         updateScore();
     }
 
-    function updateOptionUI() {
+    function checkAnswers() {
         setOptionUI(optionUI.map((item, i) => {
             if (item.selected) {
                 
@@ -73,6 +76,12 @@ function GameView(props) {
         }));
     }
 
+    function cleanOptionUI() {
+        setOptionUI(optionUI.map((item) => {
+            return {...item, feedback: 0, selected: false};
+        }));
+    }
+
     function updateScore() {
         let newScore = score;
         for (var i=0; i < optionUI.length; i++) {
@@ -82,14 +91,28 @@ function GameView(props) {
     }
 
     function goForward() {
-        if (index < gameData.length) {
-            const nextIndex = index + 1;
+        const nextIndex = index + 1;
+        if (nextIndex < gameData.length) {
             setIndex(nextIndex);
+            cleanOptionUI();
+        } else {
+            setGameEnd(true);
         }
+    }
 
+    function countTotal() {
+        let total = 0;
+        for (var i=0; i < gameData.length; i++) {
+            total = total + gameData[i].correct1 + gameData[i].correct2 + gameData[i].correct3 + gameData[i].correct4;
+        }
+        return total;
     }
 
     return (
+        <div>
+        {showResult ?
+            <Result score={score} total={countTotal()}/>
+            :
         <Card className='gameview'>
             <Card.Header className='trackers'>
                 <ProgressBar label={`Scenario ${index+1} / ${gameData.length}`} now={index+1} max={gameData.length} variant='info'/>
@@ -105,11 +128,13 @@ function GameView(props) {
             option4={gameData[index].option4}
             optionUI={optionUI}
             setOptionUI={setOptionUI}/>
-            <Buttons submitted={submitted} handleSubmit={handleSubmit} goForward={goForward}/>
+            <Buttons submitted={submitted} handleSubmit={handleSubmit} goForward={goForward} gameEnd={gameEnd} setShowResult={setShowResult} optionUI={optionUI}/>
             {submitted ?
                 <Explanation text={gameData[index].explanation}/>
             : ''}
         </Card>
+        }
+        </div>
     )
 }
 
