@@ -2,7 +2,7 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 import {FaCaretRight} from 'react-icons/fa';
 
-function Buttons({handleSubmit, options, setOptions, submitted, goForward}) {
+function Buttons({handleSubmit, submitted, goForward}) {
     
     return(
         <div>

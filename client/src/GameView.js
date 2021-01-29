@@ -3,7 +3,6 @@ import Axios from "axios";
 import Card from 'react-bootstrap/Card';
 import Scenario from './Scenario';
 import Buttons from './GameButtons';
-import Button from 'react-bootstrap/Button';
 import Explanation from './Explanation';
 
 
@@ -12,6 +11,12 @@ function GameView(props) {
     const [gameData, setGameData] = useState([{}]);
     const [index, setIndex] = useState(0);
     const [submitted, setSubmitted] = useState(false);
+    const [optionUI, setOptionUI] = useState([
+        {id: 1, selected: false, feedback: 0},
+        {id: 2, selected: false, feedback: 0},
+        {id: 3, selected: false, feedback: 0},
+        {id: 4, selected: false, feedback: 0}]);
+    const [score, setScore] = useState(0);
     
     useEffect(() => {
         
@@ -45,36 +50,52 @@ function GameView(props) {
 
     function handleSubmit() {
         setSubmitted(true);
-        /*setOptions(options.map((item) => {
+        setOptionUI(optionUI.map((item, i) => {
             if (item.selected) {
-                if (item.isCorrect) {
-                    return {
-                        ...item, feedback: 1
-                    };
-                } else {
-                    return {
-                        ...item, feedback: 2
-                    };
+                
+                if ((i===0 && gameData[index].correct1===1) || (i===1 && gameData[index].correct2===1) || (i===2 && gameData[index].correct3===1) || (i===3 && gameData[index].correct4===1)) {
+                    return {...item, feedback: 1};
                 }
-        }
+                else {
+                    return {...item, feedback: -1};
+                }
+            }
             return item;
-        }))*/
+        }));
+        
+        updateScore();
+
+    }
+
+    function updateScore() {
+        let newScore = score;
+        for (var i=0; i < optionUI.length; i++) {
+            newScore = newScore + optionUI[i].feedback;
+        }
+        setScore(newScore);
     }
 
     function goForward() {
-        const nextIndex = index + 1;
-        setIndex(nextIndex);
+        if (index < gameData.length) {
+            const nextIndex = index + 1;
+            setIndex(nextIndex);
+        }
+
     }
 
     return (
         <Card className='game-view'>
+            <h2>Score: {score}</h2>
+            <h2>Scenario {index+1} of {gameData.length}</h2>
             <Scenario
             title={gameData[index].scenarioname}
             text={gameData[index].questiontext}
             option1={gameData[index].option1}
             option2={gameData[index].option2}
             option3={gameData[index].option3}
-            option4={gameData[index].option4}/>
+            option4={gameData[index].option4}
+            optionUI={optionUI}
+            setOptionUI={setOptionUI}/>
             <Buttons submitted={submitted} handleSubmit={handleSubmit} goForward={goForward}/>
             {submitted ?
                 <Explanation text={gameData[index].explanation}/>
