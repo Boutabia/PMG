@@ -1,6 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from "react";
-import './App.css';
 import GameView from './GameView';
 
 function App() {
@@ -8,7 +7,7 @@ function App() {
   
 
   return (
-    <div className="App">
+    <div>
       
       <GameView/>
 

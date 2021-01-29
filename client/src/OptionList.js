@@ -5,7 +5,7 @@ import Option from './Option';
 function OptionList({option1, option2, option3, option4, optionUI, setOptionUI}) {
       
     return (
-        <ListGroup className='options'>
+        <ListGroup>
                 <Option id={1} text={option1} selected={optionUI[0].selected} feedback={optionUI[0].feedback} optionUI={optionUI} setOptionUI={setOptionUI}/>
                 <Option id={2} text={option2} selected={optionUI[1].selected} feedback={optionUI[1].feedback} optionUI={optionUI} setOptionUI={setOptionUI}/>
                 <Option id={3} text={option3} selected={optionUI[2].selected} feedback={optionUI[2].feedback} optionUI={optionUI} setOptionUI={setOptionUI}/>

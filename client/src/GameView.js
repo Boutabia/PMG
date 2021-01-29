@@ -1,9 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import Axios from "axios";
 import Card from 'react-bootstrap/Card';
+import Badge from 'react-bootstrap/Badge';
+import ProgressBar from 'react-bootstrap/ProgressBar';
 import Scenario from './Scenario';
 import Buttons from './GameButtons';
 import Explanation from './Explanation';
+import './GameView.css';
 
 
 function GameView(props) {
@@ -23,6 +26,7 @@ function GameView(props) {
         function fetchData() {
             Axios.get('http://localhost:3001/api/content/startgame', {params: {difficulty: 1, limit: 15}})
             .then((response) => {
+                console.log(response.data);
                 setGameData(response.data);
                 })
             .catch((error) => {
@@ -50,6 +54,11 @@ function GameView(props) {
 
     function handleSubmit() {
         setSubmitted(true);
+        updateOptionUI();
+        updateScore();
+    }
+
+    function updateOptionUI() {
         setOptionUI(optionUI.map((item, i) => {
             if (item.selected) {
                 
@@ -62,9 +71,6 @@ function GameView(props) {
             }
             return item;
         }));
-        
-        updateScore();
-
     }
 
     function updateScore() {
@@ -84,12 +90,15 @@ function GameView(props) {
     }
 
     return (
-        <Card className='game-view'>
-            <h2>Score: {score}</h2>
-            <h2>Scenario {index+1} of {gameData.length}</h2>
+        <Card className='gameview'>
+            <Card.Header className='trackers'>
+                <ProgressBar label={`Scenario ${index+1} / ${gameData.length}`} now={index+1} max={gameData.length} variant='info'/>
+                <Badge variant='info'>Score: {score}</Badge>
+            </Card.Header>
             <Scenario
             title={gameData[index].scenarioname}
             text={gameData[index].questiontext}
+            picture={gameData[index].picture}
             option1={gameData[index].option1}
             option2={gameData[index].option2}
             option3={gameData[index].option3}
