@@ -1,6 +1,7 @@
 .gameview {
     text-align: center;
     background: linear-gradient(to bottom, #4e008e 50%, #4f12aa 100%);
+    height: fit-content;
 }
 
 .scenario {
