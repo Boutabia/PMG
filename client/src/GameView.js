@@ -24,6 +24,7 @@ function GameView(props) {
     const [gameEnd, setGameEnd] = useState(false);
     const [showResult, setShowResult] = useState(false);
     
+    //Fetch game content from the database
     useEffect(() => {
         
         function fetchData() {
@@ -55,17 +56,12 @@ function GameView(props) {
         fetchData();
         },[]);
 
-    function handleSubmit() {
-        setSubmitted(true);
-        checkAnswers();
-        updateScore();
-        if (index === gameData.length-1) {
-            setGameEnd(true);
-        }
-    }
 
+    
+    /*Updates feedback according to given answers & updates score according to feedback*/
     function checkAnswers() {
-        setOptionUI(optionUI.map((item, i) => {
+
+        const newOptions = optionUI.map((item, i) => {
             if (item.selected) {
                 
                 if ((i===0 && gameData[index].correct1===1) || (i===1 && gameData[index].correct2===1) || (i===2 && gameData[index].correct3===1) || (i===3 && gameData[index].correct4===1)) {
@@ -76,21 +72,21 @@ function GameView(props) {
                 }
             }
             return item;
-        }));
-    }
+        });
 
-    function cleanOptionUI() {
-        setOptionUI(optionUI.map((item) => {
-            return {...item, feedback: 0, selected: false};
-        }));
-    }
+        setOptionUI(newOptions);
 
-    function updateScore() {
-        let newScore = score;
-        for (var i=0; i < optionUI.length; i++) {
-            newScore = newScore + optionUI[i].feedback;
-        }
+        var newScore = newOptions.reduce((acc, obj) => acc + obj.feedback, score);
         setScore(newScore);
+    }
+    
+    /*Button actions*/
+    function handleSubmit() {
+        setSubmitted(true);
+        checkAnswers();
+        if (index === gameData.length-1) {
+            setGameEnd(true);
+        }
     }
 
     function goForward() {
@@ -104,6 +100,12 @@ function GameView(props) {
         }
     }
 
+    /*Helper functions*/
+    function cleanOptionUI() {
+        setOptionUI(optionUI.map((item) => {
+            return {...item, feedback: 0, selected: false};
+        }));
+    }
     function countTotal() {
         let total = 0;
         for (var i=0; i < gameData.length; i++) {

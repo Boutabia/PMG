@@ -42,6 +42,7 @@
   .list-group-item-options.disabled {
     border: 1px outset #5f1e91;
     background-color: #370164;
+    color: whitesmoke;
   }
   
   .list-group-item-selected {
