@@ -27,3 +27,6 @@ server/node_modules
 .eslintcache
 
 backup/
+
+client/package-lock.json
+server/package-lock.json

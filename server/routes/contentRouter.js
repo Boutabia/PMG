@@ -82,7 +82,7 @@ contentRouter.post("/complete", authenticateToken, async (req,res) => {
 
 contentRouter.get("/startgame", async(req, res)=>{
     const query = req.query;
-    const scenarioArray = await getScenarioList(query.categories, query.limit, true, query.difficulty);
+    const scenarioArray = await getScenarioList(query.categories, parseInt(query.limit), true, parseInt(query.difficulty));
 
     if (scenarioArray.length === 0){
         res.writeHead(500, "No scenarios found.");
