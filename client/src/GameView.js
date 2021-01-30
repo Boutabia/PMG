@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import Axios from "axios";
+import Axios from 'axios';
 import Card from 'react-bootstrap/Card';
 import Badge from 'react-bootstrap/Badge';
 import ProgressBar from 'react-bootstrap/ProgressBar';
@@ -121,7 +121,7 @@ function GameView(props) {
             :
         <Card className='gameview'>
             <Card.Header className='trackers'>
-                <ProgressBar label={`Scenario ${index+1} / ${gameData.length}`} now={index+1} max={gameData.length} variant='info'/>
+                <ProgressBar label={`Scenario ${index+1} / ${gameData.length}`} now={index+1} max={gameData.length} className='progress' variant='info'/>
                 <Badge variant='info'>Score: {score}</Badge>
             </Card.Header>
             <Scenario
