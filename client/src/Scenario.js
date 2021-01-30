@@ -8,7 +8,7 @@ function Scenario({title, text, picture, option1, option2, option3, option4, opt
             <Card.Body className='question'>
             <Card.Title>{title}</Card.Title>
             <Card.Text>{text}</Card.Text>
-            <Card.Img src={picture} fluid/>
+            <Card.Img src={picture} fluid className='img'/>
             </Card.Body>
             <Card.Body className='optionlist'>
             <OptionList

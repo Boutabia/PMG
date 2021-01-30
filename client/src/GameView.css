@@ -119,4 +119,8 @@
     padding-top: 20rem;
   }
 
+  .img {
+    object-fit: scale-down;
+  }
+
   
