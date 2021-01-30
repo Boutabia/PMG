@@ -307,6 +307,23 @@ async function addStatistics(statisticsArray){
 async function insertToStatistics(id){
     return (await queryPromise("INSERT INTO statistic (scenarioid) VALUES (?)", [id]));
 }
+
+/**
+ * Added upload mechanism
+ * @param {Object} file from express-fileuploader
+ * @param {Object} res Response object
+ */
+
+async function uploadFile(file, res){
+    file.mv(`${__dirname}/../public/${file.name}`, err => {
+        if (err) {
+            console.error(err);
+            return res.status(500).send(err);
+        }
+  
+        return res.json({ fileName: file.name, filePath: `/uploads/${file.name}` });
+    });
+}
 //more?
 
 module.exports={
@@ -322,5 +339,6 @@ module.exports={
     getStatistics,
     addStatistics,
     insertToStatistics,
-    deleteCategory
+    deleteCategory,
+    uploadFile
 }

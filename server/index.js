@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const cors = require ("cors");
 const app = express();
 const {isThereASuperuser} = require("./tools/usertools");
+const fileUpload = require('express-fileupload');
 
 const {contentRouter} = require("./routes/contentRouter");
 const {userRouter} = require("./routes/userRouter");
@@ -11,6 +12,7 @@ const {userRouter} = require("./routes/userRouter");
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.json());
 app.use(cors());
+app.use(fileUpload());
 
 /**
  * if superuser has not been made when the server is launched, create a superuser.
