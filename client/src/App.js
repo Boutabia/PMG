@@ -12,6 +12,7 @@ import AuthService from "./services/auth.service";
 import Scenarios from "./components/Scenarios";
 import Navbar from "react-bootstrap/Navbar";
 import AboutUs from './components/AboutUs';
+import GameView from "./GameView";
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -86,7 +87,7 @@ const App = () => {
               <Route exact path="/login" component={Login} />
               <Route path="/scenarios" component={Scenarios} />
               <Route path="/addscenario" component={AddScenarioForm} />
-              <Route exact path={"/"} component={Home} />
+              <Route exact path={"/"} component={GameView} />
             </Switch>
           </div>
         </Router>

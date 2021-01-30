@@ -12,13 +12,15 @@
     "axios": "^0.21.1",
     "bootstrap": "^4.5.3",
     "dompurify": "^2.2.6",
-    "react": "^16.13.1",
-    "react-bootstrap": "^1.4.0",
-    "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "^4.0.0",
     "react-validation": "^3.0.7",
-    "validator": "^13.5.1"
+    "validator": "^13.5.1",
+    "html-to-react": "^1.4.5",
+    "react": "^16.14.0",
+    "react-bootstrap": "^1.4.0",
+    "react-dom": "^16.14.0",
+    "react-icons": "^4.1.0",
+    "react-scripts": "^4.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
