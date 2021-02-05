@@ -8,8 +8,9 @@ function Scenario({title, text, picture, option1, option2, option3, option4, opt
             <Card.Body className='question'>
             <Card.Title>{title}</Card.Title>
             <Card.Text>{text}</Card.Text>
-            <Card.Img src={picture} fluid className='img'/>
+            <Card.Img src={picture} className='img'/>
             </Card.Body>
+            <Card.Body className='instruction'><Card.Text>Select all the options you think are correct.</Card.Text></Card.Body>
             <Card.Body className='optionlist'>
             <OptionList
                 option1={option1}
