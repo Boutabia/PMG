@@ -11,8 +11,8 @@ function Buttons({handleSubmit, submitted, goForward, gameEnd, setShowResult, op
             :<div>
                 <Button variant='game' onClick={handleSubmit} disabled={optionUI.every(item => !item.selected) || submitted}>Answer</Button>
                 {submitted ?
-                <Button variant='game' onClick={goForward}>Next question <FaCaretRight/></Button>
-                : <Button variant='game' onClick={goForward}>Skip question</Button>
+                <Button variant='game' onClick={goForward}>Next scenario <FaCaretRight/></Button>
+                : <Button variant='game' onClick={goForward}>Skip scenario</Button>
                 }
             </div>
             }
