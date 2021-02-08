@@ -2,12 +2,14 @@
   text-align: center;
   background: linear-gradient(to bottom, #4e008e 50%, #4f12aa 100%);
   padding-bottom: 2rem;
+  border: 0;
 }
 
 .scenario {
   background: #2d0872be;
   padding-top: 2rem;
   margin:auto;
+  border: 0;
 }
 
 .question{
@@ -91,10 +93,8 @@ margin-right: 12px;
 
 .explanation {
 color: #4e008e;
-margin: auto;
 padding: 1rem;
 background-color: whitesmoke;
-width: 60rem;
 border-radius: 10px;
 }
 

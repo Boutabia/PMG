@@ -124,22 +124,23 @@ function GameView(props) {
                 <ProgressBar label={`Scenario ${index+1} / ${gameData.length}`} now={index+1} max={gameData.length} className='progress' variant='info'/>
                 <Badge variant='info'>Score: {score}</Badge>
             </Card.Header>
-            <Scenario
-            title={gameData[index].scenarioname}
-            text={gameData[index].questiontext}
-            picture={gameData[index].picture}
-            option1={gameData[index].option1}
-            option2={gameData[index].option2}
-            option3={gameData[index].option3}
-            option4={gameData[index].option4}
-            optionUI={optionUI}
-            setOptionUI={setOptionUI}
-            submitted={submitted}/>
-            {submitted ?
-                <Explanation text={gameData[index].explanation}/>
-            : ''}
-            <Buttons submitted={submitted} handleSubmit={handleSubmit} goForward={goForward} gameEnd={gameEnd} setShowResult={setShowResult} optionUI={optionUI}/>
-
+            <Card.Body>
+                <Scenario
+                title={gameData[index].scenarioname}
+                text={gameData[index].questiontext}
+                picture={gameData[index].picture}
+                option1={gameData[index].option1}
+                option2={gameData[index].option2}
+                option3={gameData[index].option3}
+                option4={gameData[index].option4}
+                optionUI={optionUI}
+                setOptionUI={setOptionUI}
+                submitted={submitted}/>
+                {submitted ?
+                    <Explanation text={gameData[index].explanation}/>
+                : ''}
+                <Buttons submitted={submitted} handleSubmit={handleSubmit} goForward={goForward} gameEnd={gameEnd} setShowResult={setShowResult} optionUI={optionUI}/>
+            </Card.Body>
         </Card>
         }
         </div>
