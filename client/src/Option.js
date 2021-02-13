@@ -1,5 +1,6 @@
 import React from 'react';
-import ListGroup from 'react-bootstrap/ListGroup';
+import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
 import {FaRegCircle} from 'react-icons/fa';
 import {FaCheckCircle} from 'react-icons/fa';
 
@@ -17,16 +18,16 @@ function Option({id, text, selected, feedback, optionUI, setOptionUI, submitted}
     }
 
     return (
-       <div>
+       <Col>
         {feedback===1 ?
-            <ListGroup.Item id={id} type='button' variant='correct'><FaCheckCircle className='check'/>{text}</ListGroup.Item>
+            <Button id={id} variant='correct'><FaCheckCircle className='check'/>{text}</Button>
         : feedback===-1 ?
-            <ListGroup.Item id={id} type='button' variant='incorrect'><FaCheckCircle className='check'/>{text}</ListGroup.Item>
+            <Button id={id} variant='incorrect'><FaCheckCircle className='check'/>{text}</Button>
         : selected ?
-            <ListGroup.Item id={id} type='button' variant='selected' onClick={handleSelect} disabled={submitted}><FaCheckCircle className='check'/>{text}</ListGroup.Item>
-        :   <ListGroup.Item id={id} type='button' variant='options' onClick={handleSelect} disabled={submitted}><FaRegCircle className='check'/>{text}</ListGroup.Item>
+            <Button id={id} variant='selected' onClick={handleSelect} disabled={submitted}><FaCheckCircle className='check'/>{text}</Button>
+        :   <Button id={id} variant='options' onClick={handleSelect} disabled={submitted}><FaRegCircle className='check'/>{text}</Button>
         }
-        </div>
+        </Col>
     )
 }
 

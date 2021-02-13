@@ -1,14 +1,14 @@
 import React from 'react';
-import Card from 'react-bootstrap/Card';
+import Col from 'react-bootstrap/Col';
 import DOMPurify from 'dompurify';
 
 
 function Explanation({text}) {
     return (
-        <Card className='explanation'>
-            <Card.Title>Explanation</Card.Title>
-            <Card.Text dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(text)}}/>
-        </Card>
+        <Col className='explanation'>
+            <h5>Explanation</h5>
+            <p dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(text)}}/>
+        </Col>
     )
 }
 

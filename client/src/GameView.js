@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import Axios from 'axios';
-import Card from 'react-bootstrap/Card';
-import Badge from 'react-bootstrap/Badge';
-import ProgressBar from 'react-bootstrap/ProgressBar';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Trackers from './Trackers';
 import Scenario from './Scenario';
+import OptionList from './OptionList';
 import Buttons from './GameButtons';
 import Explanation from './Explanation';
 import Result from './Result';
@@ -14,13 +15,13 @@ function GameView(props) {
     
     const [gameData, setGameData] = useState([{}]);
     const [index, setIndex] = useState(0);
-    const [submitted, setSubmitted] = useState(false);
+    const [score, setScore] = useState(0);
     const [optionUI, setOptionUI] = useState([
         {id: 1, selected: false, feedback: 0},
         {id: 2, selected: false, feedback: 0},
         {id: 3, selected: false, feedback: 0},
         {id: 4, selected: false, feedback: 0}]);
-    const [score, setScore] = useState(0);
+    const [submitted, setSubmitted] = useState(false);
     const [gameEnd, setGameEnd] = useState(false);
     const [showResult, setShowResult] = useState(false);
     
@@ -75,7 +76,6 @@ function GameView(props) {
         });
 
         setOptionUI(newOptions);
-
         var newScore = newOptions.reduce((acc, obj) => acc + obj.feedback, score);
         setScore(newScore);
     }
@@ -119,16 +119,13 @@ function GameView(props) {
         {showResult ?
             <Result score={score} total={countTotal()}/>
             :
-        <Card className='gameview'>
-            <Card.Header className='trackers'>
-                <ProgressBar label={`Scenario ${index+1} / ${gameData.length}`} now={index+1} max={gameData.length} className='progress' variant='info'/>
-                <Badge variant='info'>Score: {score}</Badge>
-            </Card.Header>
-            <Card.Body>
-                <Scenario
+        <Container className='gameview'>
+            <Trackers index={index} length={gameData.length} score={score}/>
+            <Scenario
                 title={gameData[index].scenarioname}
                 text={gameData[index].questiontext}
-                picture={gameData[index].picture}
+                picture={`http://localhost:3001/${gameData[index].picture}`}/>
+            <OptionList
                 option1={gameData[index].option1}
                 option2={gameData[index].option2}
                 option3={gameData[index].option3}
@@ -136,12 +133,19 @@ function GameView(props) {
                 optionUI={optionUI}
                 setOptionUI={setOptionUI}
                 submitted={submitted}/>
+            <Row>
                 {submitted ?
                     <Explanation text={gameData[index].explanation}/>
                 : ''}
-                <Buttons submitted={submitted} handleSubmit={handleSubmit} goForward={goForward} gameEnd={gameEnd} setShowResult={setShowResult} optionUI={optionUI}/>
-            </Card.Body>
-        </Card>
+                </Row>
+            <Buttons
+                submitted={submitted}
+                handleSubmit={handleSubmit}
+                goForward={goForward}
+                gameEnd={gameEnd}
+                setShowResult={setShowResult}
+                optionUI={optionUI}/>
+        </Container>
         }
         </div>
     )

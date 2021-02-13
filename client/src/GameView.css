@@ -1,68 +1,72 @@
 .gameview {
   text-align: center;
   background: linear-gradient(to bottom, #4e008e 50%, #4f12aa 100%);
-  padding-bottom: 2rem;
-  border: 0;
 }
 
 .scenario {
-  background: #2d0872be;
-  padding-top: 2rem;
-  margin:auto;
-  border: 0;
+  color: whitesmoke;
 }
 
-.question{
-background-color: whitesmoke;
-margin: auto;
-margin-bottom: 2rem;
-border-radius: 10px;
-border: 2px solid #4f12aa;
-color: #4e008e;
-} 
-
-.list-group-item-options {
-background-color: #4e008e;
-border: 2px solid #4f12aa;
-text-align: left;
-border-radius: 5px;
-color: whitesmoke;
+.optionlist {
+  margin: 4px;
 }
 
-.list-group-item-options:hover {
-border: 1px outset #5f1e91;
-background-color: #370164;
+.btn-options {
+  width: 100%;
+  background-color: #2d0872be;
+  border: 1px solid #4f12aa;
+  border-radius: 5px;
+  color: whitesmoke;
+  margin: 4px 0;
+  padding: 10px;
 }
 
-.list-group-item-options.disabled {
-border: 1px outset #5f1e91;
-background-color: #370164;
-color: whitesmoke;
+.btn-options:hover {
+  width: 100%;
+  border: 1px #5f1e91;
+  background-color: #370164;
+  color: whitesmoke;
+  margin: 4px 0;
+  padding: 10px;
 }
 
-.list-group-item-selected {
-border: 1px outset #5f1e91;
-background-color: #250242;
-text-align: left;
-border-radius: 5px;
-color: whitesmoke;
-
+.btn-options.disabled {
+  width: 100%;
+  border: 1px #5f1e91;
+  background-color: #370164;
+  color: whitesmoke;
+  margin: 4px 0;
+  padding: 10px;
 }
 
-.list-group-item-correct {
-border-color: rgb(4, 31, 4);
-background-color:  rgb(7, 61, 7);
-text-align: left;
-border-radius: 5px;
-color: whitesmoke;
+.btn-selected {
+  width: 100%;
+  border: 1px #5f1e91;
+  background-color: #250242;
+  border-radius: 5px;
+  color: whitesmoke;
+  margin: 4px 0;
+  padding: 10px;
 }
 
-.list-group-item-incorrect {
-border-color: rgb(88, 4, 4);
-background-color: rgb(145, 4, 4);
-text-align: left;
-border-radius: 5px;
-color: whitesmoke;
+.btn-correct {
+  width: 100%;
+  border-color: rgb(4, 31, 4);
+  background-color:  rgb(7, 61, 7);
+  border-radius: 5px;
+  color: whitesmoke;
+  margin: 4px 0;
+  padding: 10px;
+}
+
+.btn-incorrect {
+  width: 100%;
+  border-color: rgb(88, 4, 4);
+  background-color: rgb(145, 4, 4);
+  border-radius: 5px;
+  color: whitesmoke;
+  margin: 4px 0;
+  padding: 10px;
 }
 
 .btn-game {
@@ -71,8 +75,8 @@ font-weight: bold;
 background-color: rgb(50, 7, 119);
 border: 2px solid rgb(60, 10, 139);
 border-radius: 5px;
-margin: 1rem;
-padding: 0.5rem;
+margin: 20px;
+padding: 10px;
 box-shadow: 0 8px rgb(50, 7, 119);
 }
 
@@ -92,10 +96,8 @@ margin-right: 12px;
 }
 
 .explanation {
-color: #4e008e;
-padding: 1rem;
-background-color: whitesmoke;
-border-radius: 10px;
+  color: whitesmoke;
+  padding: 4px;
 }
 
 .result {
@@ -103,11 +105,12 @@ min-height: 100vh;
 color: whitesmoke;
 text-align: center;
 background: linear-gradient(to bottom, #4e008e 50%, #4f12aa 100%);
-padding-top: 20rem;
+padding-top: 200px;
 }
 
 .img {
-object-fit: scale-down;
+margin: 8px;
+width: 80%;
 }
 
 .trackers{
@@ -115,14 +118,25 @@ background-color: rgb(18, 1, 44);
 color: whitesmoke;
 display: flex;
 justify-content: space-between;
+padding: 10px;
+margin-bottom: 4px;
 }
 
 .progress {
-min-width: 300px;
+min-width: 600px;
 font-weight: bold;
 }
 
 .instruction {
 color: whitesmoke;
 font-style: oblique;
+font-size: 0.75em;
+}
+
+.ans-btn, .result-btn {
+  justify-content: center;
+}
+
+.next-btn {
+  justify-content: end;
 }

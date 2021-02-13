@@ -1,27 +1,16 @@
 import React from 'react';
-import Card from 'react-bootstrap/Card';
-import OptionList from './OptionList';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import DOMPurify from 'dompurify';
 
-function Scenario({title, text, picture, option1, option2, option3, option4, optionUI, setOptionUI, submitted}) {
+function Scenario({title, text, picture}) {
     return (
-        <Card className='scenario'>
-            <Card.Body className='question'>
-            <Card.Title>{title}</Card.Title>
-            <Card.Text>{text}</Card.Text>
-            <Card.Img src={picture} className='img'/>
-            </Card.Body>
-            <Card.Body className='instruction'><Card.Text>Select all the options you think are correct.</Card.Text></Card.Body>
-            <Card.Body className='optionlist'>
-            <OptionList
-                option1={option1}
-                option2={option2}
-                option3={option3}
-                option4={option4}
-                optionUI={optionUI}
-                setOptionUI={setOptionUI}
-                submitted={submitted}/>
-            </Card.Body>
-        </Card>
+        <Row className='scenario'>
+            <Col><h4>{title}</h4>
+                <Row><Col><img src={picture} className='img'/></Col></Row>
+                <Row><Col><p dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(text)}}/></Col></Row>
+            </Col>
+        </Row>
     )
 }
 

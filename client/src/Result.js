@@ -1,15 +1,12 @@
 import React from 'react';
-import Card from 'react-bootstrap/Card';
+import Container from 'react-bootstrap/Container';
 
 function Result({score, total}) {
     return (
-        <Card className='result'>
-            <Card.Body>
-            <Card.Title>Result</Card.Title>
-            <Card.Text>You scored {score} out of {total} points! </Card.Text>
-            </Card.Body>
-
-        </Card>
+        <Container className='result'>
+            <h1>Result</h1>
+            <p>You scored {score} out of {total} points! </p>
+        </Container>
     )
 }
 
