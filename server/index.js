@@ -13,6 +13,7 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.json());
 app.use(cors());
 app.use(fileUpload());
+app.use(express.static('public'));
 
 /**
  * if superuser has not been made when the server is launched, create a superuser.
