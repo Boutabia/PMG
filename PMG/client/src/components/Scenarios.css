@@ -1,0 +1,49 @@
+.table {
+  background-color: white;
+}
+
+.btn {
+  margin: auto;
+}
+
+.btn-secondary {
+  -moz-border-radius: 0px;
+  -webkit-border-radius: 0px;
+  border-radius: 0px;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #4E0091;
+  background-color: white;
+  color: #4E0091;
+  font-weight: 600;
+  letter-spacing: 2px;
+}
+
+.btn-secondary:hover {
+  border-color: #8406ea;
+  color: #8406ea;
+  background-color: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.btn-secondary:focus {
+  border-style: solid;
+  border-width: 2px;
+  border-color: #4E0091;
+  background-color: white;
+  color: #4E0091;
+  outline-style: solid;
+  outline-color: #8406ea!important;
+  box-shadow: 0 0 0 2px #BA64FF;
+}
+
+.btn-secondary:active:focus {
+  background-color: #3d0072!important;
+  border: 2px solid #8406ea!important;
+  box-shadow: 0 0 0 2px #8406ea!important;
+}
+
+.btn-secondary:disabled {
+  background-color: #d5d5d5;
+  color: #626164;
+}

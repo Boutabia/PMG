@@ -1,0 +1,167 @@
+
+POST http://localhost:3001/api/user/login
+Content-Type: application/json 
+
+{
+    "username": "user1",
+    "password": "password2020"
+}
+
+###
+POST http://localhost:3001/api/user/login
+Content-Type: application/json 
+
+{
+    "username": "superuser",
+    "password": "superuserpassword2020"
+}
+
+###
+
+GET http://localhost:3001/get
+Content-Type : application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InN1cGVydXNlciIsInBhc3N3b3JkaGFzaCI6IiQyYiQxMiQyTWcySzlzTzhwNE1KeGFEL1FpY0d1QkFDQzRzZTFOVUFTZFVkdTVTbzdXTTBKUld5TkhlZSIsInJvbGUiOiJzdXBlcnVzZXIiLCJpYXQiOjE2MDU4NzE5MDYsImV4cCI6MTYwNTg3NTUwNn0.bWvKtpEac7ovnb0zcwOtwJdP6Hec6vONG0TCWPJIARE
+
+###
+post http://localhost:3001/api/user/register
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywibmFtZSI6InN1cGVydXNlciIsInBhc3N3b3JkaGFzaCI6IiQyYiQxMiR2T3R4ZGo5dk5Qak1KdmxwWnBOYjd1Sk1NbzltMkEubFF2ZmdUUkJVRldZcVp1Ym5rL2lZTyIsInJvbGUiOiJzdXBlcnVzZXIiLCJpYXQiOjE2MDc2MTQyNjgsImV4cCI6MTYwNzY1NzQ2OH0.Lbtt_vVtzHqbVsaSLGgeTlcfwd-MwbMsC2TW4mEMvKU
+
+{
+     "newuser": {
+        "name": "user141",
+        "password": "password2020"
+    }
+}
+
+###
+
+GET http://localhost:3001/api/content/startgame
+Content-Type : application/json
+
+{
+    "limit" : 15,
+    "categories" : [],
+    "difficulty": 3
+}
+
+###
+
+GET http://localhost:3001/api/content/category
+Content-Type : application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6InVzZXIxIiwicGFzc3dvcmRoYXNoIjoiJDJiJDEyJGFTQ3FEU1hSL3pTY094NTFFYTNlTi5yekhKMENTNVVnRUM3cDZOTTJTLk1TdFd2RGF6eTYyIiwicm9sZSI6InVzZXIiLCJpYXQiOjE2MDc5NTE0NDksImV4cCI6MTYwNzk5NDY0OX0.1K_g5aqpjEEsJfuK6avrF4b3zIDbTsF8OejV6SFWdsU
+
+
+###
+
+POST http://localhost:3001/api/content/category
+Content-Type: application/json 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywibmFtZSI6InN1cGVydXNlciIsInBhc3N3b3JkaGFzaCI6IiQyYiQxMiR2T3R4ZGo5dk5Qak1KdmxwWnBOYjd1Sk1NbzltMkEubFF2ZmdUUkJVRldZcVp1Ym5rL2lZTyIsInJvbGUiOiJzdXBlcnVzZXIiLCJpYXQiOjE2MDc2MTQyNjgsImV4cCI6MTYwNzY1NzQ2OH0.Lbtt_vVtzHqbVsaSLGgeTlcfwd-MwbMsC2TW4mEMvKU
+
+{
+    "newCategoryName": "New Category 10/12"
+}
+
+###
+
+GET http://localhost:3001/api/content/allScenarios
+Content-Type : application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywibmFtZSI6InN1cGVydXNlciIsInBhc3N3b3JkaGFzaCI6IiQyYiQxMiR2T3R4ZGo5dk5Qak1KdmxwWnBOYjd1Sk1NbzltMkEubFF2ZmdUUkJVRldZcVp1Ym5rL2lZTyIsInJvbGUiOiJzdXBlcnVzZXIiLCJpYXQiOjE2MDc2MTQyNjgsImV4cCI6MTYwNzY1NzQ2OH0.Lbtt_vVtzHqbVsaSLGgeTlcfwd-MwbMsC2TW4mEMvKU
+
+
+###
+
+POST http://localhost:3001/api/content/complete
+Content-Type : application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywibmFtZSI6InN1cGVydXNlciIsInBhc3N3b3JkaGFzaCI6IiQyYiQxMiR2T3R4ZGo5dk5Qak1KdmxwWnBOYjd1Sk1NbzltMkEubFF2ZmdUUkJVRldZcVp1Ym5rL2lZTyIsInJvbGUiOiJzdXBlcnVzZXIiLCJpYXQiOjE2MDc2MTQyNjgsImV4cCI6MTYwNzY1NzQ2OH0.Lbtt_vVtzHqbVsaSLGgeTlcfwd-MwbMsC2TW4mEMvKU
+
+{
+    "scenarioNameVar": "Testmaterial?",
+    "questionTypeVar": 1,
+    "questionTextVar": "Is this testmaterial? Think so? Or no?",
+    "pictureVar": "/../img/TestThonking.png",
+    "questionOption1Var": "Yes", 
+    "questionOption2Var": "It is", 
+    "questionOption3Var": "No...", 
+    "questionOption4Var": "Indeed",
+    "questionCorrect1Var": 1,
+    "questionCorrect2Var": 1,
+    "questionCorrect3Var": 0,
+    "questionCorrect4Var": 1,
+    "questionExplanationVar": "*Thinking* ... ... ... Yes, yes it seems.",
+    "scenarioDifficultyVar": 1,
+    "scenarioCategoryVar": [4]
+}
+
+###
+
+GET http://localhost:3001/api/content/statistics
+Content-Type : application/json
+
+{
+    "scenarioIdVar": 12
+}
+
+###
+
+GET http://localhost:3001/api/content/statistics
+Content-Type : application/json
+
+
+###
+POST http://localhost:3001/api/content/statistics
+Content-Type : application/json
+
+{
+    "statisticsArrayVar":[{
+        "id": 1,
+        "statistic": 0
+    },
+    {
+        "id": 1,
+        "statistic": 1
+    },
+    {
+        "id": 2,
+        "statistic": 2
+    },
+    {
+        "id": 222,
+        "statistic": 0
+    }
+    ]
+}
+
+###
+
+DELETE http://localhost:3001/api/user/delete 
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywibmFtZSI6InN1cGVydXNlciIsInBhc3N3b3JkaGFzaCI6IiQyYiQxMiR2T3R4ZGo5dk5Qak1KdmxwWnBOYjd1Sk1NbzltMkEubFF2ZmdUUkJVRldZcVp1Ym5rL2lZTyIsInJvbGUiOiJzdXBlcnVzZXIiLCJpYXQiOjE2MDc2MjAxNzksImV4cCI6MTYwNzY2MzM3OX0.xYEf-bWs9oCOEl1guaJUDFwggjpikLaDnP-q6wloGfc
+
+{
+    "name": "user141"
+}
+
+###
+
+DELETE http://localhost:3001/api/content/scenario 
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywibmFtZSI6InN1cGVydXNlciIsInBhc3N3b3JkaGFzaCI6IiQyYiQxMiR2T3R4ZGo5dk5Qak1KdmxwWnBOYjd1Sk1NbzltMkEubFF2ZmdUUkJVRldZcVp1Ym5rL2lZTyIsInJvbGUiOiJzdXBlcnVzZXIiLCJpYXQiOjE2MDc2MTQyNjgsImV4cCI6MTYwNzY1NzQ2OH0.Lbtt_vVtzHqbVsaSLGgeTlcfwd-MwbMsC2TW4mEMvKU
+
+{
+    "scenarioToDeleteVar": 30
+}
+
+###
+
+DELETE http://localhost:3001/api/content/category 
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywibmFtZSI6InN1cGVydXNlciIsInBhc3N3b3JkaGFzaCI6IiQyYiQxMiR2T3R4ZGo5dk5Qak1KdmxwWnBOYjd1Sk1NbzltMkEubFF2ZmdUUkJVRldZcVp1Ym5rL2lZTyIsInJvbGUiOiJzdXBlcnVzZXIiLCJpYXQiOjE2MDc2MTQyNjgsImV4cCI6MTYwNzY1NzQ2OH0.Lbtt_vVtzHqbVsaSLGgeTlcfwd-MwbMsC2TW4mEMvKU
+
+{
+    "categoryToDeleteVar": 7
+}
+
+###
+
+POST http://localhost:3001/api/content/upload
