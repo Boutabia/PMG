@@ -76,7 +76,13 @@ function GameView(props) {
         });
 
         setOptionUI(newOptions);
-        var newScore = newOptions.reduce((acc, obj) => acc + obj.feedback, score);
+
+        var newScore = score;
+        for (let i = 0; i < newOptions.length; i++) {
+            if (newOptions[i].feedback > 0) {
+                newScore++;
+            }
+        }
         setScore(newScore);
     }
     
@@ -108,7 +114,7 @@ function GameView(props) {
     }
     function countTotal() {
         let total = 0;
-        for (var i=0; i < gameData.length; i++) {
+        for (let i = 0; i < gameData.length; i++) {
             total = total + gameData[i].correct1 + gameData[i].correct2 + gameData[i].correct3 + gameData[i].correct4;
         }
         return total;
