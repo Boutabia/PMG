@@ -80,14 +80,8 @@ function GameView(props) {
 
         setOptionUI(newOptions);
 
-        if (newOptions.some(o => o.feedback > 0)) {
-            var scenarioPoints = 1;
-            for (let i = 0; i < newOptions.length; i++) {
-                if (newOptions[i].feedback < 0) {
-                    scenarioPoints -= 0.25;
-                }
-            }
-            setScore(score + scenarioPoints);
+        if (newOptions.every(o => o.feedback >= 0)) {
+            setScore(score + 1);
         }
     }
     
