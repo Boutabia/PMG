@@ -63,13 +63,16 @@ function GameView(props) {
     function checkAnswers() {
 
         const newOptions = optionUI.map((item, i) => {
-            if (item.selected) {
-                
-                if ((i===0 && gameData[index].correct1===1) || (i===1 && gameData[index].correct2===1) || (i===2 && gameData[index].correct3===1) || (i===3 && gameData[index].correct4===1)) {
+            if ((i===0 && gameData[index].correct1===1) || (i===1 && gameData[index].correct2===1) || (i===2 && gameData[index].correct3===1) || (i===3 && gameData[index].correct4===1)) {
+                if (item.selected) {
                     return {...item, feedback: 1};
-                }
-                else {
+                } else {
                     return {...item, feedback: -1};
+                }
+            }
+            else {
+                if (item.selected) {
+                    return {...item, feedback: -2};
                 }
             }
             return item;
@@ -77,13 +80,13 @@ function GameView(props) {
 
         setOptionUI(newOptions);
 
-        var newScore = score;
+        var scenarioPoints = 1;
         for (let i = 0; i < newOptions.length; i++) {
-            if (newOptions[i].feedback > 0) {
-                newScore++;
+            if (newOptions[i].feedback < 0) {
+                scenarioPoints -= 0.25;
             }
         }
-        setScore(newScore);
+        setScore(score + scenarioPoints);
     }
     
     /*Button actions*/
@@ -106,24 +109,17 @@ function GameView(props) {
         }
     }
 
-    /*Helper functions*/
+    /*Helper function*/
     function cleanOptionUI() {
         setOptionUI(optionUI.map((item) => {
             return {...item, feedback: 0, selected: false};
         }));
     }
-    function countTotal() {
-        let total = 0;
-        for (let i = 0; i < gameData.length; i++) {
-            total = total + gameData[i].correct1 + gameData[i].correct2 + gameData[i].correct3 + gameData[i].correct4;
-        }
-        return total;
-    }
 
     return (
         <div>
         {showResult ?
-            <Result score={score} total={countTotal()}/>
+            <Result score={score} total={gameData.length}/>
             :
         <Container className='gameview'>
             <Trackers index={index} length={gameData.length} score={score}/>
