@@ -13,6 +13,10 @@ import Scenarios from "./components/Scenarios";
 import Navbar from "react-bootstrap/Navbar";
 import AboutUs from './components/AboutUs';
 import GameView from "./GameView";
+import LandingPage from "./LandingPage";
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -83,11 +87,13 @@ const App = () => {
 
           <div className="container mt-3">
             <Switch>
+              <Route exact path={"/"} component={LandingPage} /> 
               <Route exact path={"/aboutus"} component={AboutUs} />
               <Route exact path="/login" component={Login} />
               <Route path="/scenarios" component={Scenarios} />
               <Route path="/addscenario" component={AddScenarioForm} />
-              <Route exact path={"/"} component={GameView} />
+              <Route exact path={"/gameview"} component={GameView} />
+              
             </Switch>
           </div>
         </Router>

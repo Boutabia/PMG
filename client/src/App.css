@@ -1,13 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 
+
+
 body {
   width: 100%;
   height: 100%;
   font-family: 'Montserrat', sans-serif;
-  background-color: white;
+  background-color: #4E0091;
+  color:#4E0091;
 }
-
-
+.container {
+  background-color:#ffffff ;
+  
+}
 .navbar {
   background-color: #4E0091;
 }
@@ -27,3 +32,169 @@ body {
 .navbar-brand {
   font-weight: bold;
 }
+
+@import 'https://fonts.googleapis.com/css?family=Bungee+Shade';
+
+*, :after, :before {
+  box-sizing: border-box;
+}
+
+:focus {
+  outline: none;
+}
+body {
+  background:#4E0091;
+}
+
+/*div {
+  margin: 3rem auto;
+  max-width: 660px;
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  background-color: #4E0091;
+}
+*/
+button {
+  overflow: visible;
+  border: 0;
+  padding: 0;
+  margin: 1.8rem;
+}
+.btn.striped-shadow span {
+  display: block;
+  position: relative;
+  z-index: 2;
+  border: 5px solid;
+}
+
+.btn.striped-shadow.blue span {
+  border-color: #ffffff;
+  border-width: 4px;
+  background: #4E0091;
+  color: #ffffff;
+}
+
+
+.btn {
+  /*font-family: 'Bungee Shade', sans-serif;*/
+  font-family: 'Bungee Shade', sans-serif;
+  height: 80px;
+  line-height: 65px;
+  display: inline-block;
+  letter-spacing: 3px;
+  position: relative;
+  font-size: 2rem;/*1.35rem;*/ 
+  transition: opacity .3s, z-index .3s step-end, -webkit-transform .3s;
+  transition: opacity .3s, z-index .3s step-end, transform .3s;
+  transition: opacity .3s,
+    z-index .3s step-end,
+    transform .3s,
+    -webkit-transform .3s;
+  z-index: 1;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.btn {  /*button size*/
+  width: 300px; /*200*/
+  height: 120px;
+  line-height: 80px; /*38px*/
+  position: absolute;
+  top: 450px;
+  right: 820px;
+}
+
+
+
+button.btn.striped-shadow.blue:after, button.btn.striped-shadow.blue:before {
+  background-image: linear-gradient(
+    135deg,
+    transparent 0,
+    transparent 5px,
+    #ffffff 5px,
+    #ffffff 10px,
+    transparent 10px
+  );
+
+
+}
+
+button.btn.striped-shadow:hover:before {
+  max-height: calc(100% - 10px);
+}
+
+button.btn.striped-shadow:after {
+  width: calc(100% - 4px);
+  height: 10px;
+  left: -10px;
+  bottom: -9px;
+  background-size: 15px 10px;
+  background-repeat: repeat-x;
+}
+button.btn.striped-shadow:after, button.btn.striped-shadow:before {
+  content: '';
+  display: block;
+  position: absolute;
+  z-index: 1;
+  transition: max-height .3s, width .3s, -webkit-transform .3s;
+  transition: transform .3s, max-height .3s, width .3s;
+  transition: transform .3s, max-height .3s, width .3s, -webkit-transform .3s;
+}
+
+.btn.striped-shadow:hover {
+  -webkit-transform: translate(-16px, 16px);
+  -ms-transform: translate(-16px, 16px);
+  transform: translate(-16px, 16px);
+  z-index: 3;
+}
+
+button.btn.striped-shadow:hover:after, button.btn.striped-shadow:hover:before {
+  -webkit-transform: translate(16px, -16px);
+  -ms-transform: translate(16px, -16px);
+  transform: translate(16px, -16px);
+}
+button.btn.striped-shadow:before {
+  width: 10px;
+  max-height: calc(100% - 5px);
+  height: 100%;
+  left: -16px;
+  bottom: -5px;
+  background-size: 10px 15px;
+  background-repeat: repeat-y;
+  background-position: 0 100%;
+}
+
+
+.welcomeText {
+
+  font-size: 60px;
+  font-weight: bolder;
+  position: absolute;
+  top: 100px;
+  background-color: #4E0091;
+  color:#ffffff;
+
+
+  
+}
+.instructionsText {
+  position: absolute;
+  bottom: 80px;
+  left: 400px;
+  width: 1200px;
+  font-family:sans-serif;
+  border-color: #ffffff;
+  color: #ffffff;
+  
+  /*background-color:#4E0091;
+  color:#ffffff;
+*/  
+
+}
+
+
+ 
+
+
