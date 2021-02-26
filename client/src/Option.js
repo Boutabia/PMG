@@ -21,7 +21,7 @@ function Option({id, text, selected, feedback, optionUI, setOptionUI, submitted}
        <Col>
         {feedback===1 ?
             <Button id={id} variant='correct'><FaCheckCircle className='check'/>{text}</Button>
-        : feedback===-1 ?
+        : feedback===-2 ?
             <Button id={id} variant='incorrect'><FaCheckCircle className='check'/>{text}</Button>
         : selected ?
             <Button id={id} variant='selected' onClick={handleSelect} disabled={submitted}><FaCheckCircle className='check'/>{text}</Button>

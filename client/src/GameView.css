@@ -122,11 +122,6 @@ padding: 10px;
 margin-bottom: 4px;
 }
 
-.progress {
-min-width: 600px;
-font-weight: bold;
-}
-
 .instruction {
 color: whitesmoke;
 font-style: oblique;
