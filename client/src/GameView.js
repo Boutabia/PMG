@@ -122,7 +122,7 @@ function GameView(props) {
             <Scenario
                 title={gameData[index].scenarioname}
                 text={gameData[index].questiontext}
-                picture={`http://localhost:3001/${gameData[index].picture}`}/>
+                picture={gameData[index].picture}/>
             <OptionList
                 option1={gameData[index].option1}
                 option2={gameData[index].option2}
