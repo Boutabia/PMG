@@ -105,17 +105,21 @@ function GameView(props) {
         }
     }
 
-    /*Helper function*/
+    /*Reset option feedback*/
     function cleanOptionUI() {
         setOptionUI(optionUI.map((item) => {
             return {...item, feedback: 0, selected: false};
         }));
     }
+    /*Start a new game*/
+    function refreshGame() {
+        window.location.reload();
+  }
 
     return (
         <div>
         {showResult ?
-            <Result score={score} total={gameData.length}/>
+            <Result score={score} total={gameData.length} refreshGame={refreshGame}/>
             :
         <Container className='gameview'>
             <Trackers index={index} length={gameData.length} score={score}/>
